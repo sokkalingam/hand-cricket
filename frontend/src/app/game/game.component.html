@@ -3,9 +3,10 @@
 </div>
 
 <div>
-  User Input: {{userInput}}
+  User Input: <span *ngIf='userInput'>{{userInput}}</span>
+              <span *ngIf='!userInput'>{{lastPlayedInput}}</span>
   <br />
-  <input name='userInput' [(ngModel)]='userInput' type='Number' />
+  <input name='userInput' [(ngModel)]='userInput' type='Number' (keyup.enter)='play()' />
 </div>
 
 <div>

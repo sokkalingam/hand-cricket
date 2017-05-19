@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 
 export class GameComponent {
   userInput: number;
+  lastPlayedInput: number;
   computerInput: number;
   status: string;
 
@@ -24,6 +25,7 @@ export class GameComponent {
 
   play(): void {
     this.computerInput = this.getRandomNumber();
+    this.lastPlayedInput = this.userInput;
 
     if (this.computerInput == this.userInput) {
         this.status = "OUT";
@@ -34,6 +36,8 @@ export class GameComponent {
       this.addRuns(this.userInput);
       this.addBallsPlayed();
     }
+
+    this.userInput = undefined;
   }
 
   addRuns(run: number): void {
