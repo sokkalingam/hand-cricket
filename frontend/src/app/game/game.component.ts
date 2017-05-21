@@ -33,7 +33,9 @@ export class GameComponent {
   * Play Game
   */
   play(): void {
-    if (!this.userInput) return;
+
+    if (this.userInput < 0 || this.userInput > 6)
+      return;
 
     this.lastPlayedInput = this.userInput;
     this.computerInput = this.getRandomNumber();
