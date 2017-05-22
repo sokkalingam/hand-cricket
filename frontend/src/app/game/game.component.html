@@ -1,41 +1,78 @@
 <div class="container">
+
+  <div *ngIf='(firstBatting == undefined)'>
+    <h3>What would you like to do first?</h3>
+    <button type="button" class="btn btn-primary" (click)='toBat()'>Batting</button>
+    <button type="button" class="btn btn-success" (click)='toBowl()'>Bowling</button>
+  </div>
+
+  <div *ngIf='(firstBatting != undefined)'>
+
+    <div class="jumbrotron">
+      <h3>
+        <div *ngIf='(winner == undefined)' class="alert alert-info" role="alert">
+          You are now {{firstBatting ? "Batting" : "Bowling"}}
+        </div>
+        <div *ngIf='(winner == "Computer")' class="alert alert-danger" role="alert">
+          Game Over! {{winner}} Won
+        </div>
+        <div *ngIf='(winner == "User")' class="alert alert-success" role="alert">
+          Game Over! {{winner}} Won
+        </div>
+      </h3>
+    </div>
+
     <form>
-      <div class="form-group">
+      <div class="form-group well">
         <label for="computerInput">Computer Played: </label>
         <span>{{computerInput}}</span>
       </div>
-      <div class="form-group">
+      <div class="form-group well">
         <label for="lastPlayedInput">User Last Played: </label>
         <span>{{lastPlayedInput}}</span>
       </div>
-      <div class="form-group">
+      <div class="form-group well">
         <label for="userInput">User Currently Playing: </label>
         <span>{{userInput}}</span>
         <br />
-        <input name='userInput' [(ngModel)]='userInput' type='number' (keydown.enter)='play()' />
+        <input *ngIf='firstBatting == true' class="form-control" name='userInput' [(ngModel)]='userInput' type='number' (keydown.enter)='bat()' />
+        <input *ngIf='firstBatting == false' class="form-control" name='userInput' [(ngModel)]='userInput' type='number' (keydown.enter)='bowl()' />
         <span>(Can only play numbers between 0 to 6)</span>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group well">
         <label for="ballsPlayed">Balls Played: </label>
         <span>{{noOfBallsPlayed}}</span>
       </div>
-      <div class="form-group">
+      <div class="form-group well">
         <label for="runsScored">Runs Scored: </label>
         <span>{{runsScored}}</span>
-      </div>
+      </div> -->
       <div *ngIf='status'>
-        <div class="form-group">
+        <div class="form-group well alert-danger">
           <label for="status">Player Status: </label>
           <span>{{status}}</span>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group well">
           <label for="totalNoOfBallsPlayed">Total Number of Balls Played: </label>
           <span>{{totalNoOfBallsPlayed}}</span>
         </div>
-        <div class="form-group">
+        <div class="form-group well">
           <label for="totalNumberOfRunsScored">Total Number of Runs Scored: </label>
           <span>{{totalNumberOfRunsScored}}</span>
-        </div>
+        </div> -->
       </div>
     </form>
-</div>
+  </div>
+
+  <div class="jumbrotron" *ngIf='firstBatting != undefined'>
+    <h3>Game Updates</h3>
+    <div *ngIf='userRuns != undefined' class="alert alert-warning">
+      You have scored {{userRuns}} runs in {{userBalls}} balls.
+    </div>
+    <div *ngIf='computerRuns != undefined' class="alert alert-warning">
+      Computer has scored {{computerRuns}} runs in {{computerBalls}} balls.
+    </div>
+    <div *ngIf='winner != undefined'>
+      <button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
+    </div>
+  </div>
