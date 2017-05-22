@@ -23,43 +23,43 @@
     </div>
 
     <form>
-      <div class="form-group">
+      <div class="form-group well">
         <label for="computerInput">Computer Played: </label>
         <span>{{computerInput}}</span>
       </div>
-      <div class="form-group">
+      <div class="form-group well">
         <label for="lastPlayedInput">User Last Played: </label>
         <span>{{lastPlayedInput}}</span>
       </div>
-      <div class="form-group">
+      <div class="form-group well">
         <label for="userInput">User Currently Playing: </label>
         <span>{{userInput}}</span>
         <br />
-        <input *ngIf='firstBatting == true' name='userInput' [(ngModel)]='userInput' type='number' (keydown.enter)='bat()' />
-        <input *ngIf='firstBatting == false' name='userInput' [(ngModel)]='userInput' type='number' (keydown.enter)='bowl()' />
+        <input *ngIf='firstBatting == true' class="form-control" name='userInput' [(ngModel)]='userInput' type='number' (keydown.enter)='bat()' />
+        <input *ngIf='firstBatting == false' class="form-control" name='userInput' [(ngModel)]='userInput' type='number' (keydown.enter)='bowl()' />
         <span>(Can only play numbers between 0 to 6)</span>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group well">
         <label for="ballsPlayed">Balls Played: </label>
         <span>{{noOfBallsPlayed}}</span>
       </div>
-      <div class="form-group">
+      <div class="form-group well">
         <label for="runsScored">Runs Scored: </label>
         <span>{{runsScored}}</span>
-      </div>
+      </div> -->
       <div *ngIf='status'>
-        <div class="form-group">
+        <div class="form-group well alert-danger">
           <label for="status">Player Status: </label>
           <span>{{status}}</span>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group well">
           <label for="totalNoOfBallsPlayed">Total Number of Balls Played: </label>
           <span>{{totalNoOfBallsPlayed}}</span>
         </div>
-        <div class="form-group">
+        <div class="form-group well">
           <label for="totalNumberOfRunsScored">Total Number of Runs Scored: </label>
           <span>{{totalNumberOfRunsScored}}</span>
-        </div>
+        </div> -->
       </div>
     </form>
   </div>
