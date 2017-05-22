@@ -2,7 +2,6 @@
 .idea
 node_modules
 jspm_packages
-*.log
 npm-debug.log
 debug.log
 src/**/*.js
