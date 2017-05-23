@@ -17,6 +17,10 @@ export class GameComponent {
   userBalls: number = undefined;
   computerBalls: number = undefined;
 
+  isUserBattingFirst: boolean = undefined;
+  gameStatus: number = 0;
+  isOut: boolean = undefined;
+
   /**
   * 0 to 6, total of 7 different outputs from computer
   */
@@ -33,92 +37,86 @@ export class GameComponent {
     location.reload();
   }
 
-isUserBattingFirst: boolean = undefined;
-gameStatus: number = 0;
-isOut: boolean = undefined;
-
-isInputValid(): boolean {
-  return (this.userInput >= 0 && this.userInput <= 6);
-}
-
-userBatting(): void {
-
-  if (!this.isInputValid()) return;
-
-  if (this.userRuns == undefined) this.userRuns = 0;
-  if (this.userBalls == undefined) this.userBalls = 0;
-
-  this.lastPlayedInput = this.userInput;
-  this.computerInput = this.getRandomNumber();
-
-  if (this.userInput == this.computerInput) {
-    this.isOut = true;
-    this.isUserBattingFirst = !this.isUserBattingFirst;
-    this.userBalls++;
-  } else {
-    this.isOut = false;
-
-    if (this.userInput == 0)
-      this.userRuns += this.computerInput;
-    else
-      this.userRuns += this.userInput;
-    this.userBalls++;
+  isInputValid(): boolean {
+    return (this.userInput >= 0 && this.userInput <= 6);
   }
 
-  this.userInput = undefined;
+  userBatting(): void {
 
-  if (this.userRuns > this.computerRuns)
-    this.gameStatus = 1;
+    if (!this.isInputValid()) return;
 
-  if (this.isOut && this.userRuns < this.computerRuns)
-    this.gameStatus = 2;
+    if (this.userRuns == undefined) this.userRuns = 0;
+    if (this.userBalls == undefined) this.userBalls = 0;
 
-  if (this.isOut && this.userRuns == this.computerRuns && this.userRuns != undefined)
-      this.gameStatus = 3;
-}
+    this.computerInput = this.getRandomNumber();
+    this.lastPlayedInput = this.userInput;
+    this.userInput = undefined;
 
-computerBatting(): void {
+    if (this.lastPlayedInput == this.computerInput) {
+      this.isOut = true;
+      this.isUserBattingFirst = !this.isUserBattingFirst;
+      this.userBalls++;
+    } else {
+      this.isOut = false;
 
-  if (!this.isInputValid()) return;
+      if (this.lastPlayedInput == 0)
+        this.userRuns += this.computerInput;
+      else
+        this.userRuns += this.lastPlayedInput;
+      this.userBalls++;
+    }
 
-  if (this.computerRuns == undefined) this.computerRuns = 0;
-  if (this.computerBalls == undefined) this.computerBalls = 0;
+    if (this.userRuns > this.computerRuns)
+      this.gameStatus = 1;
 
-  this.lastPlayedInput = this.userInput;
-  this.computerInput = this.getRandomNumber();
+    if (this.isOut && this.userRuns < this.computerRuns)
+      this.gameStatus = 2;
 
-  if (this.userInput == this.computerInput) {
-    this.isOut = true;
-    this.isUserBattingFirst = !this.isUserBattingFirst;
-    this.computerBalls++;
-  } else {
-    this.isOut = false;
-
-    if (this.computerInput == 0)
-      this.computerRuns += this.userInput;
-    else
-      this.computerRuns += this.computerInput;
-    this.computerBalls++;
+    if (this.isOut && this.userRuns == this.computerRuns && this.userRuns != undefined)
+        this.gameStatus = 3;
   }
 
-  this.userInput = undefined;
+  computerBatting(): void {
 
-  if (this.isOut && this.userRuns > this.computerRuns)
-    this.gameStatus = 1;
+    if (!this.isInputValid()) return;
 
-  if (this.computerRuns > this.userRuns)
-    this.gameStatus = 2;
+    if (this.computerRuns == undefined) this.computerRuns = 0;
+    if (this.computerBalls == undefined) this.computerBalls = 0;
 
-  if (this.isOut && this.userRuns == this.computerRuns && this.computerRuns != undefined)
-      this.gameStatus = 3;
-}
+    this.lastPlayedInput = this.userInput;
+    this.userInput = undefined;
+    this.computerInput = this.getRandomNumber();
 
-choseToBat(): void {
-  this.isUserBattingFirst = true;
-}
+    if (this.lastPlayedInput == this.computerInput) {
+      this.isOut = true;
+      this.isUserBattingFirst = !this.isUserBattingFirst;
+      this.computerBalls++;
+    } else {
+      this.isOut = false;
 
-choseToBowl(): void {
-  this.isUserBattingFirst = false;
-}
+      if (this.computerInput == 0)
+        this.computerRuns += this.lastPlayedInput;
+      else
+        this.computerRuns += this.computerInput;
+      this.computerBalls++;
+    }
+
+    if (this.isOut && this.userRuns > this.computerRuns)
+      this.gameStatus = 1;
+
+    if (this.computerRuns > this.userRuns)
+      this.gameStatus = 2;
+
+    if (this.isOut && this.userRuns == this.computerRuns && this.computerRuns != undefined)
+        this.gameStatus = 3;
+  }
+
+  choseToBat(): void {
+    this.isUserBattingFirst = true;
+  }
+
+  choseToBowl(): void {
+    this.isUserBattingFirst = false;
+  }
 
 }
