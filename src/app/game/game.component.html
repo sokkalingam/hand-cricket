@@ -2,14 +2,14 @@
 
   <div *ngIf='(isUserBattingFirst == undefined)'>
     <h3>What would you like to do first?</h3>
-    <button type="button" class="btn btn-primary" (click)='choseToBat()'>Batting</button>
-    <button type="button" class="btn btn-success" (click)='choseToBowl()'>Bowling</button>
+    <button type="button" class="btn btn-primary btn-lg" (click)='choseToBat()'>Batting</button>
+    <button type="button" class="btn btn-success btn-lg" (click)='choseToBowl()'>Bowling</button>
   </div>
 
   <div *ngIf='(isUserBattingFirst != undefined)'>
 
     <div class="jumbrotron">
-      <h3>
+      <h4>
         <div *ngIf='(gameStatus == 0)' class="alert alert-info" role="alert">
           You are now {{isUserBattingFirst ? "Batting" : "Bowling"}}
         </div>
@@ -25,11 +25,11 @@
         <div *ngIf='gameStatus != 0'>
           <button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
         </div>
-      </h3>
+      </h4>
     </div>
 
     <div>
-      <form>
+      <form (ngSubmit)='isUserBattingFirst ? userBatting() : computerBatting()'>
         <div class="form-group well">
           <label for="computerInput">Computer Played: </label>
           <span>{{computerInput}}</span>
@@ -41,12 +41,15 @@
         </div>
 
         <div *ngIf='gameStatus == 0' class="form-group well">
-          <label for="userInput">User Currently Playing: </label>
-          <span>{{userInput}}</span>
-          <br />
-          <input *ngIf='isUserBattingFirst == true' class="form-control" name='userInput' [(ngModel)]='userInput' type='number' (keydown.enter)='userBatting()' />
-          <input *ngIf='isUserBattingFirst == false' class="form-control" name='userInput' [(ngModel)]='userInput' type='number' (keydown.enter)='computerBatting()' />
-          <span>(Can only play numbers between 0 to 6)</span>
+          <div>
+            <label for="userInput">User Currently Playing: </label>
+            <span>{{userInput}}</span>
+          </div>
+          <div>
+            <input name='userInput' [(ngModel)]='userInput' type='number' />
+            <button type="submit" class="btn btn-success">Play</button>
+            <div>(Can only play numbers between 0 to 6)</div>
+          </div>
         </div>
 
         <div *ngIf='isOut'>
