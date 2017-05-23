@@ -7,18 +7,9 @@ import { Component, Input } from '@angular/core';
 
 export class GameComponent {
 
-  firstBatting: boolean = undefined;
-  winner: string = undefined;
-
   userInput: number;
   computerInput: number;
   lastPlayedInput: number;
-  status: string;
-
-  noOfBallsPlayed: number = 0;
-  totalNoOfBallsPlayed: number = 0;
-  runsScored: number = 0;
-  totalNumberOfRunsScored: number = 0;
 
   userRuns: number = undefined;
   computerRuns: number = undefined;
@@ -38,95 +29,96 @@ export class GameComponent {
     return Math.floor(Math.random() * this.noOfOutputs);
   }
 
-  bat(): void {
-
-    this.play();
-    this.userRuns = this.totalNumberOfRunsScored + this.runsScored;
-    this.userBalls = this.totalNoOfBallsPlayed + this.noOfBallsPlayed;
-
-    // first batting, play till outputs
-
-    // already batted, play till out or you beat the score
-
-    if (this.userRuns > this.computerRuns) {
-        this.winner = "User";
-    }
-
-    if (this.status == 'OUT') {
-        if (this.userRuns < this.computerRuns)
-          this.winner = "Computer";
-        if (this.firstBatting)
-          this.toBowl();
-    }
-  }
-
-  bowl(): void {
-
-    this.play();
-    this.computerRuns = this.totalNumberOfRunsScored + this.runsScored;
-    this.computerBalls = this.totalNoOfBallsPlayed + this.noOfBallsPlayed;
-
-    // if you batted first, bowl till out or your score is beaten
-    // if you have not batted already, bowl till out
-
-
-    if (this.computerRuns > this.userRuns) {
-      this.winner = "Computer";
-    }
-
-    if (this.status == 'OUT') {
-        if (this.userRuns > this.computerRuns)
-          this.winner = "User";
-        if (this.firstBatting == false)
-          this.toBat();
-    }
-  }
-
-  /**
-  * Play Game
-  */
-  play(): void {
-
-    if (this.userInput < 0 || this.userInput > 6)
-      return;
-
-    this.lastPlayedInput = this.userInput;
-    this.computerInput = this.getRandomNumber();
-
-    if (this.computerInput == this.userInput) {
-        this.status = "OUT";
-        this.totalNoOfBallsPlayed = this.noOfBallsPlayed;
-        this.totalNumberOfRunsScored = this.runsScored;
-        this.runsScored = 0;
-        this.noOfBallsPlayed = 0;
-    } else {
-        this.status = undefined;
-        this.addRuns(this.userInput);
-        this.addBallsPlayed();
-        this.totalNoOfBallsPlayed = 0;
-        this.totalNumberOfRunsScored = 0;
-    }
-
-    this.userInput = undefined;
-  }
-
-  addRuns(run: number): void {
-    this.runsScored += run;
-  }
-
-  addBallsPlayed(): void {
-    this.noOfBallsPlayed++;
-  }
-
-  toBat(): void {
-    this.firstBatting = true;
-  }
-
-  toBowl(): void {
-    this.firstBatting = false;
-  }
-
   restartGame(): void {
     location.reload();
   }
+
+isUserBattingFirst: boolean = undefined;
+gameStatus: number = 0;
+isOut: boolean = undefined;
+
+isInputValid(): boolean {
+  return (this.userInput >= 0 && this.userInput <= 6);
+}
+
+userBatting(): void {
+
+  if (!this.isInputValid()) return;
+
+  if (this.userRuns == undefined) this.userRuns = 0;
+  if (this.userBalls == undefined) this.userBalls = 0;
+
+  this.lastPlayedInput = this.userInput;
+  this.computerInput = this.getRandomNumber();
+
+  if (this.userInput == this.computerInput) {
+    this.isOut = true;
+    this.isUserBattingFirst = !this.isUserBattingFirst;
+    this.userBalls++;
+  } else {
+    this.isOut = false;
+
+    if (this.userInput == 0)
+      this.userRuns += this.computerInput;
+    else
+      this.userRuns += this.userInput;
+    this.userBalls++;
+  }
+
+  this.userInput = undefined;
+
+  if (this.userRuns > this.computerRuns)
+    this.gameStatus = 1;
+
+  if (this.isOut && this.userRuns < this.computerRuns)
+    this.gameStatus = 2;
+
+  if (this.isOut && this.userRuns == this.computerRuns && this.userRuns != undefined)
+      this.gameStatus = 3;
+}
+
+computerBatting(): void {
+
+  if (!this.isInputValid()) return;
+
+  if (this.computerRuns == undefined) this.computerRuns = 0;
+  if (this.computerBalls == undefined) this.computerBalls = 0;
+
+  this.lastPlayedInput = this.userInput;
+  this.computerInput = this.getRandomNumber();
+
+  if (this.userInput == this.computerInput) {
+    this.isOut = true;
+    this.isUserBattingFirst = !this.isUserBattingFirst;
+    this.computerBalls++;
+  } else {
+    this.isOut = false;
+
+    if (this.computerInput == 0)
+      this.computerRuns += this.userInput;
+    else
+      this.computerRuns += this.computerInput;
+    this.computerBalls++;
+  }
+
+  this.userInput = undefined;
+
+  if (this.isOut && this.userRuns > this.computerRuns)
+    this.gameStatus = 1;
+
+  if (this.computerRuns > this.userRuns)
+    this.gameStatus = 2;
+
+  if (this.isOut && this.userRuns == this.computerRuns && this.computerRuns != undefined)
+      this.gameStatus = 3;
+}
+
+choseToBat(): void {
+  this.isUserBattingFirst = true;
+}
+
+choseToBowl(): void {
+  this.isUserBattingFirst = false;
+}
+
 }
