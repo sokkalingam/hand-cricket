@@ -1,25 +1,28 @@
 <div class="container">
 
-  <div *ngIf='(firstBatting == undefined)'>
+  <div *ngIf='(isUserBattingFirst == undefined)'>
     <h3>What would you like to do first?</h3>
-    <button type="button" class="btn btn-primary" (click)='toBat()'>Batting</button>
-    <button type="button" class="btn btn-success" (click)='toBowl()'>Bowling</button>
+    <button type="button" class="btn btn-primary" (click)='choseToBat()'>Batting</button>
+    <button type="button" class="btn btn-success" (click)='choseToBowl()'>Bowling</button>
   </div>
 
-  <div *ngIf='(firstBatting != undefined)'>
+  <div *ngIf='(isUserBattingFirst != undefined)'>
 
     <div class="jumbrotron">
       <h3>
-        <div *ngIf='(winner == undefined)' class="alert alert-info" role="alert">
-          You are now {{firstBatting ? "Batting" : "Bowling"}}
+        <div *ngIf='(gameStatus == 0)' class="alert alert-info" role="alert">
+          You are now {{isUserBattingFirst ? "Batting" : "Bowling"}}
         </div>
-        <div *ngIf='(winner == "Computer")' class="alert alert-danger" role="alert">
-          Game Over! {{winner}} Won
+        <div *ngIf='(gameStatus == 1)' class="alert alert-success" role="alert">
+          Game Over! User Won
         </div>
-        <div *ngIf='(winner == "User")' class="alert alert-success" role="alert">
-          Game Over! {{winner}} Won
+        <div *ngIf='(gameStatus == 2)' class="alert alert-danger" role="alert">
+          Game Over! Computer Won
         </div>
-        <div *ngIf='winner != undefined'>
+        <div *ngIf='(gameStatus == 3)' class="alert alert-warning" role="alert">
+          Game Over! Game is Draw
+        </div>
+        <div *ngIf='gameStatus != 0'>
           <button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
         </div>
       </h3>
@@ -37,19 +40,19 @@
           <span>{{lastPlayedInput}}</span>
         </div>
 
-        <div *ngIf='winner == undefined' class="form-group well">
+        <div *ngIf='gameStatus == 0' class="form-group well">
           <label for="userInput">User Currently Playing: </label>
           <span>{{userInput}}</span>
           <br />
-          <input *ngIf='firstBatting == true' class="form-control" name='userInput' [(ngModel)]='userInput' type='number' (keydown.enter)='bat()' />
-          <input *ngIf='firstBatting == false' class="form-control" name='userInput' [(ngModel)]='userInput' type='number' (keydown.enter)='bowl()' />
+          <input *ngIf='isUserBattingFirst == true' class="form-control" name='userInput' [(ngModel)]='userInput' type='number' (keydown.enter)='userBatting()' />
+          <input *ngIf='isUserBattingFirst == false' class="form-control" name='userInput' [(ngModel)]='userInput' type='number' (keydown.enter)='computerBatting()' />
           <span>(Can only play numbers between 0 to 6)</span>
         </div>
 
-        <div *ngIf='status'>
+        <div *ngIf='isOut'>
           <div class="form-group well alert-danger">
             <label for="status">Player Status: </label>
-            <span>{{status}}</span>
+            <span>Out</span>
           </div>
         </div>
       </form>
@@ -57,7 +60,7 @@
 
   </div>
 
-  <div class="jumbrotron" *ngIf='firstBatting != undefined'>
+  <div class="jumbrotron" *ngIf='isUserBattingFirst != undefined'>
     <h3>Game Updates</h3>
     <div *ngIf='userRuns != undefined' class="alert alert-warning">
       You have scored {{userRuns}} runs in {{userBalls}} balls.
