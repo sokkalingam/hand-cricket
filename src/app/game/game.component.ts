@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
 
+import { Update } from '../model/Update';
+import { Player } from '../model/Player';
+
 @Component({
   selector: 'game',
   templateUrl: './game.component.html'
@@ -11,15 +14,15 @@ export class GameComponent {
   computerInput: number;
   lastPlayedInput: number;
 
-  userRuns: number = undefined;
-  computerRuns: number = undefined;
-
-  userBalls: number = undefined;
-  computerBalls: number = undefined;
+  user: Player = new Player();
+  computer: Player = new Player();
 
   isUserBattingFirst: boolean = undefined;
+  isUserBattingNow: boolean = undefined;
   gameStatus: number = 0;
   isOut: boolean = undefined;
+
+  updates: Update[] = [];
 
   /**
   * 0 to 6, total of 7 different outputs from computer
@@ -41,74 +44,94 @@ export class GameComponent {
     return (this.userInput >= 0 && this.userInput <= 6);
   }
 
+  setOut(): void {
+    this.isOut = true;
+  }
+  setNotOut(): void { this.isOut = false; }
+
+  setGameStatus(num: number): void { this.gameStatus = num; }
+
+  setUserInput(): void {
+    this.lastPlayedInput = this.userInput;
+    this.userInput = undefined;
+  }
+
+   setComputerInput(): void {
+     this.computerInput = this.getRandomNumber();
+   }
+
+   initPlayer(player: Player): Player {
+     if (player.balls == undefined) player.balls = 0;
+     if (player.runs == undefined)  player.runs  = 0;
+     return player;
+   }
+
   userBatting(): void {
+
+    this.isUserBattingNow = true;
 
     if (!this.isInputValid()) return;
 
-    if (this.userRuns == undefined) this.userRuns = 0;
-    if (this.userBalls == undefined) this.userBalls = 0;
+    this.user = this.initPlayer(this.user);
 
-    this.computerInput = this.getRandomNumber();
-    this.lastPlayedInput = this.userInput;
-    this.userInput = undefined;
+    this.setComputerInput();
+    this.setUserInput();
 
     if (this.lastPlayedInput == this.computerInput) {
-      this.isOut = true;
+      this.setOut();
       this.isUserBattingFirst = !this.isUserBattingFirst;
-      this.userBalls++;
+      this.user.balls++;
     } else {
-      this.isOut = false;
-
+      this.setNotOut();
       if (this.lastPlayedInput == 0)
-        this.userRuns += this.computerInput;
+        this.user.runs += this.computerInput;
       else
-        this.userRuns += this.lastPlayedInput;
-      this.userBalls++;
+        this.user.runs += this.lastPlayedInput;
+      this.user.balls++;
     }
 
-    if (this.userRuns > this.computerRuns)
-      this.gameStatus = 1;
+    if (this.user.runs > this.computer.runs)
+      this.setGameStatus(1);
 
-    if (this.isOut && this.userRuns < this.computerRuns)
-      this.gameStatus = 2;
+    if (this.isOut && this.user.runs < this.computer.runs)
+      this.setGameStatus(2);
 
-    if (this.isOut && this.userRuns == this.computerRuns && this.userRuns != undefined)
-        this.gameStatus = 3;
+    if (this.isOut && this.user.runs == this.computer.runs && this.user.runs != undefined)
+        this.setGameStatus(3);
   }
 
   computerBatting(): void {
 
+    this.isUserBattingNow = false;
+
     if (!this.isInputValid()) return;
 
-    if (this.computerRuns == undefined) this.computerRuns = 0;
-    if (this.computerBalls == undefined) this.computerBalls = 0;
+    this.computer = this.initPlayer(this.computer);
 
-    this.lastPlayedInput = this.userInput;
-    this.userInput = undefined;
-    this.computerInput = this.getRandomNumber();
+    this.setComputerInput();
+    this.setUserInput();
 
     if (this.lastPlayedInput == this.computerInput) {
-      this.isOut = true;
+      this.setOut();
       this.isUserBattingFirst = !this.isUserBattingFirst;
-      this.computerBalls++;
+      this.computer.balls++;
     } else {
-      this.isOut = false;
-
+      this.setNotOut();
       if (this.computerInput == 0)
-        this.computerRuns += this.lastPlayedInput;
+        this.computer.runs += this.lastPlayedInput;
       else
-        this.computerRuns += this.computerInput;
-      this.computerBalls++;
+        this.computer.runs += this.computerInput;
+      this.computer.balls++;
     }
 
-    if (this.isOut && this.userRuns > this.computerRuns)
-      this.gameStatus = 1;
+    if (this.isOut && this.user.runs > this.computer.runs)
+      this.setGameStatus(1);
 
-    if (this.computerRuns > this.userRuns)
-      this.gameStatus = 2;
+    if (this.computer.runs > this.user.runs)
+      this.setGameStatus(2);
 
-    if (this.isOut && this.userRuns == this.computerRuns && this.computerRuns != undefined)
-        this.gameStatus = 3;
+    if (this.isOut && this.user.runs == this.computer.runs && this.computer.runs != undefined)
+        this.setGameStatus(3);
   }
 
   choseToBat(): void {
@@ -117,6 +140,10 @@ export class GameComponent {
 
   choseToBowl(): void {
     this.isUserBattingFirst = false;
+  }
+
+  addUpdate(level: number, message: string): void {
+    this.updates.push(new Update(level, message));
   }
 
 }
