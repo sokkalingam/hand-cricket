@@ -65,10 +65,10 @@
 
   <div class="jumbrotron" *ngIf='isUserBattingFirst != undefined'>
     <h3>Game Updates</h3>
-    <div *ngIf='userRuns != undefined' class="alert alert-warning">
-      You have scored {{userRuns}} runs in {{userBalls}} balls.
+    <div *ngIf='user.runs != undefined' class="alert alert-warning">
+      You have scored {{user.runs}} runs in {{user.balls}} balls.
     </div>
-    <div *ngIf='computerRuns != undefined' class="alert alert-warning">
-      Computer has scored {{computerRuns}} runs in {{computerBalls}} balls.
+    <div *ngIf='computer.runs != undefined' class="alert alert-warning">
+      Computer has scored {{computer.runs}} runs in {{computer.balls}} balls.
     </div>
   </div>
