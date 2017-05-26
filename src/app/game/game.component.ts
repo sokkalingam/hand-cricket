@@ -3,6 +3,8 @@ import { Component, Input } from '@angular/core';
 import { Update } from '../model/Update';
 import { Player } from '../model/Player';
 
+import { UpdateType } from '../enum/UpdateType';
+
 @Component({
   selector: 'game',
   templateUrl: './game.component.html'
@@ -14,8 +16,8 @@ export class GameComponent {
   computerInput: number;
   lastPlayedInput: number;
 
-  user: Player = new Player();
-  computer: Player = new Player();
+  user: Player = new Player("You");
+  computer: Player = new Player("Computer");
 
   isUserBattingFirst: boolean = undefined;
   isUserBattingNow: boolean = undefined;
@@ -45,11 +47,25 @@ export class GameComponent {
   }
 
   setOut(): void {
+    var batsman: Player = this.getBatsman();
+    var updateType: UpdateType = this.isUserBattingNow ? UpdateType.DANGER : UpdateType.SUCCESS;
+    this.addUpdate(updateType, `${batsman.name} got Out! Scored ${batsman.runs} runs in ${batsman.balls} balls`);
     this.isOut = true;
   }
+
   setNotOut(): void { this.isOut = false; }
 
-  setGameStatus(num: number): void { this.gameStatus = num; }
+  getBatsman(): Player {
+    return this.isUserBattingNow ? this.user : this.computer;
+  }
+
+  getBowler(): Player {
+    return this.isUserBattingNow ? this.computer : this.user;
+  }
+
+  setGameStatus(num: number): void {
+    this.gameStatus = num;
+  }
 
   setUserInput(): void {
     this.lastPlayedInput = this.userInput;
@@ -66,6 +82,16 @@ export class GameComponent {
      return player;
    }
 
+   didInputsMatch(userInput: number, computerInput: number): boolean {
+     var message: string = null;
+     if (this.isUserBattingNow)
+       message = `You batted ${userInput}, Computer bowled ${computerInput}`;
+     else
+        message = `Computer batted ${computerInput}, You bowled ${userInput}`;
+     this.addUpdate(UpdateType.INFO, message);
+     return userInput == computerInput;
+   }
+
   userBatting(): void {
 
     this.isUserBattingNow = true;
@@ -77,10 +103,10 @@ export class GameComponent {
     this.setComputerInput();
     this.setUserInput();
 
-    if (this.lastPlayedInput == this.computerInput) {
-      this.setOut();
+    if (this.didInputsMatch(this.lastPlayedInput, this.computerInput)) {
       this.isUserBattingFirst = !this.isUserBattingFirst;
       this.user.balls++;
+      this.setOut();
     } else {
       this.setNotOut();
       if (this.lastPlayedInput == 0)
@@ -111,10 +137,10 @@ export class GameComponent {
     this.setComputerInput();
     this.setUserInput();
 
-    if (this.lastPlayedInput == this.computerInput) {
-      this.setOut();
+    if (this.didInputsMatch(this.lastPlayedInput, this.computerInput)) {
       this.isUserBattingFirst = !this.isUserBattingFirst;
       this.computer.balls++;
+      this.setOut();
     } else {
       this.setNotOut();
       if (this.computerInput == 0)
@@ -142,8 +168,15 @@ export class GameComponent {
     this.isUserBattingFirst = false;
   }
 
-  addUpdate(level: number, message: string): void {
-    this.updates.push(new Update(level, message));
+  addUpdate(type: UpdateType, message: string): void {
+    this.updates.push(new Update(type, message));
+  }
+
+  // return last 10 updates in reverse order
+  processedUpdates(updates: Update[], noOfUpdates: number): Update[] {
+    if (updates.length > noOfUpdates)
+      updates = updates.slice(updates.length - noOfUpdates)
+    return updates.reverse();
   }
 
 }
