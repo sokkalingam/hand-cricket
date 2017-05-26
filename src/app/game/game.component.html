@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
 
   <div *ngIf='(isUserBattingFirst == undefined)'>
     <h3>What would you like to do first?</h3>
@@ -8,67 +8,83 @@
 
   <div *ngIf='(isUserBattingFirst != undefined)'>
 
-    <div class="jumbrotron">
-      <h4>
-        <div *ngIf='(gameStatus == 0)' class="alert alert-info" role="alert">
-          You are now {{isUserBattingFirst ? "Batting" : "Bowling"}}
-        </div>
-        <div *ngIf='(gameStatus == 1)' class="alert alert-success" role="alert">
-          Game Over! User Won
-        </div>
-        <div *ngIf='(gameStatus == 2)' class="alert alert-danger" role="alert">
-          Game Over! Computer Won
-        </div>
-        <div *ngIf='(gameStatus == 3)' class="alert alert-warning" role="alert">
-          Game Over! Game is Draw
-        </div>
-        <div *ngIf='gameStatus != 0'>
-          <button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
-        </div>
-      </h4>
-    </div>
+      <div class="row">
+        <div class="col-xs-6">
+        <h3>Gameplay</h3>
+          <div *ngIf='(gameStatus == 0)' class="alert alert-info" role="alert">
+            You are now {{isUserBattingFirst ? "Batting" : "Bowling"}}
+          </div>
+          <div *ngIf='(gameStatus == 1)' class="alert alert-success" role="alert">
+            Game Over! User Won
+          </div>
+          <div *ngIf='(gameStatus == 2)' class="alert alert-danger" role="alert">
+            Game Over! Computer Won
+          </div>
+          <div *ngIf='(gameStatus == 3)' class="alert alert-warning" role="alert">
+            Game Over! Game is Draw
+          </div>
 
-    <div>
-      <form (ngSubmit)='isUserBattingFirst ? userBatting() : computerBatting()'>
-        <div class="form-group well">
-          <label for="computerInput">Computer Played: </label>
-          <span>{{computerInput}}</span>
-        </div>
-
-        <div class="form-group well">
-          <label for="lastPlayedInput">User Last Played: </label>
-          <span>{{lastPlayedInput}}</span>
-        </div>
-
-        <div *ngIf='gameStatus == 0' class="form-group well">
           <div>
-            <label for="userInput">User Currently Playing: </label>
-            <span>{{userInput}}</span>
+            <form (ngSubmit)='isUserBattingFirst ? userBatting() : computerBatting()'>
+
+              <div class="row">
+                <div class="col-xs-6">
+                  <div class="form-group well well-sm">
+                    <label for="computerInput">Computer Played: </label>
+                    <span>{{computerInput}}</span>
+                  </div>
+                </div>
+
+                <div class="col-xs-6">
+                  <div class="form-group well well-sm">
+                    <label for="lastPlayedInput">User Last Played: </label>
+                    <span>{{lastPlayedInput}}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf='isOut'>
+                <div class="form-group well well-sm alert-danger">
+                  <label for="status">Player Status: </label>
+                  <span>Out</span>
+                </div>
+              </div>
+
+              <div *ngIf='gameStatus == 0' class="form-group well well-sm">
+                <div>
+                  <label for="userInput">User Currently Playing: </label>
+                  <span>{{userInput}}</span>
+                </div>
+                <div>
+                  <input name='userInput' [(ngModel)]='userInput' type='number' />
+                  <button type="submit" class="btn btn-success">Play</button>
+                  <div>(Can only play numbers between 0 to 6)</div>
+                </div>
+              </div>
+
+              <div *ngIf='gameStatus != 0'>
+                <button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
+              </div>
+
+            </form>
           </div>
-          <div>
-            <input name='userInput' [(ngModel)]='userInput' type='number' />
-            <button type="submit" class="btn btn-success">Play</button>
-            <div>(Can only play numbers between 0 to 6)</div>
-          </div>
+
         </div>
 
-        <div *ngIf='isOut'>
-          <div class="form-group well alert-danger">
-            <label for="status">Player Status: </label>
-            <span>Out</span>
+        <div class="col-xs-6">
+          <div *ngIf='updates.length > 0'>
+            <h3>Game Updates</h3>
+            <div *ngFor="let update of processedUpdates(updates, 5)">
+              <div class="well well-sm" [class.alert-danger] ='update.type == 0'
+                                 [class.alert-warning]='update.type == 1'
+                                 [class.alert-info]   ='update.type == 2'
+                                 [class.alert-success]='update.type == 3'>
+                {{update.message}}
+              </div>
+            </div>
           </div>
         </div>
-      </form>
-    </div>
+      </div>
 
   </div>
-
-  <div class="jumbrotron" *ngIf='isUserBattingFirst != undefined'>
-    <h3>Game Updates</h3>
-    <div *ngIf='user.runs != undefined' class="alert alert-warning">
-      You have scored {{user.runs}} runs in {{user.balls}} balls.
-    </div>
-    <div *ngIf='computer.runs != undefined' class="alert alert-warning">
-      Computer has scored {{computer.runs}} runs in {{computer.balls}} balls.
-    </div>
-  </div>
+</div>
