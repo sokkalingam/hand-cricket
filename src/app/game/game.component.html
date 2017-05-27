@@ -8,6 +8,7 @@
 
   <div *ngIf='(isUserBattingFirst != undefined)'>
 
+      <!-- ###### Row 1 ####### -->
       <div class="row">
         <div class="col-xs-6">
         <h3>Gameplay</h3>
@@ -15,7 +16,7 @@
             You are now {{isUserBattingFirst ? "Batting" : "Bowling"}}
           </div>
           <div *ngIf='(gameStatus == 1)' class="alert alert-success" role="alert">
-            Game Over! User Won
+            Game Over! You Won
           </div>
           <div *ngIf='(gameStatus == 2)' class="alert alert-danger" role="alert">
             Game Over! Computer Won
@@ -23,7 +24,6 @@
           <div *ngIf='(gameStatus == 3)' class="alert alert-warning" role="alert">
             Game Over! Game is Draw
           </div>
-
           <div>
             <form (ngSubmit)='isUserBattingFirst ? userBatting() : computerBatting()'>
 
@@ -75,16 +75,35 @@
           <div *ngIf='updates.length > 0'>
             <h3>Game Updates</h3>
             <div *ngFor="let update of processedUpdates(updates, 5)">
-              <div class="well well-sm" [class.alert-danger] ='update.type == 0'
-                                 [class.alert-warning]='update.type == 1'
-                                 [class.alert-info]   ='update.type == 2'
-                                 [class.alert-success]='update.type == 3'>
-                {{update.message}}
-              </div>
+                <div class="well well-sm" align="center"
+                [class.alert-danger] ='update.type == 0' [class.alert-warning]='update.type == 1'
+                [class.alert-info]   ='update.type == 2' [class.alert-success]='update.type == 3'>
+                    {{update.message}}
+                </div>
             </div>
           </div>
         </div>
+
       </div>
+      <!-- ##### Row 1 End ##### -->
+
+      <!-- ###### Row 2 ######## -->
+      <div class="row">
+
+        <div class="col-xs-6">
+          <div *ngIf="user.runs != undefined || computer.runs != undefined">
+            <h3>Score Board</h3>
+            <div *ngIf="user.runs != undefined" class="alert alert-info">
+              You scored {{user.runs}} runs in {{user.balls}} balls
+            </div>
+            <div *ngIf="computer.runs != undefined" class="alert alert-warning">
+              Computer scored {{computer.runs}} runs in {{computer.balls}} balls
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ##### Row 2 End ######### -->
 
   </div>
 </div>
