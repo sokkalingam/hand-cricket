@@ -45,8 +45,7 @@
 
               <div *ngIf='isOut'>
                 <div class="form-group well well-sm alert-danger">
-                  <label for="status">Player Status: </label>
-                  <span>Out</span>
+                  <label>{{isUserBattingNow ? "You" : "Computer" }} got out</label>
                 </div>
               </div>
 
@@ -89,9 +88,9 @@
 
       <!-- ###### Row 2 ######## -->
       <div class="row">
+        <div *ngIf="user.runs != undefined || computer.runs != undefined">
 
-        <div class="col-xs-6">
-          <div *ngIf="user.runs != undefined || computer.runs != undefined">
+          <div class="col-xs-6">
             <h3>Score Board</h3>
             <div *ngIf="user.runs != undefined" class="alert alert-info">
               You scored {{user.runs}} runs in {{user.balls}} balls
@@ -100,8 +99,12 @@
               Computer scored {{computer.runs}} runs in {{computer.balls}} balls
             </div>
           </div>
-        </div>
 
+          <div class="col-xs-6" *ngIf='!isOut'>
+            <progress-bar [currentScore]='getBatsman().runs' [targetScore]='targetScore'></progress-bar>
+          </div>
+
+        </div>
       </div>
       <!-- ##### Row 2 End ######### -->
 
