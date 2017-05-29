@@ -1,0 +1,8 @@
+<h3>Progress Bar</h3>
+<label>Target Score: </label><span> {{targetScore}}</span>
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="currentScore"
+    [style.width]="(currentScore/targetScore)*100 + '%'">
+    {{currentScore}} runs
+  </div>
+</div>

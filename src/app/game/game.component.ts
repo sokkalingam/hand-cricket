@@ -5,6 +5,8 @@ import { Player } from '../model/Player';
 
 import { UpdateType } from '../enum/UpdateType';
 
+import { HelperService } from '../shared/services/helper.service';
+
 @Component({
   selector: 'game',
   templateUrl: './game.component.html'
@@ -24,12 +26,17 @@ export class GameComponent {
   gameStatus: number = 0;
   isOut: boolean = undefined;
 
+  targetScore: number;
+
   updates: Update[] = [];
 
   /**
   * 0 to 6, total of 7 different outputs from computer
   */
   noOfOutputs: number = 7;
+
+  constructor(private helperService: HelperService) {
+  }
 
   /**
   * Returns a random number between 0 and 6, both included
@@ -92,6 +99,14 @@ export class GameComponent {
      return userInput == computerInput;
    }
 
+   setTargetScore(): void {
+     if (this.getBowler().runs == undefined) {
+       this.targetScore = this.helperService.getNextTargetScore(this.getBatsman().runs);
+     } else {
+       this.targetScore = this.getBowler().runs;
+     }
+   }
+
   userBatting(): void {
 
     this.isUserBattingNow = true;
@@ -115,6 +130,8 @@ export class GameComponent {
         this.user.runs += this.lastPlayedInput;
       this.user.balls++;
     }
+
+    this.setTargetScore();
 
     if (this.user.runs > this.computer.runs)
       this.setGameStatus(1);
@@ -149,6 +166,8 @@ export class GameComponent {
         this.computer.runs += this.computerInput;
       this.computer.balls++;
     }
+
+    this.setTargetScore();
 
     if (this.isOut && this.user.runs > this.computer.runs)
       this.setGameStatus(1);
