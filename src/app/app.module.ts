@@ -8,6 +8,7 @@ import { GameComponent } from './components/game/game.component';
 import { ProgressBarComponent } from './components/progress_bar/progress-bar.component';
 import { GameUpdateComponent } from './components/game-updates/game-update.component';
 import { ScoreBoardComponent } from './components/score-board/score-board.component';
+import { GameStatusComponent } from './components/game-status/game-status.component';
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule ],
@@ -16,7 +17,8 @@ import { ScoreBoardComponent } from './components/score-board/score-board.compon
                   GameComponent,
                   ProgressBarComponent,
                   GameUpdateComponent,
-                  ScoreBoardComponent
+                  ScoreBoardComponent,
+                  GameStatusComponent
                 ],
   bootstrap:    [ AppComponent ]
 })

@@ -1,9 +1,13 @@
+import { PlayerType } from '../enum/PlayerType';
+
 export class Player {
-  name: string;
+  // name: string;
+  type: PlayerType;
   runs: number;
   balls: number;
+  status: number;
 
-  constructor(name: string) {
-    this.name = name;
+  constructor(type: PlayerType) {
+    this.type = type;
   }
 }

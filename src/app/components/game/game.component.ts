@@ -4,6 +4,7 @@ import { Update } from '../../model/Update';
 import { Player } from '../../model/Player';
 
 import { UpdateType } from '../../enum/UpdateType';
+import { PlayerType } from '../../enum/PlayerType';
 
 import { ProgressBarService } from '../../services/progress-bar.service';
 import { UpdateService } from '../../services/update.service';
@@ -20,8 +21,8 @@ export class GameComponent {
   computerInput: number;
   lastPlayedInput: number;
 
-  user: Player = new Player("You");
-  computer: Player = new Player("Computer");
+  user: Player = new Player(PlayerType.User);
+  computer: Player = new Player(PlayerType.Computer);
 
   isUserBattingFirst: boolean = undefined;
   isUserBattingNow: boolean = undefined;
@@ -56,10 +57,9 @@ export class GameComponent {
     return (this.userInput >= 0 && this.userInput <= 6);
   }
 
-  setOut(): void {
-    var batsman: Player = this.getBatsman();
-    var updateType: UpdateType = this.isUserBattingNow ? UpdateType.DANGER : UpdateType.SUCCESS;
-    this.updateService.addUpdate(updateType, `${batsman.name} got Out! Scored ${batsman.runs} runs in ${batsman.balls} balls`);
+  setOut(player: Player): void {
+    var updateType: UpdateType = player.type == PlayerType.User ? UpdateType.DANGER : UpdateType.SUCCESS;
+    this.updateService.addUpdate(updateType, `${player.type} got Out! Scored ${player.runs} runs in ${player.balls} balls`);
     this.isOut = true;
   }
 
@@ -89,6 +89,7 @@ export class GameComponent {
    initPlayer(player: Player): Player {
      if (player.balls == undefined) player.balls = 0;
      if (player.runs == undefined)  player.runs  = 0;
+     if (player.status == undefined) player.status = 1;
      return player;
    }
 

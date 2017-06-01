@@ -1,0 +1,12 @@
+<div *ngIf='(gameStatus == 0)' class="alert alert-info" role="alert">
+  You are now {{isUserBattingFirst ? "Batting" : "Bowling"}}
+</div>
+<div *ngIf='(gameStatus == 1)' class="alert alert-success" role="alert">
+  Game Over! You Won
+</div>
+<div *ngIf='(gameStatus == 2)' class="alert alert-danger" role="alert">
+  Game Over! Computer Won
+</div>
+<div *ngIf='(gameStatus == 3)' class="alert alert-warning" role="alert">
+  Game Over! Game is Draw
+</div>
