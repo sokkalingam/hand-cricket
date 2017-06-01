@@ -1,0 +1,7 @@
+<h3>Score Board</h3>
+<div *ngIf="user.runs != undefined" class="alert alert-info">
+  You scored {{user.runs}} runs in {{user.balls}} balls
+</div>
+<div *ngIf="computer.runs != undefined" class="alert alert-warning">
+  Computer scored {{computer.runs}} runs in {{computer.balls}} balls
+</div>

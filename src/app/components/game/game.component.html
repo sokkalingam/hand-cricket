@@ -25,7 +25,7 @@
             Game Over! Game is Draw
           </div>
           <div>
-            <form (ngSubmit)='isUserBattingFirst ? userBatting() : computerBatting()'>
+            <form (ngSubmit)='play(isUserBattingFirst)'>
 
               <div class="row">
                 <div class="col-xs-6">
@@ -71,16 +71,7 @@
         </div>
 
         <div class="col-xs-6">
-          <div *ngIf='updates.length > 0'>
-            <h3>Game Updates</h3>
-            <div *ngFor="let update of processedUpdates(updates, 5)">
-                <div class="well well-sm" align="center"
-                [class.alert-danger] ='update.type == 0' [class.alert-warning]='update.type == 1'
-                [class.alert-info]   ='update.type == 2' [class.alert-success]='update.type == 3'>
-                    {{update.message}}
-                </div>
-            </div>
-          </div>
+          <game-update [updates]='updates'></game-update>
         </div>
 
       </div>
@@ -91,13 +82,7 @@
         <div *ngIf="user.runs != undefined || computer.runs != undefined">
 
           <div class="col-xs-6">
-            <h3>Score Board</h3>
-            <div *ngIf="user.runs != undefined" class="alert alert-info">
-              You scored {{user.runs}} runs in {{user.balls}} balls
-            </div>
-            <div *ngIf="computer.runs != undefined" class="alert alert-warning">
-              Computer scored {{computer.runs}} runs in {{computer.balls}} balls
-            </div>
+            <score-board [user]='user' [computer]='computer'></score-board>
           </div>
 
           <div class="col-xs-6" *ngIf='!isOut'>

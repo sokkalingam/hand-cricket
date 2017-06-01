@@ -1,15 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { Update } from '../model/Update';
-import { Player } from '../model/Player';
+import { Update } from '../../model/Update';
+import { Player } from '../../model/Player';
 
-import { UpdateType } from '../enum/UpdateType';
+import { UpdateType } from '../../enum/UpdateType';
 
-import { HelperService } from '../shared/services/helper.service';
+import { ProgressBarService } from '../../services/progress-bar.service';
+import { UpdateService } from '../../services/update.service';
 
 @Component({
   selector: 'game',
-  templateUrl: './game.component.html'
+  templateUrl: './game.component.html',
+  providers: [ProgressBarService, UpdateService]
 })
 
 export class GameComponent {
@@ -35,14 +37,15 @@ export class GameComponent {
   */
   noOfOutputs: number = 7;
 
-  constructor(private helperService: HelperService) {
-  }
+  constructor(private progressBarService: ProgressBarService,
+              private updateService: UpdateService) { }
 
   /**
   * Returns a random number between 0 and 6, both included
   */
   getRandomNumber(): number {
-    return Math.floor(Math.random() * this.noOfOutputs);
+    // return Math.floor(Math.random() * this.noOfOutputs);
+    return 0;
   }
 
   restartGame(): void {
@@ -56,7 +59,7 @@ export class GameComponent {
   setOut(): void {
     var batsman: Player = this.getBatsman();
     var updateType: UpdateType = this.isUserBattingNow ? UpdateType.DANGER : UpdateType.SUCCESS;
-    this.addUpdate(updateType, `${batsman.name} got Out! Scored ${batsman.runs} runs in ${batsman.balls} balls`);
+    this.updateService.addUpdate(updateType, `${batsman.name} got Out! Scored ${batsman.runs} runs in ${batsman.balls} balls`);
     this.isOut = true;
   }
 
@@ -95,28 +98,46 @@ export class GameComponent {
        message = `You batted ${userInput}, Computer bowled ${computerInput}`;
      else
         message = `Computer batted ${computerInput}, You bowled ${userInput}`;
-     this.addUpdate(UpdateType.INFO, message);
+     this.updateService.addUpdate(UpdateType.INFO, message);
      return userInput == computerInput;
    }
 
    setTargetScore(): void {
      if (this.getBowler().runs == undefined) {
-       this.targetScore = this.helperService.getNextTargetScore(this.getBatsman().runs);
+       this.targetScore = this.progressBarService.getNextTargetScore(this.getBatsman().runs);
      } else {
        this.targetScore = this.getBowler().runs;
      }
    }
 
+   getUpdates(): void {
+     this.updates = this.updateService.getUpdates();
+   }
+
+   play(userBatting: boolean): void {
+
+     if (!this.isInputValid()) return;
+
+     this.setComputerInput();
+     this.setUserInput();
+
+     if (userBatting)
+      this.userBatting();
+     else
+      this.computerBatting();
+
+      this.runGameThings();
+   }
+
+   runGameThings(): void {
+      this.setTargetScore();
+      this.getUpdates();
+   }
+
   userBatting(): void {
 
     this.isUserBattingNow = true;
-
-    if (!this.isInputValid()) return;
-
     this.user = this.initPlayer(this.user);
-
-    this.setComputerInput();
-    this.setUserInput();
 
     if (this.didInputsMatch(this.lastPlayedInput, this.computerInput)) {
       this.isUserBattingFirst = !this.isUserBattingFirst;
@@ -131,8 +152,6 @@ export class GameComponent {
       this.user.balls++;
     }
 
-    this.setTargetScore();
-
     if (this.user.runs > this.computer.runs)
       this.setGameStatus(1);
 
@@ -146,13 +165,7 @@ export class GameComponent {
   computerBatting(): void {
 
     this.isUserBattingNow = false;
-
-    if (!this.isInputValid()) return;
-
     this.computer = this.initPlayer(this.computer);
-
-    this.setComputerInput();
-    this.setUserInput();
 
     if (this.didInputsMatch(this.lastPlayedInput, this.computerInput)) {
       this.isUserBattingFirst = !this.isUserBattingFirst;
@@ -166,8 +179,6 @@ export class GameComponent {
         this.computer.runs += this.computerInput;
       this.computer.balls++;
     }
-
-    this.setTargetScore();
 
     if (this.isOut && this.user.runs > this.computer.runs)
       this.setGameStatus(1);
@@ -185,17 +196,6 @@ export class GameComponent {
 
   choseToBowl(): void {
     this.isUserBattingFirst = false;
-  }
-
-  addUpdate(type: UpdateType, message: string): void {
-    this.updates.push(new Update(type, message));
-  }
-
-  // return last 10 updates in reverse order
-  processedUpdates(updates: Update[], noOfUpdates: number): Update[] {
-    if (updates.length > noOfUpdates)
-      updates = updates.slice(updates.length - noOfUpdates)
-    return updates.reverse();
   }
 
 }
