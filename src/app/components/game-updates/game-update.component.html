@@ -1,0 +1,10 @@
+<div *ngIf='updates.length > 0'>
+  <h3>Game Updates</h3>
+  <div *ngFor="let update of updates">
+      <div class="well well-sm" align="center"
+      [class.alert-danger] ='update.type == 0' [class.alert-warning]='update.type == 1'
+      [class.alert-info]   ='update.type == 2' [class.alert-success]='update.type == 3'>
+          {{update.message}}
+      </div>
+  </div>
+</div>
