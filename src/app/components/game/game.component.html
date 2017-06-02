@@ -1,57 +1,53 @@
 <div class="container-fluid">
 
-  <div *ngIf='(isUserBattingFirst == undefined)'>
+  <div *ngIf='!(user.batting || user.bowling)'>
     <h3>What would you like to do first?</h3>
     <button type="button" class="btn btn-primary btn-lg" (click)='choseToBat()'>Batting</button>
     <button type="button" class="btn btn-success btn-lg" (click)='choseToBowl()'>Bowling</button>
   </div>
 
-  <div *ngIf='(isUserBattingFirst != undefined)'>
+  <div *ngIf='user.batting || user.bowling'>
 
     <!-- ###### Row 1 ####### -->
     <div class="row">
       <div class="col-xs-6">
         <h3>Gameplay</h3>
-        <game-status [isUserBattingFirst]='isUserBattingFirst' [gameStatus]='gameStatus'></game-status>
-        <form (ngSubmit)='play(isUserBattingFirst)'>
+        <game-status [user]='user' [gameStatus]='game.gameStatus'></game-status>
+        <form (ngSubmit)='play(user.batting)'>
           <div class="row">
             <div class="col-xs-6">
               <div class="form-group well well-sm">
                 <label for="computerInput">Computer Played: </label>
-                <span>{{computerInput}}</span>
+                <span>{{computer.lastDelivery}}</span>
               </div>
             </div>
             <div class="col-xs-6">
               <div class="form-group well well-sm">
                 <label for="lastPlayedInput">User Last Played: </label>
-                <span>{{lastPlayedInput}}</span>
+                <span>{{user.lastDelivery}}</span>
               </div>
             </div>
           </div>
-          <div *ngIf='isOut'>
+          <div *ngIf='user.batted ? PlayerStatus[user.status] == PlayerStatus.Out : PlayerStatus[computer.status] == PlayerStatus.Out'>
             <div class="form-group well well-sm alert-danger">
-              <label>{{isUserBattingNow ? "You" : "Computer" }} got out</label>
+              <label>{{user.batted ? "You" : "Computer" }} got out</label>
             </div>
           </div>
-          <div *ngIf='gameStatus == 0' class="form-group well well-sm">
-            <div>
-              <label for="userInput">User Currently Playing: </label>
-              <span>{{userInput}}</span>
-            </div>
+          <div *ngIf='gameStatus == undefined' class="form-group well well-sm">
             <div>
               <input name='userInput' [(ngModel)]='userInput' type='number' />
               <button type="submit" class="btn btn-success">Play</button>
               <div>(Can only play numbers between 0 to 6)</div>
             </div>
           </div>
-          <div *ngIf='gameStatus != 0'>
+          <div *ngIf='gameStatus != undefined'>
             <button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
           </div>
         </form>
       </div>
 
       <div class="col-xs-6">
-        <game-update [updates]='updates'></game-update>
+        <game-update [updates]='game.updates'></game-update>
       </div>
 
     </div>
@@ -66,7 +62,7 @@
         </div>
 
         <div class="col-xs-6" *ngIf='!isOut'>
-          <progress-bar [currentScore]='getBatsman().runs' [targetScore]='targetScore'></progress-bar>
+          <progress-bar [currentScore]='getBatsman().runs' [targetScore]='game.targetScore'></progress-bar>
         </div>
 
       </div>
