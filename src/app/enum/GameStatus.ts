@@ -1,6 +1,7 @@
 export enum GameStatus {
-  User_Won,
-  Computer_Won,
-  Draw,
-  No_Game
+  USER_WON,
+  COMPUTER_WON,
+  DRAW,
+  NOT_STARTED,
+  IN_PROGRESS
 }

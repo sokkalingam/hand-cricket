@@ -1,73 +1,75 @@
 <div class="container-fluid">
+	<div *ngIf='game.gameStatus == GameStatus.NOT_STARTED'>
+		<h3>What would you like to do first?</h3>
+		<button type="button" class="btn btn-primary btn-lg" (click)='choseToBat()'>Batting</button>
+		<button type="button" class="btn btn-success btn-lg" (click)='choseToBowl()'>Bowling</button>
+	</div>
 
-  <div *ngIf='!(user.batting || user.bowling)'>
-    <h3>What would you like to do first?</h3>
-    <button type="button" class="btn btn-primary btn-lg" (click)='choseToBat()'>Batting</button>
-    <button type="button" class="btn btn-success btn-lg" (click)='choseToBowl()'>Bowling</button>
-  </div>
+	<div *ngIf='game.gameStatus != GameStatus.NOT_STARTED'>
 
-  <div *ngIf='user.batting || user.bowling'>
+		<!-- ###### Row 1 ####### -->
+		<div class="row">
+			<div class="col-xs-6">
+				<h3>Gameplay</h3>
+				<game-status [user]='user' [gameStatus]='game.gameStatus'></game-status>
+				<form (ngSubmit)='play(user.batting)'>
+					<div class="row">
+						<div class="col-xs-6">
+							<div class="form-group well well-sm">
+								<label for="computerInput">Computer Played: </label>
+								<span>{{computer.lastDelivery}}</span>
+							</div>
+						</div>
+						<div class="col-xs-6">
+							<div class="form-group well well-sm">
+								<label for="lastPlayedInput">User Last Played: </label>
+								<span>{{user.lastDelivery}}</span>
+							</div>
+						</div>
+					</div>
+					<div *ngIf='user.isOut() && !user.bowling' class="form-group well well-sm alert-danger">
+						<label>You got out!</label>
+					</div>
+					<div *ngIf='computer.isOut() && !computer.bowling' class="form-group well well-sm alert-danger">
+						<label>Computer got out!</label>
+					</div>
+					<div *ngIf='game.gameStatus == GameStatus.IN_PROGRESS' class="form-group well well-sm">
+						<div>
+							<input name='userInput' [(ngModel)]='userInput' type='number' />
+							<button type="submit" class="btn btn-success">Play</button>
+							<div>(Can only play numbers between 0 to 6)</div>
+						</div>
+					</div>
+					<div *ngIf='(game.gameStatus == GameStatus.USER_WON) ||
+					(game.gameStatus == GameStatus.COMPUTER_WON) ||
+					(game.gameStatus == GameStatus.DRAW)'>
+					<button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
+				</div>
+			</form>
+		</div>
 
-    <!-- ###### Row 1 ####### -->
-    <div class="row">
-      <div class="col-xs-6">
-        <h3>Gameplay</h3>
-        <game-status [user]='user' [gameStatus]='game.gameStatus'></game-status>
-        <form (ngSubmit)='play(user.batting)'>
-          <div class="row">
-            <div class="col-xs-6">
-              <div class="form-group well well-sm">
-                <label for="computerInput">Computer Played: </label>
-                <span>{{computer.lastDelivery}}</span>
-              </div>
-            </div>
-            <div class="col-xs-6">
-              <div class="form-group well well-sm">
-                <label for="lastPlayedInput">User Last Played: </label>
-                <span>{{user.lastDelivery}}</span>
-              </div>
-            </div>
-          </div>
-          <div *ngIf='user.batted ? PlayerStatus[user.status] == PlayerStatus.Out : PlayerStatus[computer.status] == PlayerStatus.Out'>
-            <div class="form-group well well-sm alert-danger">
-              <label>{{user.batted ? "You" : "Computer" }} got out</label>
-            </div>
-          </div>
-          <div *ngIf='gameStatus == undefined' class="form-group well well-sm">
-            <div>
-              <input name='userInput' [(ngModel)]='userInput' type='number' />
-              <button type="submit" class="btn btn-success">Play</button>
-              <div>(Can only play numbers between 0 to 6)</div>
-            </div>
-          </div>
-          <div *ngIf='gameStatus != undefined'>
-            <button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
-          </div>
-        </form>
-      </div>
+		<div class="col-xs-6">
+			<game-update [updates]='game.updates'></game-update>
+		</div>
 
-      <div class="col-xs-6">
-        <game-update [updates]='game.updates'></game-update>
-      </div>
+	</div>
+	<!-- ##### Row 1 End ##### -->
 
-    </div>
-    <!-- ##### Row 1 End ##### -->
+	<!-- ###### Row 2 ######## -->
+	<div class="row">
+		<div *ngIf="user.runs != undefined || computer.runs != undefined">
 
-    <!-- ###### Row 2 ######## -->
-    <div class="row">
-      <div *ngIf="user.runs != undefined || computer.runs != undefined">
+			<div class="col-xs-6">
+				<score-board [user]='user' [computer]='computer'></score-board>
+			</div>
 
-        <div class="col-xs-6">
-          <score-board [user]='user' [computer]='computer'></score-board>
-        </div>
+			<div class="col-xs-6" *ngIf='getBatsman().runs'>
+				<progress-bar [currentScore]='getBatsman().runs' [targetScore]='game.targetScore'></progress-bar>
+			</div>
 
-        <div class="col-xs-6" *ngIf='!isOut'>
-          <progress-bar [currentScore]='getBatsman().runs' [targetScore]='game.targetScore'></progress-bar>
-        </div>
+		</div>
+	</div>
+	<!-- ##### Row 2 End ######### -->
 
-      </div>
-    </div>
-    <!-- ##### Row 2 End ######### -->
-
-  </div>
+</div>
 </div>

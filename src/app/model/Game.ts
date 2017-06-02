@@ -5,5 +5,5 @@ import { Player } from './Player';
 export class Game {
   targetScore: number;
   updates: Update[] = [];
-  gameStatus: GameStatus = GameStatus.No_Game;
+  gameStatus: GameStatus = GameStatus.NOT_STARTED;
 }

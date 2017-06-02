@@ -20,7 +20,12 @@ import { UpdateService } from '../../services/update.service';
 
 export class GameComponent {
 
+  /**
+  * Init Enums
+  */
   PlayerStatus = PlayerStatus;
+  PlayerType = PlayerType;
+  GameStatus = GameStatus;
 
   userInput: number;
   // computerInput: number;
@@ -70,14 +75,12 @@ export class GameComponent {
     player.status = PlayerStatus.Out;
     player.batted = true;
     player.batting = false;
-    if (!player.bowled) player.bowling = true;
   }
 
   setNotOut(player: Player): void {
     player.status = PlayerStatus.NotOut;
     player.batting = true;
     player.batted = false;
-    player.bowling = false;
   }
 
   getBatsman(): Player {
@@ -179,13 +182,13 @@ export class GameComponent {
     }
 
     if (this.getBatsman().runs > this.getBowler().runs)
-      this.setGameStatus(GameStatus.User_Won);
+      this.setGameStatus(GameStatus.USER_WON);
 
     if (this.getBatsman().isOut() && this.getBatsman().runs < this.getBowler().runs)
-      this.setGameStatus(GameStatus.Computer_Won);
+      this.setGameStatus(GameStatus.COMPUTER_WON);
 
     if (this.getBatsman().isOut() && this.getBatsman().runs == this.getBowler().runs && this.getBatsman().runs != undefined)
-        this.setGameStatus(GameStatus.Draw);
+        this.setGameStatus(GameStatus.DRAW);
   }
 
   computerBatting(): void {
@@ -203,23 +206,25 @@ export class GameComponent {
     }
 
     if (this.getBatsman().runs > this.getBowler().runs)
-      this.setGameStatus(GameStatus.Computer_Won);
+      this.setGameStatus(GameStatus.COMPUTER_WON);
 
     if (this.getBatsman().isOut() && this.getBatsman().runs < this.getBowler().runs)
-      this.setGameStatus(GameStatus.User_Won);
+      this.setGameStatus(GameStatus.USER_WON);
 
     if (this.getBatsman().isOut() && this.getBatsman().runs == this.getBowler().runs && this.getBatsman().runs != undefined)
-        this.setGameStatus(GameStatus.Draw);
+        this.setGameStatus(GameStatus.DRAW);
   }
 
   choseToBat(): void {
     this.makeBatsman(this.user);
     this.makeBowler(this.computer);
+    this.setGameStatus(GameStatus.IN_PROGRESS);
   }
 
   choseToBowl(): void {
     this.makeBatsman(this.computer);
     this.makeBowler(this.user);
+    this.setGameStatus(GameStatus.IN_PROGRESS);
   }
 
 }
