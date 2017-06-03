@@ -32,22 +32,6 @@ export class GameplayComponent {
 	UpdateType = UpdateType;
 
 	userInput: number;
-	// computerInput: number;
-	// lastPlayedInput: number;
-
-	// user: Player = new Player(PlayerType.User);
-	// computer: Player = new Player(PlayerType.Computer);
-	//
-	// game: Game = new Game();
-
-	// isUserBattingFirst: boolean = undefined;
-	// isUserBattingNow: boolean = undefined;
-	// gameStatus: number = 0;
-	// isOut: boolean = undefined;
-
-	// targetScore: number;
-	//
-	// updates: Update[] = [];
 
 	/**
 	* 0 to 6, total of 7 different outputs from computer
