@@ -10,6 +10,7 @@ import { GameUpdateComponent } from './components/game-updates/game-update.compo
 import { ScoreBoardComponent } from './components/score-board/score-board.component';
 import { GameStatusComponent } from './components/game-status/game-status.component';
 import { GameplayComponent } from './components/gameplay/gameplay.component';
+import { PlaySelectComponent } from './components/play-select/play-select.component';
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule ],
@@ -20,7 +21,8 @@ import { GameplayComponent } from './components/gameplay/gameplay.component';
                   GameUpdateComponent,
                   ScoreBoardComponent,
                   GameStatusComponent,
-									GameplayComponent
+									GameplayComponent,
+									PlaySelectComponent
                 ],
   bootstrap:    [ AppComponent ]
 })
