@@ -1,7 +1,12 @@
+import { UUID } from 'angular2-uuid';
+
 import { PlayerType } from '../enum/PlayerType';
 import { PlayerStatus } from '../enum/PlayerStatus';
 
 export class Player {
+
+	id: string = UUID.UUID();
+
   name: string;
   lastDelivery: number;
   type: PlayerType;
@@ -9,16 +14,10 @@ export class Player {
   balls: number;
   status: PlayerStatus;
 
-  batting: boolean;
-  bowling: boolean;
-  batted: boolean;
-  bowled: boolean;
-
   constructor(type: PlayerType) {
     this.type = type;
   }
 
-  isOut(): boolean {
-    return this.status == PlayerStatus.Out;
-  }
+  isOut(): boolean { return this.status == PlayerStatus.Out; }
+
 }

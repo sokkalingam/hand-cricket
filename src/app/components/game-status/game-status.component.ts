@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
 
 import { GameStatus } from '../../enum/GameStatus';
-import { Player } from '../../model/Player';
+import { PlayerType } from '../../enum/PlayerType';
+
+import { Game } from '../../model/Game';
 
 @Component({
   selector: 'game-status',
@@ -11,10 +13,8 @@ import { Player } from '../../model/Player';
 export class GameStatusComponent {
 
   GameStatus = GameStatus;
+	PlayerType = PlayerType;
 
   @Input()
-  gameStatus: GameStatus;
-
-  @Input()
-  user: Player;
+  game: Game;
 }

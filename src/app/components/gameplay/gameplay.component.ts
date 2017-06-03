@@ -29,6 +29,7 @@ export class GameplayComponent {
 	PlayerStatus = PlayerStatus;
 	PlayerType = PlayerType;
 	GameStatus = GameStatus;
+	UpdateType = UpdateType;
 
 	userInput: number;
 	// computerInput: number;
@@ -72,29 +73,21 @@ export class GameplayComponent {
 		return (this.userInput >= 0 && this.userInput <= 6);
 	}
 
-	setOut(player: Player): void {
-		var updateType: UpdateType = player.type == PlayerType.User ? UpdateType.DANGER : UpdateType.SUCCESS;
-		this.updateService.addUpdate(updateType, `${PlayerType[player.type]} got Out! Scored ${player.runs} runs in ${player.balls} balls`);
-		player.status = PlayerStatus.Out;
-		player.batted = true;
-		player.batting = false;
-		if (!player.bowled) player.bowling = true;
+	setOut(batsman: Player, bowler: Player): void {
+		var updateType: UpdateType = batsman.type == PlayerType.User ? UpdateType.DANGER : UpdateType.SUCCESS;
+		this.updateService.addUpdate(updateType, `${PlayerType[batsman.type]} got Out, scored ${batsman.runs} runs in ${batsman.balls} balls`);
+		batsman.status = PlayerStatus.Out;
+		this.game.addToBattedList(batsman);
+		this.game.addToBowledList(bowler);
 	}
 
 	setNotOut(player: Player): void {
 		player.status = PlayerStatus.NotOut;
-		player.batting = true;
-		player.batted = false;
-		player.bowling = false;
 	}
 
-	getBatsman(): Player {
-		return this.user.batting ? this.user : this.computer;
-	}
+	getBatsman(): Player { return this.game.getBatsman(); }
 
-	getBowler(): Player {
-		return this.user.bowling ? this.user : this.computer;
-	}
+	getBowler(): Player { return this.game.getBowler(); }
 
 	setGameStatus(gameStatus: GameStatus): void {
 		this.game.gameStatus = gameStatus;
@@ -113,14 +106,12 @@ export class GameplayComponent {
 		 if (player.balls == undefined) player.balls = 0;
 		 if (player.runs == undefined)  player.runs  = 0;
 		 player.status = PlayerStatus.NotOut;
-		 player.batting = true;
-		 player.batted = false;
+		 this.game.setBatsman(player);
 		 return player;
 	 }
 
 	 makeBowler(player: Player): Player {
-		 player.bowling = true;
-		 player.bowled = false;
+		 this.game.setBowler(player);
 		 return player;
 	 }
 
@@ -180,7 +171,7 @@ export class GameplayComponent {
 		this.addBalls(this.getBatsman());
 
 		if (this.didInputsMatch(this.getBatsman(), this.getBowler())) {
-			this.setOut(this.getBatsman());
+			this.setOut(this.getBatsman(), this.getBowler());
 		} else {
 			this.setNotOut(this.getBatsman());
 			this.addRuns(this.getBatsman(), this.getBowler());
@@ -194,6 +185,11 @@ export class GameplayComponent {
 
 		if (this.getBatsman().isOut() && this.getBatsman().runs == this.getBowler().runs && this.getBatsman().runs != undefined)
 				this.setGameStatus(GameStatus.DRAW);
+
+		if (this.getBatsman().isOut()) {
+			this.makeBatsman(this.computer);
+			this.makeBowler(this.user);
+		}
 	}
 
 	computerBatting(): void {
@@ -204,7 +200,7 @@ export class GameplayComponent {
 		this.addBalls(this.getBatsman());
 
 		if (this.didInputsMatch(this.getBatsman(), this.getBowler())) {
-			this.setOut(this.getBatsman());
+			this.setOut(this.getBatsman(), this.getBowler());
 		} else {
 			this.setNotOut(this.getBatsman());
 			this.addRuns(this.getBatsman(), this.getBowler());
@@ -218,6 +214,11 @@ export class GameplayComponent {
 
 		if (this.getBatsman().isOut() && this.getBatsman().runs == this.getBowler().runs && this.getBatsman().runs != undefined)
 				this.setGameStatus(GameStatus.DRAW);
+
+		if (this.getBatsman().isOut()) {
+			this.makeBatsman(this.user);
+			this.makeBowler(this.computer);
+		}
 	}
 
 	choseToBat(): void {
@@ -231,6 +232,5 @@ export class GameplayComponent {
 		this.makeBowler(this.user);
 		this.setGameStatus(GameStatus.IN_PROGRESS);
 	}
-
 
 }

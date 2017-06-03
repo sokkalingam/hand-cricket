@@ -1,6 +1,6 @@
 <h3>Gameplay</h3>
-<game-status [user]='user' [gameStatus]='game.gameStatus'></game-status>
-<form (ngSubmit)='play(user.batting)'>
+<game-status [game]='game'></game-status>
+<form (ngSubmit)='play(game.batsman.type == PlayerType.User)'>
 	<div class="row">
 		<div class="col-xs-6">
 			<div class="form-group well well-sm">
@@ -15,11 +15,9 @@
 			</div>
 		</div>
 	</div>
-	<div *ngIf='user.isOut() && !user.bowling' class="form-group well well-sm alert-danger">
-		<label>You got out!</label>
-	</div>
-	<div *ngIf='computer.isOut() && !computer.bowling' class="form-group well well-sm alert-danger">
-		<label>Computer got out!</label>
+	<div class="form-group well well-sm alert-danger"
+		*ngIf='game.updates.length > 0 && game.updates[0].type == UpdateType.DANGER'>
+		<label>{{game.updates[0].message.replace("User", "You")}}</label>
 	</div>
 	<div *ngIf='game.gameStatus == GameStatus.IN_PROGRESS' class="form-group well well-sm">
 		<div>
