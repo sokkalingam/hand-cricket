@@ -17,7 +17,7 @@ export class Game {
 		if (!this.didPlayerBat(player))
 			this.batsman = player;
 	}
-	getBatsman(): Player { return this.batsman; 		}
+	getBatsman(): Player { return this.batsman; }
 
 	setBowler(player: Player): void {
 		if (!this.didPlayerBowl(player))

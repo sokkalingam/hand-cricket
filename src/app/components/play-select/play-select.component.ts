@@ -9,9 +9,12 @@ import { PlayerType } from '../../enum/PlayerType';
 import { PlayerStatus } from '../../enum/PlayerStatus';
 import { GameStatus } from '../../enum/GameStatus';
 
+import { GameService } from '../../services/game.service';
+
 @Component({
 	selector: 'play-select',
-	templateUrl: './play-select.component.html'
+	templateUrl: './play-select.component.html',
+	providers: [GameService]
 })
 
 export class PlaySelectComponent {
@@ -22,33 +25,18 @@ export class PlaySelectComponent {
 
 	GameStatus = GameStatus;
 
+	constructor(private gameService: GameService) {}
+
 	setGameStatus(gameStatus: GameStatus): void {
 		this.game.gameStatus = gameStatus;
 	}
 
-	makeBatsman(player: Player): Player {
-		if (player.balls == undefined) player.balls = 0;
-		if (player.runs == undefined)  player.runs  = 0;
-		player.status = PlayerStatus.NotOut;
-		this.game.setBatsman(player);
-		return player;
-	}
-
-	makeBowler(player: Player): Player {
-		this.game.setBowler(player);
-		return player;
-	}
-
 	choseToBat(): void {
-		this.makeBatsman(this.user);
-		this.makeBowler(this.computer);
-		this.setGameStatus(GameStatus.IN_PROGRESS);
+		this.gameService.setPlayersAndGame(this.game, this.user, this.computer);
 	}
 
 	choseToBowl(): void {
-		this.makeBatsman(this.computer);
-		this.makeBowler(this.user);
-		this.setGameStatus(GameStatus.IN_PROGRESS);
+		this.gameService.setPlayersAndGame(this.game, this.computer, this.user);
 	}
 
 }
