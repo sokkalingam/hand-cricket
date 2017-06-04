@@ -45,8 +45,7 @@ export class GameplayComponent {
 	* Returns a random number between 0 and 6, both included
 	*/
 	getRandomNumber(): number {
-		// return Math.floor(Math.random() * this.noOfOutputs);
-		return 0;
+		return Math.floor(Math.random() * this.noOfOutputs);
 	}
 
 	restartGame(): void {

@@ -13,11 +13,17 @@ export class Game {
 	battedList: Player[] = [];
 	bowledList: Player[] = [];
 
-	setBatsman(player: Player): void 	{ this.batsman = player; 	}
-	getBatsman(): Player 							{ return this.batsman; 		}
+	setBatsman(player: Player): void 	{
+		if (!this.didPlayerBat(player))
+			this.batsman = player;
+	}
+	getBatsman(): Player { return this.batsman; 		}
 
-	setBowler(player: Player): void 	{ this.bowler = player; }
-	getBowler(): Player 							{ return this.bowler; 	}
+	setBowler(player: Player): void {
+		if (!this.didPlayerBowl(player))
+			this.bowler = player;
+	}
+	getBowler(): Player { return this.bowler; }
 
 	addToBattedList(batsman: Player): void { this.battedList.push(batsman); }
 	addToBowledList(batsman: Player): void { this.bowledList.push(batsman); }
