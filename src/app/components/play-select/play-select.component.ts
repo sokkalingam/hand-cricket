@@ -18,7 +18,7 @@ import { GameService } from '../../services/game.service';
 })
 
 export class PlaySelectComponent {
-  
+
   @Input() user: Player;
   @Input() computer: Player;
   @Input() game: Game;
@@ -37,6 +37,13 @@ export class PlaySelectComponent {
 
   choseToBowl(): void {
     this.gameService.setPlayersAndGame(this.game, this.computer, this.user);
+  }
+
+  toss(): void {
+    if (Math.random() < 0.5)
+      this.choseToBat();
+    else
+      this.choseToBowl();
   }
 
 }
