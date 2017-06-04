@@ -13,7 +13,7 @@ import { Game } from '../../model/Game';
 export class GameStatusComponent {
 
   GameStatus = GameStatus;
-	PlayerType = PlayerType;
+  PlayerType = PlayerType;
 
   @Input()
   game: Game;

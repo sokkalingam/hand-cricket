@@ -1,33 +1,33 @@
 
-	<!-- Select Batting Or Bowling -->
-	<play-select [user]='user' [computer]='computer' [game]='game'></play-select>
+<!-- Select Batting Or Bowling -->
+<play-select [user]='user' [computer]='computer' [game]='game'></play-select>
 
-	<div *ngIf='game.gameStatus != GameStatus.NOT_STARTED'>
+<div *ngIf='game.gameStatus != GameStatus.NOT_STARTED'>
 
-		<!-- Row 1 -->
-		<div class="row">
-			<!-- Column 1 -->
-			<div class="col-xs-6">
-				<gameplay [user]='user' [computer]='computer' [game]='game'></gameplay>
-			</div>
-			<!-- Column 2 -->
-			<div class="col-xs-6">
-				<game-update [updates]='game.updates'></game-update>
-			</div>
-		</div>
+  <!-- Row 1 -->
+  <div class="row">
+    <!-- Column 1 -->
+    <div class="col-xs-6">
+      <gameplay [user]='user' [computer]='computer' [game]='game'></gameplay>
+    </div>
+    <!-- Column 2 -->
+    <div class="col-xs-6">
+      <game-update [updates]='game.updates'></game-update>
+    </div>
+  </div>
 
-		<!-- Row 2 -->
-		<div class="row">
-			<div *ngIf="user.runs != undefined || computer.runs != undefined">
-				<!-- Column 1 -->
-				<div class="col-xs-6">
-					<score-board [user]='user' [computer]='computer'></score-board>
-				</div>
-				<!-- Column 2 -->
-				<div class="col-xs-6">
-					<progress-bar [game]='game'></progress-bar>
-				</div>
-			</div>
-		</div>
+  <!-- Row 2 -->
+  <div class="row">
+    <div *ngIf="user.runs != undefined || computer.runs != undefined">
+      <!-- Column 1 -->
+      <div class="col-xs-6">
+        <score-board [user]='user' [computer]='computer'></score-board>
+      </div>
+      <!-- Column 2 -->
+      <div class="col-xs-6">
+        <progress-bar [game]='game'></progress-bar>
+      </div>
+    </div>
+  </div>
 
-	</div>
+</div>

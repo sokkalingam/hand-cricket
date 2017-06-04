@@ -13,8 +13,9 @@ export class UpdateService {
   }
 
   getUpdates(): Update[] {
-    if (this.updates.length > this.noOfUpdates)
+    if (this.updates.length > this.noOfUpdates) {
       this.updates.pop();
+    }
     return this.updates;
   }
 }

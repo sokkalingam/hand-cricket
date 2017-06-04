@@ -8,8 +8,9 @@ export class ProgressBarService {
   getNextTargetScore(currentScore: number): number {
     var nextTargetScore: number = this.scoreIncrement;
     if (!currentScore) return nextTargetScore;
-    while (nextTargetScore < currentScore)
+    while (nextTargetScore < currentScore) {
       nextTargetScore *= 2;
+    }
     return nextTargetScore;
   }
 

@@ -1,12 +1,12 @@
 <div *ngIf='game.batsman.runs'>
-	<h3>Progress Bar</h3>
-	<label>Current Score: </label><span> {{game.batsman.runs}},</span>
-	<label>Target Score: </label><span> {{game.targetScore}}</span>
-	<div class="progress">
-	  <div class="progress-bar" role="progressbar" aria-valuenow="game.batsman.runs"
-			aria-valuemin="0" aria-valuemax="game.targetScore"
-	    [style.width]="( game.batsman.runs / game.targetScore ) * 100 + '%'">
-	    {{game.batsman.runs}} runs
-	  </div>
-	</div>
+  <h3>Progress Bar</h3>
+  <label>Current Score: </label><span> {{game.batsman.runs}},</span>
+  <label>Target Score: </label><span> {{game.targetScore}}</span>
+  <div class="progress">
+    <div class="progress-bar" role="progressbar" aria-valuenow="game.batsman.runs"
+    aria-valuemin="0" aria-valuemax="game.targetScore"
+    [style.width]="( game.batsman.runs / game.targetScore ) * 100 + '%'">
+    {{game.batsman.runs}} runs
+  </div>
+</div>
 </div>
