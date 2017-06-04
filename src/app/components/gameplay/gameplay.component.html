@@ -1,0 +1,34 @@
+<h3>Gameplay</h3>
+<game-status [game]='game'></game-status>
+<form (ngSubmit)='play(game.batsman.type == PlayerType.User)'>
+	<!-- <div class="row">
+		<div class="col-xs-6"> -->
+			<div class="form-group well well-sm">
+				<label for="computerInput">Computer Played: </label>
+				<span>{{computer.lastDelivery}}</span>
+			</div>
+		<!-- </div> -->
+		<!-- <div class="col-xs-6"> -->
+			<div class="form-group well well-sm">
+				<label for="lastPlayedInput">You Last Played: </label>
+				<span>{{user.lastDelivery}}</span>
+			</div>
+		<!-- </div> -->
+	<!-- </div> -->
+	<div class="form-group well well-sm alert-danger"
+		*ngIf='game.updates.length > 0 && game.updates[0].type == UpdateType.DANGER'>
+		<label>{{game.updates[0].message.replace("User", "You")}}</label>
+	</div>
+	<div *ngIf='game.gameStatus == GameStatus.IN_PROGRESS' class="form-group well well-sm">
+		<div>
+			<input name='userInput' [(ngModel)]='userInput' type='number' />
+			<button type="submit" class="btn btn-success">Play</button>
+			<div>(Can only play numbers between 0 to 6)</div>
+		</div>
+	</div>
+	<div *ngIf='(game.gameStatus == GameStatus.USER_WON) ||
+	(game.gameStatus == GameStatus.COMPUTER_WON) ||
+	(game.gameStatus == GameStatus.DRAW)'>
+	<button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
+</div>
+</form>

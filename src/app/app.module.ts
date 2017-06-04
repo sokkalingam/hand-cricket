@@ -8,6 +8,9 @@ import { GameComponent } from './components/game/game.component';
 import { ProgressBarComponent } from './components/progress_bar/progress-bar.component';
 import { GameUpdateComponent } from './components/game-updates/game-update.component';
 import { ScoreBoardComponent } from './components/score-board/score-board.component';
+import { GameStatusComponent } from './components/game-status/game-status.component';
+import { GameplayComponent } from './components/gameplay/gameplay.component';
+import { PlaySelectComponent } from './components/play-select/play-select.component';
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule ],
@@ -16,7 +19,10 @@ import { ScoreBoardComponent } from './components/score-board/score-board.compon
                   GameComponent,
                   ProgressBarComponent,
                   GameUpdateComponent,
-                  ScoreBoardComponent
+                  ScoreBoardComponent,
+                  GameStatusComponent,
+									GameplayComponent,
+									PlaySelectComponent
                 ],
   bootstrap:    [ AppComponent ]
 })

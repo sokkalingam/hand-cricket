@@ -9,7 +9,7 @@ export class ProgressBarService {
     var nextTargetScore: number = this.scoreIncrement;
     if (!currentScore) return nextTargetScore;
     while (nextTargetScore < currentScore)
-      nextTargetScore += this.scoreIncrement;
+      nextTargetScore *= 2;
     return nextTargetScore;
   }
 

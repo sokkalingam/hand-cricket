@@ -1,97 +1,33 @@
-<div class="container-fluid">
 
-  <div *ngIf='(isUserBattingFirst == undefined)'>
-    <h3>What would you like to do first?</h3>
-    <button type="button" class="btn btn-primary btn-lg" (click)='choseToBat()'>Batting</button>
-    <button type="button" class="btn btn-success btn-lg" (click)='choseToBowl()'>Bowling</button>
-  </div>
+	<!-- Select Batting Or Bowling -->
+	<play-select [user]='user' [computer]='computer' [game]='game'></play-select>
 
-  <div *ngIf='(isUserBattingFirst != undefined)'>
+	<div *ngIf='game.gameStatus != GameStatus.NOT_STARTED'>
 
-      <!-- ###### Row 1 ####### -->
-      <div class="row">
-        <div class="col-xs-6">
-        <h3>Gameplay</h3>
-          <div *ngIf='(gameStatus == 0)' class="alert alert-info" role="alert">
-            You are now {{isUserBattingFirst ? "Batting" : "Bowling"}}
-          </div>
-          <div *ngIf='(gameStatus == 1)' class="alert alert-success" role="alert">
-            Game Over! You Won
-          </div>
-          <div *ngIf='(gameStatus == 2)' class="alert alert-danger" role="alert">
-            Game Over! Computer Won
-          </div>
-          <div *ngIf='(gameStatus == 3)' class="alert alert-warning" role="alert">
-            Game Over! Game is Draw
-          </div>
-          <div>
-            <form (ngSubmit)='play(isUserBattingFirst)'>
+		<!-- Row 1 -->
+		<div class="row">
+			<!-- Column 1 -->
+			<div class="col-xs-6">
+				<gameplay [user]='user' [computer]='computer' [game]='game'></gameplay>
+			</div>
+			<!-- Column 2 -->
+			<div class="col-xs-6">
+				<game-update [updates]='game.updates'></game-update>
+			</div>
+		</div>
 
-              <div class="row">
-                <div class="col-xs-6">
-                  <div class="form-group well well-sm">
-                    <label for="computerInput">Computer Played: </label>
-                    <span>{{computerInput}}</span>
-                  </div>
-                </div>
+		<!-- Row 2 -->
+		<div class="row">
+			<div *ngIf="user.runs != undefined || computer.runs != undefined">
+				<!-- Column 1 -->
+				<div class="col-xs-6">
+					<score-board [user]='user' [computer]='computer'></score-board>
+				</div>
+				<!-- Column 2 -->
+				<div class="col-xs-6">
+					<progress-bar [game]='game'></progress-bar>
+				</div>
+			</div>
+		</div>
 
-                <div class="col-xs-6">
-                  <div class="form-group well well-sm">
-                    <label for="lastPlayedInput">User Last Played: </label>
-                    <span>{{lastPlayedInput}}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div *ngIf='isOut'>
-                <div class="form-group well well-sm alert-danger">
-                  <label>{{isUserBattingNow ? "You" : "Computer" }} got out</label>
-                </div>
-              </div>
-
-              <div *ngIf='gameStatus == 0' class="form-group well well-sm">
-                <div>
-                  <label for="userInput">User Currently Playing: </label>
-                  <span>{{userInput}}</span>
-                </div>
-                <div>
-                  <input name='userInput' [(ngModel)]='userInput' type='number' />
-                  <button type="submit" class="btn btn-success">Play</button>
-                  <div>(Can only play numbers between 0 to 6)</div>
-                </div>
-              </div>
-
-              <div *ngIf='gameStatus != 0'>
-                <button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
-              </div>
-
-            </form>
-          </div>
-
-        </div>
-
-        <div class="col-xs-6">
-          <game-update [updates]='updates'></game-update>
-        </div>
-
-      </div>
-      <!-- ##### Row 1 End ##### -->
-
-      <!-- ###### Row 2 ######## -->
-      <div class="row">
-        <div *ngIf="user.runs != undefined || computer.runs != undefined">
-
-          <div class="col-xs-6">
-            <score-board [user]='user' [computer]='computer'></score-board>
-          </div>
-
-          <div class="col-xs-6" *ngIf='!isOut'>
-            <progress-bar [currentScore]='getBatsman().runs' [targetScore]='targetScore'></progress-bar>
-          </div>
-
-        </div>
-      </div>
-      <!-- ##### Row 2 End ######### -->
-
-  </div>
-</div>
+	</div>
