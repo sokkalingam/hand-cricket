@@ -8,24 +8,24 @@ import { PlayerStatus } from '../../enum/PlayerStatus';
 import { GameStatus } from '../../enum/GameStatus';
 
 @Component({
-	selector: 'game',
-	templateUrl: './game.component.html'
+  selector: 'game',
+  templateUrl: './game.component.html'
 })
 
 export class GameComponent {
 
-	/**
-	* Init Enums
-	*/
-	PlayerStatus = PlayerStatus;
-	PlayerType = PlayerType;
-	GameStatus = GameStatus;
+  /**
+  * Init Enums
+  */
+  PlayerStatus = PlayerStatus;
+  PlayerType = PlayerType;
+  GameStatus = GameStatus;
 
-	userInput: number;
+  userInput: number;
 
-	user: Player = new Player(PlayerType.User);
-	computer: Player = new Player(PlayerType.Computer);
+  user: Player = new Player(PlayerType.User);
+  computer: Player = new Player(PlayerType.Computer);
 
-	game: Game = new Game();
+  game: Game = new Game();
 
 }

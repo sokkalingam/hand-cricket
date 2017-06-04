@@ -14,5 +14,5 @@ export class ScoreBoardComponent {
 
   @Input()
   computer: Player;
-  
+
 }

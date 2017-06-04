@@ -12,31 +12,31 @@ import { GameStatus } from '../../enum/GameStatus';
 import { GameService } from '../../services/game.service';
 
 @Component({
-	selector: 'play-select',
-	templateUrl: './play-select.component.html',
-	providers: [GameService]
+  selector: 'play-select',
+  templateUrl: './play-select.component.html',
+  providers: [GameService]
 })
 
 export class PlaySelectComponent {
+  
+  @Input() user: Player;
+  @Input() computer: Player;
+  @Input() game: Game;
 
-	@Input() user: Player;
-	@Input() computer: Player;
-	@Input() game: Game;
+  GameStatus = GameStatus;
 
-	GameStatus = GameStatus;
+  constructor(private gameService: GameService) {}
 
-	constructor(private gameService: GameService) {}
+  setGameStatus(gameStatus: GameStatus): void {
+    this.game.gameStatus = gameStatus;
+  }
 
-	setGameStatus(gameStatus: GameStatus): void {
-		this.game.gameStatus = gameStatus;
-	}
+  choseToBat(): void {
+    this.gameService.setPlayersAndGame(this.game, this.user, this.computer);
+  }
 
-	choseToBat(): void {
-		this.gameService.setPlayersAndGame(this.game, this.user, this.computer);
-	}
-
-	choseToBowl(): void {
-		this.gameService.setPlayersAndGame(this.game, this.computer, this.user);
-	}
+  choseToBowl(): void {
+    this.gameService.setPlayersAndGame(this.game, this.computer, this.user);
+  }
 
 }
