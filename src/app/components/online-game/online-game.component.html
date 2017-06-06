@@ -1,9 +1,10 @@
 <div>
-  <button (click)='connect()'>Connect</button>
+  <button *ngIf='!stompClient' (click)='connect()'>Connect</button>
+  <button *ngIf='stompClient' (click)='disconnect()'>Diconnect</button>
 </div>
 <br />
 <input type="text" [(ngModel)]='name' />
-<button (click)='send()'>Send Message</button>
+<button *ngIf='stompClient' (click)='send()'>Send Message</button>
 
 <hr />
 <h4>Messages</h4>

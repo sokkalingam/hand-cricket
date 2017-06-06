@@ -19,7 +19,7 @@ export class OnlineGameComponent {
     this.name = '';
   }
 
-  connect() {
+  connect(): void {
     var that = this;
     var socket = new SockJS('http://localhost:8080/gs-guide-websocket');
     this.stompClient = Stomp.over(socket);
@@ -33,5 +33,11 @@ export class OnlineGameComponent {
     }, function (err: any) {
         console.log('Error Is: ', err);
     });
+ }
+
+ disconnect(): void {
+    this.stompClient.disconnect();
+    this.stompClient = undefined;
+    console.log("Disconnected");
 }
 }
