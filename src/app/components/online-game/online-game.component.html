@@ -1,0 +1,14 @@
+<div>
+  <button (click)='connect()'>Connect</button>
+</div>
+<br />
+<input type="text" [(ngModel)]='name' />
+<button (click)='send()'>Send Message</button>
+
+<hr />
+<h4>Messages</h4>
+<div>
+  <p *ngFor='let message of messages'>
+    {{message}}
+  </p>
+</div>
