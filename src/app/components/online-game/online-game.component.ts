@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 var SockJS = require('sockjs-client');
 var Stomp = require('stompjs');
@@ -8,13 +8,16 @@ var Stomp = require('stompjs');
   templateUrl: './online-game.component.html'
 })
 
-export class OnlineGameComponent {
+export class OnlineGameComponent implements OnInit {
   stompClient: any;
   name: string = '';
   messages: string[] = [];
 
+  ngOnInit(): void {
+    this.connect();
+  }
+
   send(): void {
-    console.log(this.name);
     this.stompClient.send('/app/hello', {}, JSON.stringify({ 'name': this.name }));
     this.name = '';
   }
@@ -26,7 +29,15 @@ export class OnlineGameComponent {
     console.log('StompClient: ' + JSON.stringify(this.stompClient));
     this.stompClient.connect({}, function (frame: any) {
         console.log('Connected: ' + frame);
-        that.stompClient.subscribe('/topic/greetings', function (greeting: any) {
+        that.stompClient.subscribe('/topic/greetings/GAME', function (greeting: any) {
+            console.log('Received Greeting: ' + JSON.stringify(greeting));
+            that.messages.push(JSON.parse(greeting.body).content);
+        });
+        that.stompClient.subscribe('/topic/greetings/USER', function (greeting: any) {
+            console.log('Received Greeting: ' + JSON.stringify(greeting));
+            that.messages.push(JSON.parse(greeting.body).content);
+        });
+        that.stompClient.subscribe('/topic/greetings/COMP', function (greeting: any) {
             console.log('Received Greeting: ' + JSON.stringify(greeting));
             that.messages.push(JSON.parse(greeting.body).content);
         });
@@ -37,7 +48,6 @@ export class OnlineGameComponent {
 
  disconnect(): void {
     this.stompClient.disconnect();
-    this.stompClient = undefined;
     console.log("Disconnected");
 }
 }
