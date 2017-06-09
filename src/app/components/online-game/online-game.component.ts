@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import { Player } from '../../model/Player';
+import { PlayerType } from '../../enum/PlayerType';
 
 var SockJS = require('sockjs-client');
 var Stomp = require('stompjs');
@@ -8,27 +11,37 @@ var Stomp = require('stompjs');
   templateUrl: './online-game.component.html'
 })
 
-export class OnlineGameComponent {
+export class OnlineGameComponent implements OnInit {
+  player: Player;
+
   stompClient: any;
   name: string = '';
   messages: string[] = [];
 
+  ngOnInit(): void {
+    this.player = new Player(PlayerType.User);
+    this.connect();
+  }
+
   send(): void {
-    console.log(this.name);
-    this.stompClient.send('/app/hello', {}, JSON.stringify({ 'name': this.name }));
+    this.stompClient.send(`/app/game/ABCDE/${this.player.id}`, {}, JSON.stringify({ 'name': this.name }));
     this.name = '';
   }
 
   connect(): void {
     var that = this;
-    var socket = new SockJS('http://localhost:8080/gs-guide-websocket');
+    var socket = new SockJS('http://localhost:8080/socket-registration');
     this.stompClient = Stomp.over(socket);
     console.log('StompClient: ' + JSON.stringify(this.stompClient));
     this.stompClient.connect({}, function (frame: any) {
         console.log('Connected: ' + frame);
-        that.stompClient.subscribe('/topic/greetings', function (greeting: any) {
+        that.stompClient.subscribe(`/live-updates/ABCDE/${that.player.id}`, function (greeting: any) {
             console.log('Received Greeting: ' + JSON.stringify(greeting));
-            that.messages.push(JSON.parse(greeting.body).content);
+            that.messages.push(greeting.body);
+        });
+        that.stompClient.subscribe(`/live-updates/ABCDE`, function (greeting: any) {
+            console.log('Received Greeting: ' + JSON.stringify(greeting));
+            that.messages.push(greeting.body);
         });
     }, function (err: any) {
         console.log('Error Is: ', err);
@@ -37,7 +50,6 @@ export class OnlineGameComponent {
 
  disconnect(): void {
     this.stompClient.disconnect();
-    this.stompClient = undefined;
     console.log("Disconnected");
 }
 }
