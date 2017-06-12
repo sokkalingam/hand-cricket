@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+
+import { Observable } from 'rxjs/observable';
 
 import { Player } from '../model/Player';
 import { Game } from '../model/Game';
@@ -6,8 +9,16 @@ import { Game } from '../model/Game';
 import { PlayerStatus } from '../enum/PlayerStatus';
 import { GameStatus } from '../enum/GameStatus';
 
+import 'rxjs/add/operator/map';
+
 @Injectable()
 export class GameService {
+
+  private baseUrl: string = 'http://localhost:8080';
+
+  constructor(private http: Http) {
+
+  }
 
   makeBatsman(game: Game, player: Player): Player {
     if (player.balls == undefined) player.balls = 0;
@@ -21,11 +32,16 @@ export class GameService {
     game.setBowler(player);
     return player;
   }
-  
+
   setPlayersAndGame(game: Game, batsman: Player, bowler: Player): void {
     this.makeBatsman(game, batsman);
     this.makeBowler(game, bowler);
     game.gameStatus = GameStatus.IN_PROGRESS;
+  }
+
+  getGameId(): Observable<string> {
+    return this.http.get(this.baseUrl + '/getGameId')
+      .map((response: Response) => response.text());
   }
 
 }

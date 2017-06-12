@@ -3,6 +3,7 @@ import { GameStatus } from '../enum/GameStatus';
 import { Player } from './Player';
 
 export class Game {
+  id: string;
   targetScore: number;
   updates: Update[] = [];
   gameStatus: GameStatus = GameStatus.NOT_STARTED;

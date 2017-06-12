@@ -1,13 +1,15 @@
+<game-selection [game]='game' [player]='player'></game-selection>
+
 <p>Player ID: {{player.id}}</p>
-<p *ngIf='stompClient'>Connected to Server: {{stompClient.connected}}</p>
+<p>Player Connection Status: {{player.isConnected()}}</p>
 
 <div>
-  <button *ngIf='!stompClient?.connected' (click)='connect()'>Connect</button>
-  <button *ngIf='stompClient?.connected' (click)='disconnect()'>Diconnect</button>
+  <button *ngIf='!player.isConnected()' (click)='connect()'>Connect</button>
+  <button *ngIf='player.isConnected()' (click)='disconnect()'>Diconnect</button>
 </div>
 <br />
 <input type="text" [(ngModel)]='name' />
-<button *ngIf='stompClient?.connected' (click)='send()'>Send Message</button>
+<button *ngIf='player.isConnected()' (click)='send()'>Send Message</button>
 
 <hr />
 <h4>Messages</h4>
