@@ -1,4 +1,6 @@
 export enum PlayerType {
   User,
-  Computer
+  Computer,
+  Host,
+  Guest
 }

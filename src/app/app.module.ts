@@ -16,6 +16,7 @@ import { GameStatusComponent } from './components/game-status/game-status.compon
 import { GameplayComponent } from './components/gameplay/gameplay.component';
 import { PlaySelectComponent } from './components/play-select/play-select.component';
 import { OnlineGameComponent } from './components/online-game/online-game.component';
+import { GameSelectionComponent } from './components/online-game/game-selection/game-selection.component';
 
 @NgModule({
   imports:      [ BrowserModule,
@@ -33,7 +34,8 @@ import { OnlineGameComponent } from './components/online-game/online-game.compon
                   GameStatusComponent,
 									GameplayComponent,
 									PlaySelectComponent,
-                  OnlineGameComponent
+                  OnlineGameComponent,
+                  GameSelectionComponent
                 ],
   bootstrap:    [ AppComponent ]
 })
