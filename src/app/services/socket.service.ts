@@ -10,26 +10,27 @@ var SockJS = require('sockjs-client');
 export class SocketService {
 
   socket: any;
+  stompClient: any;
 
   constructor() {
   }
 
   send(player: Player, text: string): void {
-    player.stompClient.send(`/app/game/ABCDE/${player.id}`, {}, JSON.stringify({ 'name': text }));
+    this.stompClient.send(`/app/game/ABCDE/${player.id}`, {}, JSON.stringify({ 'name': text }));
   }
 
-  connect(player: Player, messages: string[]): void {
+  connect(player: Player, messages: string[]): any {
     var that = this;
     this.socket = new SockJS('http://localhost:8080/socket-registration');
-    player.stompClient = Stomp.over(this.socket);
-    console.log('StompClient: ' + JSON.stringify(player.stompClient));
-    player.stompClient.connect({}, function (frame: any) {
+    this.stompClient = Stomp.over(this.socket);
+    console.log('StompClient: ' + JSON.stringify(this.stompClient));
+    this.stompClient.connect({}, function (frame: any) {
       console.log('Connected: ' + frame);
-      player.stompClient.subscribe(`/live-updates/ABCDE/${player.id}`, function (greeting: any) {
+      that.stompClient.subscribe(`/live-updates/ABCDE/${player.id}`, function (greeting: any) {
         console.log('Received Greeting: ' + JSON.stringify(greeting));
         messages.push(greeting.body);
       });
-      player.stompClient.subscribe(`/live-updates/ABCDE`, function (greeting: any) {
+      that.stompClient.subscribe(`/live-updates/ABCDE`, function (greeting: any) {
         console.log('Received Greeting: ' + JSON.stringify(greeting));
         messages.push(greeting.body);
       });
@@ -40,9 +41,13 @@ export class SocketService {
     });
   }
 
-  disconnect(player: Player): void {
-    player.stompClient.disconnect();
+  disconnect(): void {
+    this.stompClient.disconnect();
     console.log("Disconnected");
+  }
+
+  isConnected(): boolean {
+    return this.stompClient && this.stompClient.connected;
   }
 
 }

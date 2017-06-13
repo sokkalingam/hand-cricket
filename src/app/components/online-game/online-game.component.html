@@ -1,15 +1,15 @@
 <game-selection [game]='game' [player]='player'></game-selection>
 
 <p>Player ID: {{player.id}}</p>
-<p>Player Connection Status: {{player.isConnected()}}</p>
+<p>Connection Status: {{ isOnline() }}</p>
 
 <div>
-  <button *ngIf='!player.isConnected()' (click)='connect()'>Connect</button>
-  <button *ngIf='player.isConnected()' (click)='disconnect()'>Diconnect</button>
+  <button *ngIf='!isOnline()' (click)='connect()'>Connect</button>
+  <button *ngIf='isOnline()' (click)='disconnect()'>Diconnect</button>
 </div>
 <br />
 <input type="text" [(ngModel)]='name' />
-<button *ngIf='player.isConnected()' (click)='send()'>Send Message</button>
+<button *ngIf='isOnline()' (click)='send()'>Send Message</button>
 
 <hr />
 <h4>Messages</h4>
