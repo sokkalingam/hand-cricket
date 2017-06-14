@@ -39,9 +39,12 @@ export class GameService {
     game.gameStatus = GameStatus.IN_PROGRESS;
   }
 
-  getGameId(): Observable<string> {
-    return this.http.get(this.baseUrl + '/getGameId')
-      .map((response: Response) => response.text());
+  getGameId(player: Player): Observable<string> {
+    return this.http.post(this.baseUrl + '/hostGame', player)
+      .map((response: Response) => {
+        console.log("Response: " + response);
+        return response.text();
+    });
   }
 
 }

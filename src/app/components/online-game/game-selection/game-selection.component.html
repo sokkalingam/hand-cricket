@@ -32,6 +32,6 @@ GameID: {{game?.id}}
     <input type='text' class='form-control' name='gameId' [(ngModel)]='game.id' />
   </div>
   <button type="button" class="btn btn-success btn-lg"
-    *ngIf='player.name?.length == 5' (click)='isGameIdSaved = true'>Save</button>
+    (click)='joinGame()'>Enter Game</button>
   </form>
 </div>

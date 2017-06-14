@@ -13,7 +13,6 @@ import { SocketService } from '../../services/socket.service';
 })
 
 export class OnlineGameComponent implements OnInit {
-  connection: boolean;
   player: Player;
   game: Game;
   name: string = '';
@@ -25,7 +24,6 @@ export class OnlineGameComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.player = new Player(PlayerType.User);
     this.connect();
   }
 
@@ -34,9 +32,11 @@ export class OnlineGameComponent implements OnInit {
   }
 
   disconnect(): void {
-    this.socketService.disconnect(this.player);
+    this.socketService.disconnect();
   }
 
   send(): void { this.socketService.send(this.player, this.name); }
+
+  isOnline(): boolean { return this.socketService.isConnected(); }
 
 }

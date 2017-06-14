@@ -22,10 +22,11 @@ export class GameSelectionComponent {
   // enums
   PlayerType = PlayerType;
 
-  constructor(private gameService: GameService) {}
+  constructor(private gameService: GameService) {
+  }
 
   getGameId(): void {
-    this.gameService.getGameId().subscribe(
+    this.gameService.getGameId(this.player).subscribe(
       (gameId: string) => this.game.id = gameId,
       (error) => console.log(error)
     );
