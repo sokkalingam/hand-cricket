@@ -42,9 +42,17 @@ export class GameService {
   getGameId(player: Player): Observable<string> {
     return this.http.post(this.baseUrl + '/hostGame', player)
       .map((response: Response) => {
-        console.log("Response: " + response);
+        console.log(response.text());
         return response.text();
     });
+  }
+
+  joinGame(player: Player, id: string): Observable<boolean> {
+    return this.http.post(this.baseUrl + '/joinGame/' + id, player)
+      .map((response: Response) => {
+        console.log(response.text());
+        return response.text() == 'true';
+      });
   }
 
 }

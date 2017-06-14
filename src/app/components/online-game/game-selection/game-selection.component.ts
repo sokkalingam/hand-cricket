@@ -17,7 +17,7 @@ export class GameSelectionComponent {
   @Input() game: Game;
 
   isInfoSaved: boolean = false;
-  isGameIdSaved: boolean = false;
+  isJoined: boolean = false;
 
   // enums
   PlayerType = PlayerType;
@@ -39,5 +39,12 @@ export class GameSelectionComponent {
 
   setGuest(): void {
     this.player.type = PlayerType.Guest;
+  }
+
+  joinGame(): void {
+    this.gameService.joinGame(this.player, this.game.id).subscribe(
+      (isJoined: boolean) => this.isJoined = isJoined,
+      (error) => this.isJoined = false
+    );
   }
 }

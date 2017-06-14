@@ -1,7 +1,7 @@
-import { UUID } from 'angular2-uuid';
-
 import { PlayerType } from '../enum/PlayerType';
 import { PlayerStatus } from '../enum/PlayerStatus';
+
+import { HelperService } from '../services/helper.service';
 
 export class Player {
 
@@ -16,7 +16,7 @@ export class Player {
   stompClient: any;
 
   constructor(type: PlayerType) {
-    this.id = UUID.UUID();
+    this.id = HelperService.getRandomId(5);
     this.type = type;
   }
 
