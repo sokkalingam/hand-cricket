@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { UUID } from 'angular2-uuid';
 
-import * as _ from "lodash";
+import * as _ from 'lodash';
 
 @Injectable()
 export class HelperService {

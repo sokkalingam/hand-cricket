@@ -16,7 +16,10 @@ import { GameStatusComponent } from './components/game-status/game-status.compon
 import { GameplayComponent } from './components/gameplay/gameplay.component';
 import { PlaySelectComponent } from './components/play-select/play-select.component';
 import { OnlineGameComponent } from './components/online-game/online-game.component';
-import { GameSelectionComponent } from './components/online-game/game-selection/game-selection.component';
+import { JoinGameComponent } from './components/online-game/join-game/join-game.component';
+import { ChatComponent } from './components/online-game/chat/chat.component';
+
+import { SocketService } from './services/socket.service';
 
 @NgModule({
   imports:      [ BrowserModule,
@@ -35,8 +38,10 @@ import { GameSelectionComponent } from './components/online-game/game-selection/
 									GameplayComponent,
 									PlaySelectComponent,
                   OnlineGameComponent,
-                  GameSelectionComponent
+                  JoinGameComponent,
+                  ChatComponent
                 ],
+  providers:    [SocketService],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
