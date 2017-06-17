@@ -6,16 +6,16 @@ import { Game } from '../../../model/Game';
 import { PlayerType } from '../../../enum/PlayerType';
 import { GameService } from '../../../services/game.service';
 import { GameSequenceService } from '../../../services/game-sequence.service';
+import { SocketService } from '../../../services/socket.service';
 
 @Component({
   selector: 'join-game',
-  templateUrl: 'join-game.component.html',
-  providers: [GameService]
+  templateUrl: 'join-game.component.html'
 })
 
 export class JoinGameComponent {
   @Input() player: Player;
-  @Input() game: Game;
+  // @Input() game: Game;
 
   isInfoSaved: boolean = false;
 
@@ -23,11 +23,15 @@ export class JoinGameComponent {
   PlayerType = PlayerType;
 
   constructor(private gameService: GameService,
-              private gameSequenceService: GameSequenceService) { }
+              private gameSequenceService: GameSequenceService,
+              private socketService: SocketService) { }
 
   getGameId(): void {
     this.gameService.getGameId(this.player).subscribe(
-      (gameId: string) => this.game.id = gameId,
+      (gameId: string) => {
+        this.gameService.getGame().id = gameId,
+        this.socketService.subscribetoGame(this.gameService.getGame());
+      },
       (error) => console.log(error)
     );
   }
@@ -44,9 +48,13 @@ export class JoinGameComponent {
   }
 
   joinGame(): void {
-    this.gameService.joinGame(this.player, this.game.id).subscribe(
-      (game: Game) => this.game = game,
-      (error) => this.game = undefined
+    this.gameService.joinGame(this.player, this.gameService.getGame().id).subscribe(
+      (game: Game) => {
+        this.gameService.setGame(game);
+        console.log(`Updated Game: ${JSON.stringify(this.gameService.getGame())}`);
+        this.socketService.subscribetoGame(this.gameService.getGame());
+      },
+      (error) => console.log(error)
     );
   }
 }

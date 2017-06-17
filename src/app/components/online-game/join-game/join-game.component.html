@@ -1,5 +1,3 @@
-GameID: {{game?.id}}
-
 <!-- Get Player Details -->
 <div *ngIf='!isInfoSaved'>
   <form>
@@ -21,26 +19,25 @@ GameID: {{game?.id}}
 
 <!-- Display Game ID -->
 <div *ngIf='player.type == PlayerType.Host'>
-  Share this Game ID to your friend: {{game?.id}}
+  Share this Game ID to your friend: {{gameService.getGame()?.id}}
 </div>
 
 <!-- Receive Game ID -->
-Is Game Connected: {{gameService.isConnected(game)}}
 <div *ngIf='player.type == PlayerType.Guest'>
-  <form *ngIf='!gameService.isConnected(game)'>
+  <form *ngIf='!gameService.isConnected(gameService.getGame())'>
   <div class="form-group">
     <label for="playerName">Enter your Game ID: </label>
-    <input type='text' class='form-control' name='gameId' [(ngModel)]='game.id' />
+    <input type='text' class='form-control' name='gameId' [(ngModel)]='gameService.getGame().id' />
   </div>
   <button type="button" class="btn btn-success btn-lg"
     (click)='joinGame()'>Enter Game</button>
   </form>
 
   <div>
-    <p *ngIf='gameService.isConnected(game)'>
+    <p *ngIf='gameService.isConnected(gameService.getGame())'>
       You are connected to the game!
     </p>
-    <p *ngIf='!gameService.isConnected(game)'>
+    <p *ngIf='!gameService.isConnected(gameService.getGame())'>
       You are not yet connected to any game!
     </p>
   </div>

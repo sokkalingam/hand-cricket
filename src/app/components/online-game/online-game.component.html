@@ -1,5 +1,16 @@
-<p>Player ID: {{player.id}}</p>
-<p>Connection Status: {{ isOnline() }}</p>
+Game: {{JSON.stringify(gameService.getGame())}}
+<div class="row">
+  <div class="col-md-4 bg-info">
+    <div class="padding text-center">Player Id: {{player?.id}}</div>
+  </div>
+  <div class="col-md-4 bg-warning">
+    <div *ngIf='gameService.getGame() && gameService.getGame().id' class="padding text-center">Game Id: {{gameService.getGame()?.id}}</div>
+    <div *ngIf='!gameService.getGame() || !gameService.getGame().id' class="padding text-center">Game Not Setup</div>
+  </div>
+  <div class="col-md-4" [class.bg-success]='isOnline()' [class.bg-danger]='!isOnline()'>
+    <div class="padding text-center">Status: {{ isOnline() ? "Online" : "Offline"}}</div>
+  </div>
+</div>
 
 <div>
   <button *ngIf='!isOnline()' (click)='connect()'>Connect</button>
@@ -7,19 +18,6 @@
 </div>
 
 <hr />
-<join-game *ngIf='isOnline()' [game]='game' [player]='player'></join-game>
+<join-game *ngIf='isOnline()' [player]='player'></join-game>
 <hr />
-<chat *ngIf='gameSequenceService.isHostOrJoinDone' [game]='game' [player]='player'></chat>
-
-
-<!-- <br />
-<input type="text" [(ngModel)]='name' />
-<button *ngIf='isOnline()' (click)='send()'>Send Message</button>
-
-
-<h4>Messages</h4>
-<div>
-  <p *ngFor='let message of messages'>
-    {{message}}
-  </p>
-</div> -->
+<chat *ngIf='isGameConnected()' [player]='player'></chat>

@@ -20,6 +20,7 @@ import { JoinGameComponent } from './components/online-game/join-game/join-game.
 import { ChatComponent } from './components/online-game/chat/chat.component';
 
 import { SocketService } from './services/socket.service';
+import { GameService } from './services/game.service';
 
 @NgModule({
   imports:      [ BrowserModule,
@@ -41,7 +42,9 @@ import { SocketService } from './services/socket.service';
                   JoinGameComponent,
                   ChatComponent
                 ],
-  providers:    [SocketService],
+  providers:    [ SocketService,
+                  GameService
+                ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
