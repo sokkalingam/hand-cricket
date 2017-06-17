@@ -25,8 +25,8 @@ GameID: {{game?.id}}
 </div>
 
 <!-- Receive Game ID -->
-<div *ngIf='player.type == PlayerType.Guest && !isGameIdSaved'>
-  <form>
+<div *ngIf='player.type == PlayerType.Guest'>
+  <form *ngIf='!isJoined'>
   <div class="form-group">
     <label for="playerName">Enter your Game ID: </label>
     <input type='text' class='form-control' name='gameId' [(ngModel)]='game.id' />
@@ -34,4 +34,10 @@ GameID: {{game?.id}}
   <button type="button" class="btn btn-success btn-lg"
     (click)='joinGame()'>Enter Game</button>
   </form>
+
+  <div>
+    <p *ngIf='isJoined'>
+      Joined Game Successfully...!
+    </p>
+  </div>
 </div>
