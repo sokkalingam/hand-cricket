@@ -9,15 +9,15 @@ import { Game } from '../model/Game';
 import { PlayerStatus } from '../enum/PlayerStatus';
 import { GameStatus } from '../enum/GameStatus';
 
+import { ApplicationService } from './application.service';
+
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class GameService {
-
-  private baseUrl: string = 'http://localhost:8080';
   game: Game;
 
-  constructor(private http: Http) {}
+  constructor(private http: Http, private appService: ApplicationService) {}
 
   setGame(game: Game): void {
     this.game = game;
@@ -49,7 +49,7 @@ export class GameService {
   }
 
   getGameId(player: Player): Observable<string> {
-    return this.http.post(this.baseUrl + '/hostGame', player)
+    return this.http.post(this.appService.baseUrl + '/hostGame', player)
       .map((response: Response) => {
         console.log(response.text());
         return response.text();
@@ -57,7 +57,7 @@ export class GameService {
   }
 
   joinGame(player: Player, id: string): Observable<Game> {
-    return this.http.post(this.baseUrl + '/joinGame/' + id, player)
+    return this.http.post(this.appService.baseUrl + '/joinGame/' + id, player)
       .map((response: Response) => {
         console.log(response.json());
         return response.json();
