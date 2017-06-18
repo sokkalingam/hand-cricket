@@ -20,7 +20,15 @@ export class SocketService {
   constructor(private gameService: GameService) {
   }
 
-  sendMessage(gameId: string, message: Message) {
+  connectChat(gameId: string, message: Message) {
+    this.stompClient.send(`/app/chat/${gameId}/connect`, {}, JSON.stringify(message));
+  }
+
+  disconnectChat(gameId: string, message: Message) {
+    this.stompClient.send(`/app/chat/${gameId}/disconnect`, {}, JSON.stringify(message));
+  }
+
+  sendChatMessage(gameId: string, message: Message) {
     this.stompClient.send(`/app/chat/${gameId}`, {}, JSON.stringify(message));
   }
 
@@ -53,17 +61,18 @@ export class SocketService {
     });
   }
 
-  subscribetoGame(game: Game) {
-    this.stompClient.subscribe(`/game/${game.id}`, (response: any) => {
+  subscribetoGame(game: Game): any {
+    return this.stompClient.subscribe(`/game/${game.id}`, (response: any) => {
       console.log('Game Subscription: ' + JSON.stringify(response));
       this.gameService.setGame(JSON.parse(response.body));
     });
   }
 
-  subscribetoChat(gameId: string, messages: Message[]) {
-    this.stompClient.subscribe(`/chat/${gameId}`, (response: any) => {
+  subscribetoChat(gameId: string, messages: Message[], scrollFn: any): any {
+    return this.stompClient.subscribe(`/chat/${gameId}`, (response: any) => {
       console.log('Chat Subscription: ' + JSON.stringify(response));
       messages.push(JSON.parse(response.body));
+      setTimeout(scrollFn, 100, messages[messages.length - 1]);
     });
   }
 
