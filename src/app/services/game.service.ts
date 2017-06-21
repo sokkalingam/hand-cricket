@@ -47,12 +47,16 @@ export class GameService {
     });
   }
 
-  joinGame(player: Player, id: string): Observable<boolean> {
+  joinGame(player: Player, id: string): Observable<Game> {
     return this.http.post(this.baseUrl + '/joinGame/' + id, player)
       .map((response: Response) => {
-        console.log(response.text());
-        return response.text() == 'true';
+        console.log(response.json());
+        return response.json();
       });
+  }
+
+  isConnected(game: Game): boolean {
+    return game.batsman != undefined && game.bowler != undefined;
   }
 
 }

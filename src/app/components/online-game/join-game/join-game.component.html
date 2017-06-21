@@ -25,8 +25,9 @@ GameID: {{game?.id}}
 </div>
 
 <!-- Receive Game ID -->
+Is Game Connected: {{gameService.isConnected(game)}}
 <div *ngIf='player.type == PlayerType.Guest'>
-  <form *ngIf='!isJoined'>
+  <form *ngIf='!gameService.isConnected(game)'>
   <div class="form-group">
     <label for="playerName">Enter your Game ID: </label>
     <input type='text' class='form-control' name='gameId' [(ngModel)]='game.id' />
@@ -36,8 +37,11 @@ GameID: {{game?.id}}
   </form>
 
   <div>
-    <p *ngIf='isJoined'>
-      Joined Game Successfully...!
+    <p *ngIf='gameService.isConnected(game)'>
+      You are connected to the game!
+    </p>
+    <p *ngIf='!gameService.isConnected(game)'>
+      You are not yet connected to any game!
     </p>
   </div>
 </div>

@@ -1,0 +1,25 @@
+<button (click)='connectToChat()'>Connect to Chat</button>
+
+<div *ngIf='chatConnected'>
+  <h3>Chat</h3>
+  GameId: {{game?.id}}
+  <form>
+    <div class="form-group">
+      <p>Typing Text: {{text}}</p>
+      <input type='text' class='form-control' name='text'
+        placeholder='Type your message here...' [(ngModel)]='text' />
+    </div>
+    <button type="button" class="btn btn-success btn-lg"
+      (click)='send(text)'>Send</button>
+  </form>
+
+  <div>
+    Messages Count: {{messages.length}}
+  </div>
+
+  <div class="pre-scrollable">
+    <span *ngFor='let message of messages'>
+      <p><label>{{message.senderName}} : </label>{{message.message}}</p>
+    </span>
+  </div>
+</div>

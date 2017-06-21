@@ -16,7 +16,7 @@ export class Player {
   stompClient: any;
 
   constructor(type: PlayerType) {
-    this.id = HelperService.getRandomId(5);
+    this.id = '12345';//HelperService.getRandomId(5);
     this.type = type;
   }
 

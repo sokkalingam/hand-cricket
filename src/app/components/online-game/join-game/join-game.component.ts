@@ -5,25 +5,25 @@ import { Game } from '../../../model/Game';
 
 import { PlayerType } from '../../../enum/PlayerType';
 import { GameService } from '../../../services/game.service';
+import { GameSequenceService } from '../../../services/game-sequence.service';
 
 @Component({
-  selector: 'game-selection',
-  templateUrl: 'game-selection.component.html',
+  selector: 'join-game',
+  templateUrl: 'join-game.component.html',
   providers: [GameService]
 })
 
-export class GameSelectionComponent {
+export class JoinGameComponent {
   @Input() player: Player;
   @Input() game: Game;
 
   isInfoSaved: boolean = false;
-  isJoined: boolean = false;
 
   // enums
   PlayerType = PlayerType;
 
-  constructor(private gameService: GameService) {
-  }
+  constructor(private gameService: GameService,
+              private gameSequenceService: GameSequenceService) { }
 
   getGameId(): void {
     this.gameService.getGameId(this.player).subscribe(
@@ -35,16 +35,18 @@ export class GameSelectionComponent {
   setHost(): void {
     this.player.type = PlayerType.Host;
     this.getGameId();
+    this.gameSequenceService.isHostOrJoinDone = true;
   }
 
   setGuest(): void {
     this.player.type = PlayerType.Guest;
+    this.gameSequenceService.isHostOrJoinDone = true;
   }
 
   joinGame(): void {
     this.gameService.joinGame(this.player, this.game.id).subscribe(
-      (isJoined: boolean) => this.isJoined = isJoined,
-      (error) => this.isJoined = false
+      (game: Game) => this.game = game,
+      (error) => this.game = undefined
     );
   }
 }
