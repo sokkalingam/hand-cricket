@@ -1,0 +1,23 @@
+<div>
+
+  <div>
+    <button *ngIf='!gameConnected' class="btn btn-success" (click)='connectToChat()'>Connect to Game</button>
+    <button *ngIf='gameConnected' class="btn btn-warning" (click)='disconnectToChat()'>Disconnect from Game</button>
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-xs-6">
+      <div>
+        Column 1
+      </div>
+    </div>
+
+    <div class="col-xs-6">
+      Column 2
+    </div>
+
+  </div>
+
+</div>

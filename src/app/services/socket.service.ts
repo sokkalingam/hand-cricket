@@ -37,6 +37,10 @@ export class SocketService {
     this.stompClient.send(`/app/game/ABCDE/${player.id}`, {}, JSON.stringify({ 'name': text }));
   }
 
+  sendInput(gameId: string, playerId: string, number: number): void {
+    this.stompClient.send(`/play/${gameId}/${playerId}`, number);
+  }
+
   connect(): any {
     var that = this;
     this.socket = new SockJS(`${this.appService.baseUrl}/socket-registration`);
@@ -74,6 +78,13 @@ export class SocketService {
       console.log('Chat Subscription: ' + JSON.stringify(response));
       messages.push(JSON.parse(response.body));
       setTimeout(scrollFn, 100, messages[messages.length - 1]);
+    });
+  }
+
+  subscribeToNotice(gameId: string, playerId: string, notice: string): any {
+    return this.stompClient.subscribe(`/notice/${gameId}/${playerId}`, (response: any) => {
+      console.log('Notice Subscription: ' + JSON.stringify(response));
+      notice = response.text();
     });
   }
 

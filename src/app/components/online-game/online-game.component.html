@@ -13,3 +13,4 @@
 
 <join-game *ngIf='isOnline()' [player]='player'></join-game>
 <chat *ngIf='isGameConnected()' [player]='player'></chat>
+<play *ngIf='isGameConnected()' ></play>
