@@ -12,19 +12,19 @@ import { GameSequenceService } from '../../services/game-sequence.service';
 @Component({
   selector: 'online-game',
   templateUrl: './online-game.component.html',
-  providers: [GameService, GameSequenceService]
+  providers: [GameSequenceService]
 })
 
 export class OnlineGameComponent implements OnInit {
   player: Player;
   game: Game;
-  name: string = '';
+  JSON = JSON;
 
   constructor(private socketService: SocketService,
               private gameService: GameService,
               private gameSequenceService: GameSequenceService) {
     this.player = new Player(PlayerType.User);
-    this.game = new Game();
+    this.game = gameService.getGame();
   }
 
   ngOnInit(): void {
@@ -39,8 +39,8 @@ export class OnlineGameComponent implements OnInit {
     this.socketService.disconnect();
   }
 
-  send(): void { this.socketService.send(this.player, this.name); }
-
   isOnline(): boolean { return this.socketService.isConnected(); }
+
+  isGameConnected(): boolean { return this.gameService.isConnected(this.gameService.getGame()); }
 
 }

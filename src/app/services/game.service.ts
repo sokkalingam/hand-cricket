@@ -15,9 +15,18 @@ import 'rxjs/add/operator/map';
 export class GameService {
 
   private baseUrl: string = 'http://localhost:8080';
+  game: Game;
 
-  constructor(private http: Http) {
+  constructor(private http: Http) {}
 
+  setGame(game: Game): void {
+    this.game = game;
+  }
+
+  getGame(): Game {
+    if (!this.game)
+      this.game = new Game();
+    return this.game;
   }
 
   makeBatsman(game: Game, player: Player): Player {

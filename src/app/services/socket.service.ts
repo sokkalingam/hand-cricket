@@ -6,6 +6,8 @@ import { Message } from '../model/Message';
 
 import { PlayerType } from '../enum/PlayerType';
 
+import { GameService } from './game.service'
+
 var Stomp = require('stompjs');
 var SockJS = require('sockjs-client');
 
@@ -15,7 +17,7 @@ export class SocketService {
   socket: any;
   stompClient: any;
 
-  constructor() {
+  constructor(private gameService: GameService) {
   }
 
   sendMessage(gameId: string, message: Message) {
@@ -51,16 +53,16 @@ export class SocketService {
     });
   }
 
-  subscribetoGame(game: Game, player: Player) {
-    this.stompClient.subscribe(`/game/${game.id}/${player.id}`, (gameFromServer: Game) => {
-      console.log(JSON.stringify(gameFromServer));
-      game = gameFromServer;
+  subscribetoGame(game: Game) {
+    this.stompClient.subscribe(`/game/${game.id}`, (response: any) => {
+      console.log('Game Subscription: ' + JSON.stringify(response));
+      this.gameService.setGame(JSON.parse(response.body));
     });
   }
 
   subscribetoChat(gameId: string, messages: Message[]) {
     this.stompClient.subscribe(`/chat/${gameId}`, (response: any) => {
-      console.log('Received Message: ' + JSON.stringify(response));
+      console.log('Chat Subscription: ' + JSON.stringify(response));
       messages.push(JSON.parse(response.body));
     });
   }
