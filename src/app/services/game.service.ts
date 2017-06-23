@@ -17,7 +17,8 @@ import 'rxjs/add/operator/map';
 export class GameService {
   game: Game;
 
-  constructor(private http: Http, private appService: ApplicationService) {}
+  constructor(private http: Http,
+              private appService: ApplicationService) {}
 
   setGame(game: Game): void {
     this.game = game;
@@ -26,6 +27,7 @@ export class GameService {
   getGame(): Game {
     if (!this.game)
       this.game = new Game();
+    console.log(this.game);
     return this.game;
   }
 
@@ -66,6 +68,18 @@ export class GameService {
 
   isConnected(game: Game): boolean {
     return game.batsman != undefined && game.bowler != undefined;
+  }
+
+  isGameOver(): boolean {
+    return this.getGame().gameStatus.toString() === GameStatus[GameStatus.GAME_OVER];
+  }
+
+  isGameDraw(): boolean {
+    return this.getGame().gameStatus.toString() === GameStatus[GameStatus.DRAW];
+  }
+
+  isGameInProgress(): boolean {
+    return this.getGame().gameStatus.toString() === GameStatus[GameStatus.IN_PROGRESS];
   }
 
 }

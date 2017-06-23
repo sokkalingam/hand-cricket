@@ -13,6 +13,8 @@
   </div>
 </div>
 
-<join-game *ngIf='isOnline()' [player]='player'></join-game>
-<chat *ngIf='isGameConnected()' [player]='player'></chat>
-<play *ngIf='isGameConnected()' [player]='player'></play>
+<join-game *ngIf='isOnline()'></join-game>
+<chat *ngIf='isGameConnected()'></chat>
+<play *ngIf='isGameConnected()'></play>
+<online-game-status *ngIf='isGameConnected()'></online-game-status>
+<online-score-board *ngIf='isGameConnected()'></online-score-board>

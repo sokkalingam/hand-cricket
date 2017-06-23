@@ -1,0 +1,10 @@
+<h3>Score Board</h3>
+<div *ngIf="showCurrentPlayerScore()" class="alert alert-info">
+  You scored {{ playerService.getCurrentPlayer(gameService.getGame()).runs }} runs
+  in {{playerService.getCurrentPlayer(gameService.getGame()).balls }} balls
+</div>
+<div *ngIf="showOtherPlayerScore()" class="alert alert-warning">
+  {{ playerService.getOtherPlayer(gameService.getGame()).name }}
+  scored {{ playerService.getOtherPlayer(gameService.getGame()).runs }} runs
+  in {{playerService.getOtherPlayer(gameService.getGame()).balls }} balls
+</div>

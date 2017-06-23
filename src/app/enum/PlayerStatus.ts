@@ -1,4 +1,6 @@
 export enum PlayerStatus {
   Out,
-  NotOut
+  NotOut,
+  Won,
+  Lost
 }

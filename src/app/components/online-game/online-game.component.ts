@@ -7,22 +7,20 @@ import { PlayerType } from '../../enum/PlayerType';
 
 import { SocketService } from '../../services/socket.service';
 import { GameService } from '../../services/game.service';
-import { GameSequenceService } from '../../services/game-sequence.service';
+import { PlayerService } from '../../services/player.service';
 
 @Component({
   selector: 'online-game',
-  templateUrl: './online-game.component.html',
-  providers: [GameSequenceService]
+  templateUrl: './online-game.component.html'
 })
 
 export class OnlineGameComponent implements OnInit {
-  player: Player;
   JSON = JSON;
 
   constructor(private socketService: SocketService,
               private gameService: GameService,
-              private gameSequenceService: GameSequenceService) {
-    this.player = new Player(PlayerType.User);
+              private playerService: PlayerService) {
+    playerService.setPlayer(new Player(PlayerType.User));
   }
 
   ngOnInit(): void {
@@ -39,6 +37,9 @@ export class OnlineGameComponent implements OnInit {
 
   isOnline(): boolean { return this.socketService.isConnected(); }
 
-  isGameConnected(): boolean { return this.gameService.isConnected(this.gameService.getGame()); }
+  isGameConnected(): boolean {
+    return this.socketService.isConnected() &&
+      this.gameService.isConnected(this.gameService.getGame());
+  }
 
 }

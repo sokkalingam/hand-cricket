@@ -5,7 +5,7 @@ import { Game } from '../../../model/Game';
 
 import { PlayerType } from '../../../enum/PlayerType';
 import { GameService } from '../../../services/game.service';
-import { GameSequenceService } from '../../../services/game-sequence.service';
+import { PlayerService } from '../../../services/player.service';
 import { SocketService } from '../../../services/socket.service';
 
 @Component({
@@ -14,8 +14,7 @@ import { SocketService } from '../../../services/socket.service';
 })
 
 export class JoinGameComponent {
-  @Input() player: Player;
-  // @Input() game: Game;
+  player: Player;
 
   isInfoSaved: boolean = false;
 
@@ -23,8 +22,10 @@ export class JoinGameComponent {
   PlayerType = PlayerType;
 
   constructor(private gameService: GameService,
-              private gameSequenceService: GameSequenceService,
-              private socketService: SocketService) { }
+              private playerService: PlayerService,
+              private socketService: SocketService) {
+    this.player = playerService.getPlayer();
+  }
 
   getGameId(): void {
     this.gameService.getGameId(this.player).subscribe(
@@ -39,12 +40,10 @@ export class JoinGameComponent {
   setHost(): void {
     this.player.type = PlayerType.Host;
     this.getGameId();
-    this.gameSequenceService.isHostOrJoinDone = true;
   }
 
   setGuest(): void {
     this.player.type = PlayerType.Guest;
-    this.gameSequenceService.isHostOrJoinDone = true;
   }
 
   joinGame(): void {

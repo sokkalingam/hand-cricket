@@ -1,6 +1,6 @@
 <div>
 
-  {{JSON.stringify(game)}}
+  {{JSON.stringify(gameService.getGame())}}
 
   <div>
     <button *ngIf='!gameConnected' class="btn btn-success" (click)='connectGame()'>Connect Game</button>
@@ -16,7 +16,16 @@
         <div class="form-group well well-sm">
           <label for="lastPlayedInput">Your Input: </label>
           <input name='input' [(ngModel)]='input' type='number' />
-          <button type="submit" class="btn btn-success" (click)='sendInput()'>Play</button>
+          <button type="submit" class="btn btn-success"
+            (click)='sendInput()' [disabled]='!playEnabled()'>Play</button>
+        </div>
+        <div>
+          <h3>Game Board</h3>
+          <div>
+            <p>You are now {{ isBatsman() ? "Batting" : "Bowling" }}</p>
+            <p>You scored {{ getCurrentPlayer().runs }} runs in {{ getCurrentPlayer().balls }} balls</p>
+            <p>Opp scored {{ getOtherPlayer().runs }} runs in {{ getOtherPlayer().balls }} balls</p>
+          </div>
         </div>
       </div>
     </div>
@@ -25,10 +34,10 @@
       <div class="form-group well well-sm">
         <label for="lastPlayedInput">Opponent Played: </label>
         <div>
-          Batsman Played: {{game.batsman.lastDelivery}}
+          Batsman Played: {{gameService.getGame().batsman.lastDelivery}}
         </div>
         <div>
-          Bowler Played: {{game.bowler.lastDelivery}}
+          Bowler Played: {{gameService.getGame().bowler.lastDelivery}}
         </div>
       </div>
       <div>
