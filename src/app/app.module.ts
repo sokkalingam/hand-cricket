@@ -23,6 +23,7 @@ import { PlayComponent } from './components/online-game/play/play.component';
 import { SocketService } from './services/socket.service';
 import { GameService } from './services/game.service';
 import { ApplicationService } from './services/application.service';
+import { PlayService } from './services/play.service';
 
 @NgModule({
   imports:      [ BrowserModule,
@@ -47,7 +48,8 @@ import { ApplicationService } from './services/application.service';
                 ],
   providers:    [ SocketService,
                   GameService,
-                  ApplicationService
+                  ApplicationService,
+                  PlayService
                 ],
   bootstrap:    [ AppComponent ]
 })

@@ -1,3 +1,5 @@
+{{JSON.stringify(gameService.getGame())}}
+
 <div class="row">
   <div class="col-md-4 bg-info">
     <div class="padding text-center">Player Id: {{player?.id}}</div>
@@ -13,4 +15,4 @@
 
 <join-game *ngIf='isOnline()' [player]='player'></join-game>
 <chat *ngIf='isGameConnected()' [player]='player'></chat>
-<play *ngIf='isGameConnected()' ></play>
+<play *ngIf='isGameConnected()' [player]='player'></play>

@@ -1,21 +1,42 @@
 <div>
 
+  {{JSON.stringify(game)}}
+
   <div>
-    <button *ngIf='!gameConnected' class="btn btn-success" (click)='connectToChat()'>Connect to Game</button>
-    <button *ngIf='gameConnected' class="btn btn-warning" (click)='disconnectToChat()'>Disconnect from Game</button>
+    <button *ngIf='!gameConnected' class="btn btn-success" (click)='connectGame()'>Connect Game</button>
+    <button *ngIf='gameConnected' class="btn btn-warning" (click)='disconnectGame()'>Disconnect Game</button>
   </div>
 
 
-  <div class="row">
+
+  <div class="row" *ngIf='gameConnected'>
 
     <div class="col-xs-6">
       <div>
-        Column 1
+        <div class="form-group well well-sm">
+          <label for="lastPlayedInput">Your Input: </label>
+          <input name='input' [(ngModel)]='input' type='number' />
+          <button type="submit" class="btn btn-success" (click)='sendInput()'>Play</button>
+        </div>
       </div>
     </div>
 
     <div class="col-xs-6">
-      Column 2
+      <div class="form-group well well-sm">
+        <label for="lastPlayedInput">Opponent Played: </label>
+        <div>
+          Batsman Played: {{game.batsman.lastDelivery}}
+        </div>
+        <div>
+          Bowler Played: {{game.bowler.lastDelivery}}
+        </div>
+      </div>
+      <div>
+        <h4>Note</h4>
+        <p>
+            {{playService.notice}}
+        </p>
+      </div>
     </div>
 
   </div>

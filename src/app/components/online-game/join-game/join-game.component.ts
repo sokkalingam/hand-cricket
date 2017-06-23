@@ -53,6 +53,7 @@ export class JoinGameComponent {
         this.gameService.setGame(game);
         console.log(`Updated Game: ${JSON.stringify(this.gameService.getGame())}`);
         this.socketService.subscribetoGame(this.gameService.getGame());
+        console.log(`Subscribed Game: ${JSON.stringify(this.gameService.getGame())}`);
       },
       (error) => console.log(error)
     );
