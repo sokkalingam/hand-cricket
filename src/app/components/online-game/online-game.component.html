@@ -1,4 +1,3 @@
-Game: {{JSON.stringify(gameService.getGame())}}
 <div class="row">
   <div class="col-md-4 bg-info">
     <div class="padding text-center">Player Id: {{player?.id}}</div>
@@ -10,11 +9,6 @@ Game: {{JSON.stringify(gameService.getGame())}}
   <div class="col-md-4" [class.bg-success]='isOnline()' [class.bg-danger]='!isOnline()'>
     <div class="padding text-center">Status: {{ isOnline() ? "Online" : "Offline"}}</div>
   </div>
-</div>
-
-<div>
-  <button *ngIf='!isOnline()' (click)='connect()'>Connect</button>
-  <button *ngIf='isOnline()' (click)='disconnect()'>Diconnect</button>
 </div>
 
 <hr />

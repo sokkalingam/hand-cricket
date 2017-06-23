@@ -9,15 +9,18 @@ import { GameService } from '../../../services/game.service';
 
 @Component({
   selector: 'chat',
-  templateUrl: 'chat.component.html'
+  templateUrl: 'chat.component.html',
+  styleUrls: ['chat.component.css']
 })
 
 export class ChatComponent {
 
   @Input() player: Player;
   messages: Message[] = [];
-  text: string;
+  text: string = '';
   chatConnected: boolean;
+
+  chatSubsription: any;
 
   constructor(private socketService: SocketService,
               private gameService: GameService) { }
@@ -27,14 +30,43 @@ export class ChatComponent {
   }
 
   send(): void {
-    var message = this.composeMessage(this.text);
-    this.socketService.sendMessage(this.gameService.getGame().id, message);
+    if (!this.text.trim()) return;
+    this.socketService.sendChatMessage(this.gameService.getGame().id, this.composeMessage(this.text));
     this.text = '';
   }
 
   connectToChat(): void {
-    this.socketService.subscribetoChat(this.gameService.getGame().id, this.messages);
+    if (this.chatSubsription) return;
+    this.chatSubsription = this.socketService.subscribetoChat(this.gameService.getGame().id, this.messages, this.scrollToBottom);
+    this.socketService.connectChat(this.gameService.getGame().id, this.composeMessage(''));
     this.chatConnected = true;
   }
 
+  disconnectToChat(): void {
+    if (!this.chatSubsription) return;
+    this.socketService.disconnectChat(this.gameService.getGame().id, this.composeMessage(''));
+    this.chatSubsription.unsubscribe();
+    this.chatSubsription = undefined;
+    this.chatConnected = false;
+  }
+
+  isChatConnected(): boolean { return this.chatSubsription != undefined; }
+
+  fromHost(message: Message): boolean {
+    return this.player.id == message.senderId;
+  }
+
+  fromChatBot(message: Message): boolean {
+    return message.senderId == 'CHATBOT';
+  }
+
+  fromGuest(message: Message): boolean {
+    return !this.fromHost(message) && !this.fromChatBot(message);
+  }
+
+  scrollToBottom(lastMessage: Message): void {
+    var lastMessageElement = document.getElementById(lastMessage.date.toString());
+    console.log(lastMessageElement);
+    lastMessageElement.scrollIntoView();
+  }
 }
