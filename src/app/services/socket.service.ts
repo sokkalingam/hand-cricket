@@ -59,7 +59,7 @@ export class SocketService {
       // });
     }, function (err: any) {
       // console.log('Socket Disconnected', err);
-      setTimeout(window.location.reload(), 5000);
+      setTimeout(window.location.reload, 5000);
     });
   }
 
