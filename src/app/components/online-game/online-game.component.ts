@@ -38,8 +38,7 @@ export class OnlineGameComponent implements OnInit {
   isOnline(): boolean { return this.socketService.isConnected(); }
 
   isGameConnected(): boolean {
-    return this.socketService.isConnected() &&
-      this.gameService.isConnected(this.gameService.getGame());
+    return this.isOnline() && this.gameService.isConnected();
   }
 
 }

@@ -1,17 +1,17 @@
 <!-- Get Player Details -->
-<div *ngIf='!isInfoSaved'>
+<div *ngIf='collectInfo()'>
   <form>
   <div class="form-group">
     <label for="playerName">Enter your name: </label>
     <input type='text' class='form-control' name='name' [(ngModel)]='player.name' />
   </div>
   <button type="button" class="btn btn-success btn-lg"
-    *ngIf='player.name?.length > 0' (click)='isInfoSaved = true'>Save</button>
+    *ngIf='player.name?.length > 0' (click)='infoSaved = true'>Save</button>
   </form>
 </div>
 
 <!-- Ask Host or Join -->
-<div *ngIf='isInfoSaved && !player.type'>
+<div *ngIf='!collectInfo() && !player.type'>
   <h3>Would you like to Host or Join a Game?</h3>
   <button type="button" class="btn btn-primary btn-lg" (click)='setHost()'>Host</button>
   <button type="button" class="btn btn-success btn-lg" (click)='setGuest()'>Join</button>

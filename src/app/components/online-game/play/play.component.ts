@@ -28,6 +28,9 @@ export class PlayComponent {
               private playerService: PlayerService) {
     this.game = gameService.getGame();
     this.player = playerService.getPlayer();
+    this.socketService.subscribeToNotice(this.game.id, this.player.id);
+    this.socketService.subscribeToWait(this.game.id, this.player.id);
+    this.socketService.subscribeToResult(this.game.id, this.player.id);
   }
 
   isBatsman(): boolean {
@@ -46,22 +49,15 @@ export class PlayComponent {
     return this.playerService.getOtherPlayer(this.gameService.getGame());
   }
 
-  connectGame(): void {
-    this.socketService.subscribeToNotice(this.game.id, this.player.id);
-    this.gameConnected = true;
-  }
-
-  disconnectGame(): void {
-    this.gameConnected = false;
-  }
-
   playEnabled(): boolean {
-    return this.input >= 0 && this.input <= 6;
+    return !this.playService.wait && this.input >= 0 && this.input <= 6;
   }
 
   sendInput(): void {
-    if (this.playEnabled())
-      this.socketService.sendInput(this.game.id, this.player.id, this.input);
+    if (!this.playEnabled()) return;
+    this.socketService.sendInput(this.game.id, this.player.id, this.input);
+    this.input = undefined;
+    this.playService.notice = '';
   }
 
 }

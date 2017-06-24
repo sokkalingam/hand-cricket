@@ -27,6 +27,8 @@ export class ChatComponent {
               private gameService: GameService,
               private playerService: PlayerService) {
     this.player = playerService.getCurrentPlayer(gameService.getGame());
+    this.socketService.subscribetoChat(this.gameService.getGame().id, this.messages);
+    this.socketService.connectChat(this.gameService.getGame().id, this.composeMessage(''));
   }
 
   composeMessage(text: string): Message {
@@ -41,7 +43,7 @@ export class ChatComponent {
 
   connectToChat(): void {
     if (this.chatSubsription) return;
-    this.chatSubsription = this.socketService.subscribetoChat(this.gameService.getGame().id, this.messages, this.scrollToBottom);
+    this.chatSubsription = this.socketService.subscribetoChat(this.gameService.getGame().id, this.messages);
     this.socketService.connectChat(this.gameService.getGame().id, this.composeMessage(''));
     this.chatConnected = true;
   }

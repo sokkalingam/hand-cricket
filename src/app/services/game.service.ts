@@ -27,8 +27,11 @@ export class GameService {
   getGame(): Game {
     if (!this.game)
       this.game = new Game();
-    console.log(this.game);
     return this.game;
+  }
+
+  resetGame(): void {
+    this.game = undefined;
   }
 
   makeBatsman(game: Game, player: Player): Player {
@@ -51,7 +54,7 @@ export class GameService {
   }
 
   getGameId(player: Player): Observable<string> {
-    return this.http.post(this.appService.baseUrl + '/hostGame', player)
+    return this.http.post(this.appService.baseUrl + '/game/hostGame', player)
       .map((response: Response) => {
         console.log(response.text());
         return response.text();
@@ -59,15 +62,15 @@ export class GameService {
   }
 
   joinGame(player: Player, id: string): Observable<Game> {
-    return this.http.post(this.appService.baseUrl + '/joinGame/' + id, player)
+    return this.http.post(this.appService.baseUrl + '/game/joinGame/' + id, player)
       .map((response: Response) => {
         console.log(response.json());
         return response.json();
       });
   }
 
-  isConnected(game: Game): boolean {
-    return game.batsman != undefined && game.bowler != undefined;
+  isConnected(): boolean {
+    return this.getGame().batsman != undefined && this.getGame().bowler != undefined;
   }
 
   isGameOver(): boolean {

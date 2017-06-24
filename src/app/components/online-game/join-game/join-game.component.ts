@@ -15,9 +15,7 @@ import { SocketService } from '../../../services/socket.service';
 
 export class JoinGameComponent {
   player: Player;
-
-  isInfoSaved: boolean = false;
-
+  infoSaved: boolean;
   // enums
   PlayerType = PlayerType;
 
@@ -25,6 +23,11 @@ export class JoinGameComponent {
               private playerService: PlayerService,
               private socketService: SocketService) {
     this.player = playerService.getPlayer();
+  }
+
+  collectInfo(): boolean {
+    if (this.gameService.isConnected()) return false;
+    return !this.infoSaved;
   }
 
   getGameId(): void {
@@ -50,9 +53,7 @@ export class JoinGameComponent {
     this.gameService.joinGame(this.player, this.gameService.getGame().id).subscribe(
       (game: Game) => {
         this.gameService.setGame(game);
-        console.log(`Updated Game: ${JSON.stringify(this.gameService.getGame())}`);
         this.socketService.subscribetoGame(this.gameService.getGame());
-        console.log(`Subscribed Game: ${JSON.stringify(this.gameService.getGame())}`);
       },
       (error) => console.log(error)
     );

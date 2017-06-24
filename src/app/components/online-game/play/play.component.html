@@ -1,15 +1,8 @@
 <div>
 
-  {{JSON.stringify(gameService.getGame())}}
+  <online-game-status></online-game-status>
 
-  <div>
-    <button *ngIf='!gameConnected' class="btn btn-success" (click)='connectGame()'>Connect Game</button>
-    <button *ngIf='gameConnected' class="btn btn-warning" (click)='disconnectGame()'>Disconnect Game</button>
-  </div>
-
-
-
-  <div class="row" *ngIf='gameConnected'>
+  <div class="row">
 
     <div class="col-xs-6">
       <div>
@@ -20,34 +13,28 @@
             (click)='sendInput()' [disabled]='!playEnabled()'>Play</button>
         </div>
         <div>
-          <h3>Game Board</h3>
-          <div>
-            <p>You are now {{ isBatsman() ? "Batting" : "Bowling" }}</p>
-            <p>You scored {{ getCurrentPlayer().runs }} runs in {{ getCurrentPlayer().balls }} balls</p>
-            <p>Opp scored {{ getOtherPlayer().runs }} runs in {{ getOtherPlayer().balls }} balls</p>
-          </div>
+
         </div>
       </div>
     </div>
 
     <div class="col-xs-6">
-      <div class="form-group well well-sm">
-        <label for="lastPlayedInput">Opponent Played: </label>
-        <div>
-          Batsman Played: {{gameService.getGame().batsman.lastDelivery}}
-        </div>
-        <div>
-          Bowler Played: {{gameService.getGame().bowler.lastDelivery}}
-        </div>
-      </div>
       <div>
-        <h4>Note</h4>
-        <p>
-            {{playService.notice}}
-        </p>
+        <div *ngIf="playService.notice" class="alert alert-info">
+          {{playService.notice}}
+        </div>
       </div>
     </div>
 
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <online-score-board></online-score-board>
+    </div>
+    <div class="col-md-6">
+      <chat></chat>
+    </div>
   </div>
 
 </div>
