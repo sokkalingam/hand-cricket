@@ -20,6 +20,9 @@
 
     <div class="col-xs-6">
       <div>
+        <div *ngIf="playService.hightlight" class="alert alert-danger">
+          {{playService.hightlight}}
+        </div>
         <div *ngIf="playService.notice" class="alert alert-info">
           {{playService.notice}}
         </div>

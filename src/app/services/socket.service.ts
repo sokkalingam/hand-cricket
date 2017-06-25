@@ -7,8 +7,10 @@ import { Message } from '../model/Message';
 import { PlayerType } from '../enum/PlayerType';
 
 import { GameService } from './game.service'
+import { PlayerService } from './player.service'
 import { ApplicationService } from './application.service';
 import { PlayService } from './play.service';
+import { HelperService } from './helper.service';
 
 var Stomp = require('stompjs');
 var SockJS = require('sockjs-client');
@@ -20,23 +22,28 @@ export class SocketService {
   stompClient: any;
 
   constructor(private gameService: GameService,
+              private playerService: PlayerService,
               private appService: ApplicationService,
-              private playService: PlayService) {}
+              private playService: PlayService,
+              private herlperService: HelperService) {}
 
-  connectChat(gameId: string, message: Message) {
-    this.stompClient.send(`/app/chat/${gameId}/connect`, {}, JSON.stringify(message));
+  connectChat(message: Message) {
+    this.stompClient.send(`/app/chat/${this.gameService.getGame().id}/connect`, {}, JSON.stringify(message));
   }
 
-  disconnectChat(gameId: string, message: Message) {
-    this.stompClient.send(`/app/chat/${gameId}/disconnect`, {}, JSON.stringify(message));
+  disconnectChat(message: Message) {
+    this.stompClient.send(`/app/chat/${this.gameService.getGame().id}/disconnect`, {}, JSON.stringify(message));
   }
 
-  sendChatMessage(gameId: string, message: Message) {
-    this.stompClient.send(`/app/chat/${gameId}`, {}, JSON.stringify(message));
+  sendChatMessage(message: Message) {
+    this.stompClient.send(`/app/chat/${this.gameService.getGame().id}`, {},
+    JSON.stringify(message));
   }
 
-  sendInput(gameId: string, playerId: string, number: number): void {
-    this.stompClient.send(`/app/game/play/${gameId}/${playerId}`, {}, number);
+  sendInput(number: number): void {
+    this.stompClient
+      .send(`/app/game/play/${this.gameService.getGame().id}/${this.playerService.getPlayer().id}`,
+        {}, number);
   }
 
   connect(): any {
@@ -58,43 +65,54 @@ export class SocketService {
       //   messages.push(message);
       // });
     }, function (err: any) {
-      // console.log('Socket Disconnected', err);
-      setTimeout(window.location.reload, 5000);
+      console.log('Socket Disconnected', err);
+      setTimeout(that.herlperService.reloadPage, 5000, window);
     });
   }
 
-  subscribetoGame(game: Game): any {
-    return this.stompClient.subscribe(`/game/${game.id}`, (response: any) => {
+  subscribetoGame(): any {
+    return this.stompClient.subscribe(`/game/${this.gameService.getGame().id}`, (response: any) => {
       console.log('Game Subscription: ' + JSON.stringify(response));
       this.gameService.setGame(JSON.parse(response.body));
     });
   }
 
-  subscribetoChat(gameId: string, messages: Message[]): any {
-    return this.stompClient.subscribe(`/chat/${gameId}`, (response: any) => {
+  subscribetoChat(messages: Message[]): any {
+    return this.stompClient.subscribe(`/chat/${this.gameService.getGame().id}`, (response: any) => {
       console.log('Chat Subscription: ' + JSON.stringify(response));
       messages.push(JSON.parse(response.body));
     });
   }
 
-  subscribeToNotice(gameId: string, playerId: string): any {
-    return this.stompClient.subscribe(`/game/player/notify/${gameId}/${playerId}`, (response: any) => {
-      console.log('Notice Subscription: ' + JSON.stringify(response));
-      this.playService.notice = response.body;
+  subscribeToNotice(): any {
+    return this.stompClient.subscribe(`/game/player/notify/${this.gameService.getGame().id}/${this.playerService.getPlayer().id}`,
+        (response: any) => {
+          console.log('Notice Subscription: ' + JSON.stringify(response));
+          this.playService.notice = response.body;
     });
   }
 
-  subscribeToWait(gameId: string, playerId: string): any {
-    return this.stompClient.subscribe(`/game/player/wait/${gameId}/${playerId}`, (response: any) => {
-      console.log('Wait Subscription: ' + JSON.stringify(response));
-      this.playService.setWait(response.body === 'true');
+  subscribeToWait(): any {
+    return this.stompClient.subscribe(`/game/player/wait/${this.gameService.getGame().id}/${this.playerService.getPlayer().id}`,
+      (response: any) => {
+        console.log('Wait Subscription: ' + JSON.stringify(response));
+        this.playService.setWait(response.body === 'true');
     });
   }
 
-  subscribeToResult(gameId: string, playerId: string): any {
-    return this.stompClient.subscribe(`/game/result/${gameId}/${playerId}`, (response: any) => {
-      console.log('Result Subscription: ' + JSON.stringify(response));
-      this.playService.notice = response.body;
+  subscribeToResult(): any {
+    return this.stompClient.subscribe(`/game/result/${this.gameService.getGame().id}/${this.playerService.getPlayer().id}`,
+      (response: any) => {
+        console.log('Result Subscription: ' + JSON.stringify(response));
+        this.playService.notice = response.body;
+    });
+  }
+
+  subscribeToHighlight(): any {
+    return this.stompClient.subscribe(`/game/highlight/${this.gameService.getGame().id}/${this.playerService.getPlayer().id}`,
+      (response: any) => {
+        console.log('Highlight Subscription: ' + JSON.stringify(response));
+        this.playService.hightlight = response.body;
     });
   }
 

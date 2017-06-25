@@ -14,4 +14,8 @@ export class HelperService {
     id = id.toUpperCase();
     return id;
   }
+
+  reloadPage(window: Window): void {
+    window.location.reload();
+  }
 }

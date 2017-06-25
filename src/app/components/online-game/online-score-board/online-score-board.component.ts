@@ -16,14 +16,14 @@ export class OnlineScoreBoardComponent {
               private gameService: GameService) {}
 
   showCurrentPlayerScore(): boolean {
-    return this.playerService.isBatsman(this.gameService.getGame()) ||
-      this.playerService.isCurrentPlayerOut(this.gameService.getGame()) ||
+    return this.playerService.isBatsman() ||
+      this.playerService.isCurrentPlayerOut() ||
       this.gameService.isGameOver() || this.gameService.isGameDraw();
   }
 
   showOtherPlayerScore(): boolean {
-    return this.playerService.isBowler(this.gameService.getGame()) ||
-      this.playerService.isOtherPlayerOut(this.gameService.getGame()) ||
+    return this.playerService.isBowler() ||
+      this.playerService.isOtherPlayerOut() ||
       this.gameService.isGameOver() || this.gameService.isGameDraw();
   }
 
