@@ -12,13 +12,15 @@ import { ApplicationService } from './application.service';
 import { PlayService } from './play.service';
 import { HelperService } from './helper.service';
 
+import * as _ from 'lodash';
+
 var Stomp = require('stompjs');
 var SockJS = require('sockjs-client');
 
 @Injectable()
 export class SocketService {
 
-  retryTimeOutInSeconds: number = 30;
+  retryTimeOutInSeconds: number = 10;
 
   socket: any;
   stompClient: any;
@@ -68,7 +70,10 @@ export class SocketService {
       // });
     }, function (err: any) {
       console.log('Socket Disconnected', err);
-      setTimeout(that.herlperService.reloadPage, 20000, window);
+      if (that.gameService.isConnected())
+        window.location.reload();
+      else
+        setTimeout(_.bind(that.connect, that), that.retryTimeOutInSeconds * 1000);
     });
   }
 

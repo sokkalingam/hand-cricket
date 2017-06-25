@@ -13,8 +13,7 @@ const routes: Routes = [
     path: 'onlineGame',
     component: OnlineGameComponent
   },
-  {
-    path: '',
+  { path: '**',
     redirectTo: '/offlineGame',
     pathMatch: 'full'
   }
