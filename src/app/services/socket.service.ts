@@ -18,6 +18,8 @@ var SockJS = require('sockjs-client');
 @Injectable()
 export class SocketService {
 
+  retryTimeOutInSeconds: number = 30;
+
   socket: any;
   stompClient: any;
 
