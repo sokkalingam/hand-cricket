@@ -1,32 +1,26 @@
 <div>
 
-  <online-game-status></online-game-status>
-
   <div class="row">
 
     <div class="col-xs-6">
-      <div>
-        <div class="form-group well well-sm">
-          <label for="lastPlayedInput">Your Input: </label>
-          <input name='input' [(ngModel)]='input' type='number' />
-          <button type="submit" class="btn btn-success"
-            (click)='sendInput()' [disabled]='!playEnabled()'>Play</button>
-        </div>
-        <div>
-
-        </div>
+      <h3>Live Gameplay</h3>
+      <online-game-status></online-game-status>
+      <div class="form-group well well-sm">
+        <label for="lastPlayedInput">Your Input: </label>
+        <input name='input' [(ngModel)]='input' type='number' />
+        <button type="submit" class="btn btn-success"
+          (click)='sendInput()' [disabled]='!playEnabled()'>Play</button>
       </div>
     </div>
 
     <div class="col-xs-6">
-      <div>
+      <h3>Game Updates</h3>
         <div *ngIf="playService.hightlight" class="alert alert-danger">
           {{playService.hightlight}}
         </div>
-        <div *ngIf="playService.notice" class="alert alert-info">
+        <div *ngIf="playService.notice" class="alert alert-primary">
           {{playService.notice}}
         </div>
-      </div>
     </div>
 
   </div>

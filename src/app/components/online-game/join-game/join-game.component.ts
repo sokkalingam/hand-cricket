@@ -34,7 +34,7 @@ export class JoinGameComponent {
     this.gameService.getGameId(this.player).subscribe(
       (gameId: string) => {
         this.gameService.getGame().id = gameId,
-        this.socketService.subscribetoGame(this.gameService.getGame());
+        this.socketService.subscribetoGame();
       },
       (error) => console.log(error)
     );
@@ -53,7 +53,7 @@ export class JoinGameComponent {
     this.gameService.joinGame(this.player, this.gameService.getGame().id).subscribe(
       (game: Game) => {
         this.gameService.setGame(game);
-        this.socketService.subscribetoGame(this.gameService.getGame());
+        this.socketService.subscribetoGame();
       },
       (error) => console.log(error)
     );

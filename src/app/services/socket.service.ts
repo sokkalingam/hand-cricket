@@ -66,7 +66,7 @@ export class SocketService {
       // });
     }, function (err: any) {
       console.log('Socket Disconnected', err);
-      setTimeout(that.herlperService.reloadPage, 5000, window);
+      setTimeout(that.herlperService.reloadPage, 20000, window);
     });
   }
 
