@@ -12,5 +12,5 @@
 </div> -->
 
 <h3 *ngIf='!isOnline()' class="text-info">Attempting to connect to server...</h3>
-<join-game *ngIf='isOnline()'></join-game>
+<join-game *ngIf='isOnline() && !isGameConnected()'></join-game>
 <play *ngIf='isGameConnected()'></play>
