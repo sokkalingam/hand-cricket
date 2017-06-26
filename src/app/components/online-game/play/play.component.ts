@@ -57,6 +57,20 @@ export class PlayComponent {
   sendInput(): void {
     if (!this.playEnabled()) return;
     this.socketService.sendInput(this.input);
+    this.clearInputAndUpdates();
+  }
+
+  restartGame(): void {
+    this.clearInputAndUpdates();
+    this.gameService.restartGame().subscribe(
+      (text: string) => {
+        console.log(text);
+      },
+      (error) => console.log(error)
+    );
+  }
+
+  clearInputAndUpdates(): void {
     this.input = undefined;
     this.playService.notice = undefined;
     this.playService.hightlight = undefined;
