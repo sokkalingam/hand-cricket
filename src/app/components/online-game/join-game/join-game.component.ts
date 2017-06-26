@@ -16,6 +16,7 @@ import { SocketService } from '../../../services/socket.service';
 export class JoinGameComponent {
   player: Player;
   infoSaved: boolean;
+  errorMessage: string;
   // enums
   PlayerType = PlayerType;
 
@@ -55,7 +56,10 @@ export class JoinGameComponent {
         this.gameService.setGame(game);
         this.socketService.subscribetoGame();
       },
-      (error) => console.log(error)
+      (error) => {
+        console.log(error);
+        this.errorMessage = 'Sorry, could not find any open game';
+      }
     );
   }
 }

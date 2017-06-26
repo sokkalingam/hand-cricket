@@ -9,7 +9,7 @@
     </h3>
   </div>
   <button type="button" class="btn btn-success btn-lg"
-    *ngIf='player.name?.length > 0' (click)='infoSaved = true'>Save</button>
+    [disabled]='player.name?.trim().length == 0' (click)='infoSaved = true'>Save</button>
   </form>
 </div>
 
@@ -32,10 +32,11 @@
   <div class="form-group">
     <h3>
       <label for="playerName">Enter your Game ID: </label>
-      <input type='text' class='form-control' name='gameId' [(ngModel)]='gameService.getGame().id' />
+      <input type='text' class='form-control' name='gameId' [(ngModel)]='gameService.getGame().id' (ngModelChange)='errorMessage = ""'/>
     </h3>
+    <span class='text-danger'>{{errorMessage}}</span>
   </div>
   <button type="button" class="btn btn-success btn-lg"
-    (click)='joinGame()'>Enter Game</button>
+    [disabled]='gameService.getGame().id?.trim().length == 0' (click)='joinGame()'>Enter Game</button>
   </form>
 </div>

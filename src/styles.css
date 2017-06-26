@@ -4,10 +4,6 @@ h1 {
   font-size: 250%;
 }
 
-body, html, .container-fluid {
-	height: 100%;
-}
-
 .padding {
   margin: 10px;
 }
