@@ -50,6 +50,10 @@ export class SocketService {
         {}, number);
   }
 
+  quitGame(): void {
+    this.stompClient.send(`/app/game/${this.gameService.getGame().id}/quit`, {}, this.playerService.getPlayer().id);
+  }
+
   connect(): any {
     var that = this;
     this.socket = new SockJS(`${this.appService.baseUrl}/game/socket-registration`);
