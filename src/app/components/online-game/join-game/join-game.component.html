@@ -24,8 +24,8 @@
 
     <!-- Display Game ID -->
     <div *ngIf='player.type == PlayerType.Host && !gameService.isConnected(gameService.getGame())'>
-      <h3>Share this Game ID to your friend: <span class="text-primary">{{gameService.getGame()?.id}}</span></h3>
-      <h4 class='text-danger'>Waiting for your friend to joing the game...</h4>
+      <h3>Share this Game ID with your friend: <span class="text-primary">{{gameService.getGame()?.id}}</span></h3>
+      <h4 class='text-danger'>Waiting for your friend to join the game...</h4>
     </div>
 
     <!-- Receive Game ID -->
