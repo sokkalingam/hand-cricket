@@ -8,11 +8,11 @@ import { PlayerStatus } from '../../enum/PlayerStatus';
 import { GameStatus } from '../../enum/GameStatus';
 
 @Component({
-  selector: 'game',
-  templateUrl: './game.component.html'
+  selector: 'offline-game',
+  templateUrl: './offline-game.component.html'
 })
 
-export class GameComponent {
+export class OfflineGameComponent {
 
   /**
   * Init Enums

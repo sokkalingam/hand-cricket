@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { GameStatus } from '../../enum/GameStatus';
-import { PlayerType } from '../../enum/PlayerType';
+import { GameStatus } from '../../../enum/GameStatus';
+import { PlayerType } from '../../../enum/PlayerType';
 
-import { Game } from '../../model/Game';
+import { Game } from '../../../model/Game';
 
 @Component({
   selector: 'game-status',

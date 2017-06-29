@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Player } from '../../model/Player';
+import { Player } from '../../../model/Player';
 
 @Component({
   selector: 'score-board',
