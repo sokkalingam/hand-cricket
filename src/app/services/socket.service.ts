@@ -7,6 +7,7 @@ import { Message } from '../model/Message';
 import { PlayerType } from '../enum/PlayerType';
 
 import { GameService } from './game.service'
+import { ApplicationService } from './application.service';
 
 var Stomp = require('stompjs');
 var SockJS = require('sockjs-client');
@@ -17,8 +18,8 @@ export class SocketService {
   socket: any;
   stompClient: any;
 
-  constructor(private gameService: GameService) {
-  }
+  constructor(private gameService: GameService,
+              private appService: ApplicationService) {}
 
   connectChat(gameId: string, message: Message) {
     this.stompClient.send(`/app/chat/${gameId}/connect`, {}, JSON.stringify(message));
@@ -38,7 +39,7 @@ export class SocketService {
 
   connect(): any {
     var that = this;
-    this.socket = new SockJS('http://localhost:8080/socket-registration');
+    this.socket = new SockJS(`${this.appService.baseUrl}/socket-registration`);
     this.stompClient = Stomp.over(this.socket);
     console.log('StompClient: ' + JSON.stringify(this.stompClient));
     this.stompClient.connect({}, function (frame: any) {

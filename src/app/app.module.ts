@@ -21,6 +21,7 @@ import { ChatComponent } from './components/online-game/chat/chat.component';
 
 import { SocketService } from './services/socket.service';
 import { GameService } from './services/game.service';
+import { ApplicationService } from './services/application.service';
 
 @NgModule({
   imports:      [ BrowserModule,
@@ -43,7 +44,8 @@ import { GameService } from './services/game.service';
                   ChatComponent
                 ],
   providers:    [ SocketService,
-                  GameService
+                  GameService,
+                  ApplicationService
                 ],
   bootstrap:    [ AppComponent ]
 })
