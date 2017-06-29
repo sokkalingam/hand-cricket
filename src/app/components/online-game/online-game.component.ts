@@ -8,6 +8,7 @@ import { PlayerType } from '../../enum/PlayerType';
 import { SocketService } from '../../services/socket.service';
 import { GameService } from '../../services/game.service';
 import { PlayerService } from '../../services/player.service';
+import { CountdownService } from '../../services/countdown.service';
 
 @Component({
   selector: 'online-game',
@@ -18,12 +19,14 @@ export class OnlineGameComponent implements OnInit, OnDestroy {
 
   constructor(private socketService: SocketService,
               private gameService: GameService,
-              private playerService: PlayerService) {
+              private playerService: PlayerService,
+              private countdownService: CountdownService) {
     playerService.setPlayer(new Player(PlayerType.User));
   }
 
   ngOnInit(): void {
     this.connect();
+    this.countdownService.countdown();
   }
 
   ngOnDestroy(): void {

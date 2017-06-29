@@ -70,8 +70,8 @@ export class GameService {
   }
 
   restartGame(): Observable<string> {
-    console.log(`${this.appService.baseUrl}/game/${this.getGame().id}/restart`);
-    return this.http.get(`${this.appService.baseUrl}/game/${this.getGame().id}/restart`)
+    console.log(`${this.appService.baseUrl}/game/restart/${this.getGame().id}`);
+    return this.http.get(`${this.appService.baseUrl}/game/restart/${this.getGame().id}`)
       .map((response: Response) => {
         console.log('restartGame: ' + JSON.stringify(response));
         return response.text();

@@ -28,6 +28,7 @@ import { ApplicationService } from './services/application.service';
 import { PlayService } from './services/play.service';
 import { PlayerService } from './services/player.service';
 import { HelperService } from './services/helper.service';
+import { CountdownService } from './services/countdown.service';
 
 @NgModule({
   imports:      [ BrowserModule,
@@ -57,7 +58,8 @@ import { HelperService } from './services/helper.service';
                   ApplicationService,
                   PlayService,
                   PlayerService,
-                  HelperService
+                  HelperService,
+                  CountdownService
                 ],
   bootstrap:    [ AppComponent ]
 })
