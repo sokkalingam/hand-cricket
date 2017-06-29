@@ -17,14 +17,12 @@ import { GameSequenceService } from '../../services/game-sequence.service';
 
 export class OnlineGameComponent implements OnInit {
   player: Player;
-  game: Game;
   JSON = JSON;
 
   constructor(private socketService: SocketService,
               private gameService: GameService,
               private gameSequenceService: GameSequenceService) {
     this.player = new Player(PlayerType.User);
-    this.game = gameService.getGame();
   }
 
   ngOnInit(): void {

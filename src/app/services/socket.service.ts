@@ -8,6 +8,7 @@ import { PlayerType } from '../enum/PlayerType';
 
 import { GameService } from './game.service'
 import { ApplicationService } from './application.service';
+import { PlayService } from './play.service';
 
 var Stomp = require('stompjs');
 var SockJS = require('sockjs-client');
@@ -19,7 +20,8 @@ export class SocketService {
   stompClient: any;
 
   constructor(private gameService: GameService,
-              private appService: ApplicationService) {}
+              private appService: ApplicationService,
+              private playService: PlayService) {}
 
   connectChat(gameId: string, message: Message) {
     this.stompClient.send(`/app/chat/${gameId}/connect`, {}, JSON.stringify(message));
@@ -35,6 +37,10 @@ export class SocketService {
 
   send(player: Player, text: string): void {
     this.stompClient.send(`/app/game/ABCDE/${player.id}`, {}, JSON.stringify({ 'name': text }));
+  }
+
+  sendInput(gameId: string, playerId: string, number: number): void {
+    this.stompClient.send(`/app/play/${gameId}/${playerId}`, {}, number);
   }
 
   connect(): any {
@@ -74,6 +80,13 @@ export class SocketService {
       console.log('Chat Subscription: ' + JSON.stringify(response));
       messages.push(JSON.parse(response.body));
       setTimeout(scrollFn, 100, messages[messages.length - 1]);
+    });
+  }
+
+  subscribeToNotice(gameId: string, playerId: string): any {
+    return this.stompClient.subscribe(`/notice/${gameId}/${playerId}`, (response: any) => {
+      console.log('Notice Subscription: ' + JSON.stringify(response));
+      this.playService.notice = response.body;
     });
   }
 

@@ -17,6 +17,7 @@ export class Player {
 
   constructor(type: PlayerType) {
     this.id = HelperService.getRandomId(5);
+    this.status = PlayerStatus.NotOut;
     this.type = type;
   }
 

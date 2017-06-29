@@ -18,10 +18,12 @@ import { PlaySelectComponent } from './components/play-select/play-select.compon
 import { OnlineGameComponent } from './components/online-game/online-game.component';
 import { JoinGameComponent } from './components/online-game/join-game/join-game.component';
 import { ChatComponent } from './components/online-game/chat/chat.component';
+import { PlayComponent } from './components/online-game/play/play.component';
 
 import { SocketService } from './services/socket.service';
 import { GameService } from './services/game.service';
 import { ApplicationService } from './services/application.service';
+import { PlayService } from './services/play.service';
 
 @NgModule({
   imports:      [ BrowserModule,
@@ -41,11 +43,13 @@ import { ApplicationService } from './services/application.service';
 									PlaySelectComponent,
                   OnlineGameComponent,
                   JoinGameComponent,
-                  ChatComponent
+                  ChatComponent,
+                  PlayComponent
                 ],
   providers:    [ SocketService,
                   GameService,
-                  ApplicationService
+                  ApplicationService,
+                  PlayService
                 ],
   bootstrap:    [ AppComponent ]
 })
