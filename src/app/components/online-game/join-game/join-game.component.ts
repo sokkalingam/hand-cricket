@@ -5,7 +5,7 @@ import { Game } from '../../../model/Game';
 
 import { PlayerType } from '../../../enum/PlayerType';
 import { GameService } from '../../../services/game.service';
-import { GameSequenceService } from '../../../services/game-sequence.service';
+import { PlayerService } from '../../../services/player.service';
 import { SocketService } from '../../../services/socket.service';
 
 @Component({
@@ -14,17 +14,21 @@ import { SocketService } from '../../../services/socket.service';
 })
 
 export class JoinGameComponent {
-  @Input() player: Player;
-  // @Input() game: Game;
-
-  isInfoSaved: boolean = false;
-
+  player: Player;
+  infoSaved: boolean;
   // enums
   PlayerType = PlayerType;
 
   constructor(private gameService: GameService,
-              private gameSequenceService: GameSequenceService,
-              private socketService: SocketService) { }
+              private playerService: PlayerService,
+              private socketService: SocketService) {
+    this.player = playerService.getPlayer();
+  }
+
+  collectInfo(): boolean {
+    if (this.gameService.isConnected()) return false;
+    return !this.infoSaved;
+  }
 
   getGameId(): void {
     this.gameService.getGameId(this.player).subscribe(
@@ -39,21 +43,17 @@ export class JoinGameComponent {
   setHost(): void {
     this.player.type = PlayerType.Host;
     this.getGameId();
-    this.gameSequenceService.isHostOrJoinDone = true;
   }
 
   setGuest(): void {
     this.player.type = PlayerType.Guest;
-    this.gameSequenceService.isHostOrJoinDone = true;
   }
 
   joinGame(): void {
     this.gameService.joinGame(this.player, this.gameService.getGame().id).subscribe(
       (game: Game) => {
         this.gameService.setGame(game);
-        console.log(`Updated Game: ${JSON.stringify(this.gameService.getGame())}`);
         this.socketService.subscribetoGame(this.gameService.getGame());
-        console.log(`Subscribed Game: ${JSON.stringify(this.gameService.getGame())}`);
       },
       (error) => console.log(error)
     );

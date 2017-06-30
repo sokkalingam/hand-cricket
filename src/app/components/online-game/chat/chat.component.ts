@@ -6,6 +6,7 @@ import { Game } from '../../../model/Game';
 
 import { SocketService } from '../../../services/socket.service';
 import { GameService } from '../../../services/game.service';
+import { PlayerService } from '../../../services/player.service';
 
 @Component({
   selector: 'chat',
@@ -15,7 +16,7 @@ import { GameService } from '../../../services/game.service';
 
 export class ChatComponent {
 
-  @Input() player: Player;
+  player: Player;
   messages: Message[] = [];
   text: string = '';
   chatConnected: boolean;
@@ -23,7 +24,12 @@ export class ChatComponent {
   chatSubsription: any;
 
   constructor(private socketService: SocketService,
-              private gameService: GameService) { }
+              private gameService: GameService,
+              private playerService: PlayerService) {
+    this.player = playerService.getCurrentPlayer(gameService.getGame());
+    this.socketService.subscribetoChat(this.gameService.getGame().id, this.messages);
+    this.socketService.connectChat(this.gameService.getGame().id, this.composeMessage(''));
+  }
 
   composeMessage(text: string): Message {
     return new Message(this.player, text);
@@ -37,7 +43,7 @@ export class ChatComponent {
 
   connectToChat(): void {
     if (this.chatSubsription) return;
-    this.chatSubsription = this.socketService.subscribetoChat(this.gameService.getGame().id, this.messages, this.scrollToBottom);
+    this.chatSubsription = this.socketService.subscribetoChat(this.gameService.getGame().id, this.messages);
     this.socketService.connectChat(this.gameService.getGame().id, this.composeMessage(''));
     this.chatConnected = true;
   }

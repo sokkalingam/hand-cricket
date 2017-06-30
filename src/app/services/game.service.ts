@@ -17,7 +17,8 @@ import 'rxjs/add/operator/map';
 export class GameService {
   game: Game;
 
-  constructor(private http: Http, private appService: ApplicationService) {}
+  constructor(private http: Http,
+              private appService: ApplicationService) {}
 
   setGame(game: Game): void {
     this.game = game;
@@ -27,6 +28,10 @@ export class GameService {
     if (!this.game)
       this.game = new Game();
     return this.game;
+  }
+
+  resetGame(): void {
+    this.game = undefined;
   }
 
   makeBatsman(game: Game, player: Player): Player {
@@ -49,7 +54,7 @@ export class GameService {
   }
 
   getGameId(player: Player): Observable<string> {
-    return this.http.post(this.appService.baseUrl + '/hostGame', player)
+    return this.http.post(this.appService.baseUrl + '/game/hostGame', player)
       .map((response: Response) => {
         console.log(response.text());
         return response.text();
@@ -57,15 +62,27 @@ export class GameService {
   }
 
   joinGame(player: Player, id: string): Observable<Game> {
-    return this.http.post(this.appService.baseUrl + '/joinGame/' + id, player)
+    return this.http.post(this.appService.baseUrl + '/game/joinGame/' + id, player)
       .map((response: Response) => {
         console.log(response.json());
         return response.json();
       });
   }
 
-  isConnected(game: Game): boolean {
-    return game.batsman != undefined && game.bowler != undefined;
+  isConnected(): boolean {
+    return this.getGame().batsman != undefined && this.getGame().bowler != undefined;
+  }
+
+  isGameOver(): boolean {
+    return this.getGame().gameStatus.toString() === GameStatus[GameStatus.GAME_OVER];
+  }
+
+  isGameDraw(): boolean {
+    return this.getGame().gameStatus.toString() === GameStatus[GameStatus.DRAW];
+  }
+
+  isGameInProgress(): boolean {
+    return this.getGame().gameStatus.toString() === GameStatus[GameStatus.IN_PROGRESS];
   }
 
 }

@@ -3,5 +3,6 @@ export enum GameStatus {
   COMPUTER_WON,
   DRAW,
   NOT_STARTED,
-  IN_PROGRESS
+  IN_PROGRESS,
+  GAME_OVER
 }
