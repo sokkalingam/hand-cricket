@@ -1,13 +1,13 @@
 <h3>Online Game Status</h3>
 
 <div *ngIf='(gameService.isGameInProgress())'>
-  <div class="alert alert-info" role="alert" *ngIf='playerService.isBatsman(gameService.getGame())'>You are now BATTING</div>
-  <div class="alert alert-warning" role="alert" *ngIf='playerService.isBowler(gameService.getGame())'>You are now BOWLING</div>
+  <div class="alert alert-info" role="alert" *ngIf='playerService.isBatsman()'>You are now BATTING</div>
+  <div class="alert alert-warning" role="alert" *ngIf='playerService.isBowler()'>You are now BOWLING</div>
 </div>
-<div *ngIf='playerService.currentPlayerWon(gameService.getGame())' class="alert alert-success" role="alert">
+<div *ngIf='playerService.currentPlayerWon()' class="alert alert-success" role="alert">
   Game Over! You Won
 </div>
-<div *ngIf='playerService.currentPlayerLost(gameService.getGame())' class="alert alert-danger" role="alert">
+<div *ngIf='playerService.currentPlayerLost()' class="alert alert-danger" role="alert">
   Game Over! You Lost
 </div>
 <div *ngIf='gameService.isGameDraw()' class="alert alert-warning" role="alert">

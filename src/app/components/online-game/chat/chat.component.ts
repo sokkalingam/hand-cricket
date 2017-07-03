@@ -26,9 +26,9 @@ export class ChatComponent {
   constructor(private socketService: SocketService,
               private gameService: GameService,
               private playerService: PlayerService) {
-    this.player = playerService.getCurrentPlayer(gameService.getGame());
-    this.socketService.subscribetoChat(this.gameService.getGame().id, this.messages);
-    this.socketService.connectChat(this.gameService.getGame().id, this.composeMessage(''));
+    this.player = playerService.getCurrentPlayer();
+    this.socketService.subscribetoChat(this.messages);
+    this.socketService.connectChat(this.composeMessage(''));
   }
 
   composeMessage(text: string): Message {
@@ -37,20 +37,20 @@ export class ChatComponent {
 
   send(): void {
     if (!this.text.trim()) return;
-    this.socketService.sendChatMessage(this.gameService.getGame().id, this.composeMessage(this.text));
+    this.socketService.sendChatMessage(this.composeMessage(this.text));
     this.text = '';
   }
 
   connectToChat(): void {
     if (this.chatSubsription) return;
-    this.chatSubsription = this.socketService.subscribetoChat(this.gameService.getGame().id, this.messages);
-    this.socketService.connectChat(this.gameService.getGame().id, this.composeMessage(''));
+    this.chatSubsription = this.socketService.subscribetoChat(this.messages);
+    this.socketService.connectChat(this.composeMessage(''));
     this.chatConnected = true;
   }
 
   disconnectToChat(): void {
     if (!this.chatSubsription) return;
-    this.socketService.disconnectChat(this.gameService.getGame().id, this.composeMessage(''));
+    this.socketService.disconnectChat(this.composeMessage(''));
     this.chatSubsription.unsubscribe();
     this.chatSubsription = undefined;
     this.chatConnected = false;

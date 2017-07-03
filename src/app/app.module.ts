@@ -27,6 +27,7 @@ import { GameService } from './services/game.service';
 import { ApplicationService } from './services/application.service';
 import { PlayService } from './services/play.service';
 import { PlayerService } from './services/player.service';
+import { HelperService } from './services/helper.service';
 
 @NgModule({
   imports:      [ BrowserModule,
@@ -55,7 +56,8 @@ import { PlayerService } from './services/player.service';
                   GameService,
                   ApplicationService,
                   PlayService,
-                  PlayerService
+                  PlayerService,
+                  HelperService
                 ],
   bootstrap:    [ AppComponent ]
 })

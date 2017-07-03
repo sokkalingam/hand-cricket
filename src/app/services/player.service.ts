@@ -12,7 +12,7 @@ export class PlayerService {
 
   player: Player;
 
-  constructor(private gameService: GameService) {}
+  constructor(private gs: GameService) {}
 
   getPlayer(): Player {
     return this.player;
@@ -22,42 +22,44 @@ export class PlayerService {
     this.player = player;
   }
 
-  isBatsman(game: Game): boolean {
-    return game.batsman.id == this.getPlayer().id;
+  isBatsman(): boolean {
+    return this.gs.getGame().batsman.id == this.getPlayer().id;
   }
 
-  isBowler(game: Game): boolean {
-    return game.bowler.id == this.getPlayer().id;
+  isBowler(): boolean {
+    return this.gs.getGame().bowler.id == this.getPlayer().id;
   }
 
-  getCurrentPlayer(game: Game): Player {
+  getCurrentPlayer(): Player {
+    var game = this.gs.getGame();
     if (game.batsman.id == this.getPlayer().id)
       return game.batsman;
     if (game.bowler.id == this.getPlayer().id)
       return game.bowler;
   }
 
-  getOtherPlayer(game: Game): Player {
+  getOtherPlayer(): Player {
+    var game = this.gs.getGame();
     if (game.batsman.id != this.getPlayer().id)
       return game.batsman;
     if (game.bowler.id != this.getPlayer().id)
       return game.bowler;
   }
 
-  currentPlayerWon(game: Game): boolean {
-    return this.getCurrentPlayer(game).status.toString() === PlayerStatus[PlayerStatus.Won];
+  currentPlayerWon(): boolean {
+    return this.getCurrentPlayer().status.toString() === PlayerStatus[PlayerStatus.Won];
   }
 
-  currentPlayerLost(game: Game): boolean {
-    return this.getCurrentPlayer(game).status.toString() === PlayerStatus[PlayerStatus.Lost];
+  currentPlayerLost(): boolean {
+    return this.getCurrentPlayer().status.toString() === PlayerStatus[PlayerStatus.Lost];
   }
 
-  isCurrentPlayerOut(game: Game): boolean {
-    return this.getCurrentPlayer(game).status.toString() === PlayerStatus[PlayerStatus.Out];
+  isCurrentPlayerOut(): boolean {
+    return this.getCurrentPlayer().status.toString() === PlayerStatus[PlayerStatus.Out];
   }
 
-  isOtherPlayerOut(game: Game): boolean {
-    return this.getOtherPlayer(game).status.toString() === PlayerStatus[PlayerStatus.Out];
+  isOtherPlayerOut(): boolean {
+    return this.getOtherPlayer().status.toString() === PlayerStatus[PlayerStatus.Out];
   }
 
 }

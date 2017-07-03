@@ -28,25 +28,26 @@ export class PlayComponent {
               private playerService: PlayerService) {
     this.game = gameService.getGame();
     this.player = playerService.getPlayer();
-    this.socketService.subscribeToNotice(this.game.id, this.player.id);
-    this.socketService.subscribeToWait(this.game.id, this.player.id);
-    this.socketService.subscribeToResult(this.game.id, this.player.id);
+    this.socketService.subscribeToHighlight();
+    this.socketService.subscribeToNotice();
+    this.socketService.subscribeToWait();
+    this.socketService.subscribeToResult();
   }
 
   isBatsman(): boolean {
-    return this.playerService.isBatsman(this.gameService.getGame());
+    return this.playerService.isBatsman();
   }
 
   isBowler(): boolean {
-    return this.playerService.isBowler(this.gameService.getGame());
+    return this.playerService.isBowler();
   }
 
   getCurrentPlayer(): Player {
-    return this.playerService.getCurrentPlayer(this.gameService.getGame());
+    return this.playerService.getCurrentPlayer();
   }
 
   getOtherPlayer(): Player {
-    return this.playerService.getOtherPlayer(this.gameService.getGame());
+    return this.playerService.getOtherPlayer();
   }
 
   playEnabled(): boolean {
@@ -55,9 +56,10 @@ export class PlayComponent {
 
   sendInput(): void {
     if (!this.playEnabled()) return;
-    this.socketService.sendInput(this.game.id, this.player.id, this.input);
+    this.socketService.sendInput(this.input);
     this.input = undefined;
-    this.playService.notice = '';
+    this.playService.notice = undefined;
+    this.playService.hightlight = undefined;
   }
 
 }
