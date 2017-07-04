@@ -27,7 +27,6 @@ export class JoinGameComponent {
   }
 
   collectInfo(): boolean {
-    if (this.gameService.isConnected()) return false;
     return !this.infoSaved;
   }
 

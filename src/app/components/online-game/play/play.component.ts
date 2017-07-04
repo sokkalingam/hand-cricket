@@ -28,10 +28,12 @@ export class PlayComponent {
               private playerService: PlayerService) {
     this.game = gameService.getGame();
     this.player = playerService.getPlayer();
+    this.socketService.ping();
     this.socketService.subscribeToHighlight();
     this.socketService.subscribeToNotice();
     this.socketService.subscribeToWait();
     this.socketService.subscribeToResult();
+    this.socketService.subscribetoPing();
   }
 
   isBatsman(): boolean {
