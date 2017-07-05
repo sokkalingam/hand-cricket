@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
   <div class="col-md-4 bg-info">
     <div class="padding text-center">Player Id: {{playerService.getPlayer().id}}</div>
   </div>
@@ -9,7 +9,8 @@
   <div class="col-md-4" [class.bg-success]='isOnline()' [class.bg-danger]='!isOnline()'>
     <div class="padding text-center">Status: {{ isOnline() ? "Online" : "Offline"}}</div>
   </div>
-</div>
+</div> -->
 
+<h3 *ngIf='!isOnline()' class="text-info">Waiting to connect to server....</h3>
 <join-game *ngIf='isOnline()'></join-game>
 <play *ngIf='isGameConnected()'></play>
