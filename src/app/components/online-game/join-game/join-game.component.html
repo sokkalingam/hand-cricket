@@ -7,30 +7,32 @@
         <div class="form-group">
           <h3>
             <label for="playerName">Enter your name: </label>
-            <input type='text' class='form-control' name='name' [(ngModel)]='player.name' autocomplete='off' [maxlength]='20' />
+            <input type='text' class='form-control' name='name' [(ngModel)]='playerService.getPlayer().name' autocomplete='off' [maxlength]='20' />
           </h3>
         </div>
         <button type="button" class="btn btn-success btn-lg"
-        [disabled]='player.name?.trim().length == 0' (click)='infoSaved = true'>Save</button>
+        [disabled]='playerService.getPlayer().name?.trim().length == 0' (click)='saveInfo()'>Save</button>
       </form>
     </div>
 
+    <h3 *ngIf='gameService.getGame().connected == false'><div class='text-danger'>Opponent disconnected from game</div></h3>
+
     <!-- Ask Host or Join -->
-    <div *ngIf='!collectInfo() && !player.type'>
+    <div *ngIf='!collectInfo() && !playerService.getPlayer().type'>
       <h3>Would you like to Host or Join a Game?</h3>
       <button type="button" class="btn btn-primary btn-lg" (click)='setHost()'>Host</button>
       <button type="button" class="btn btn-success btn-lg" (click)='setGuest()'>Join</button>
     </div>
 
     <!-- Display Game ID -->
-    <div *ngIf='player.type == PlayerType.Host && !gameService.isConnected(gameService.getGame())'>
+    <div *ngIf='playerService.getPlayer().type == PlayerType.Host && !gameService.isConnected()'>
       <h3>Share this Game ID with your friend: <span class="text-primary">{{gameService.getGame()?.id}}</span></h3>
       <h4 class='text-danger'>Waiting for your friend to join the game...</h4>
     </div>
 
     <!-- Receive Game ID -->
-    <div *ngIf='player.type == PlayerType.Guest'>
-      <form *ngIf='!gameService.isConnected(gameService.getGame())'>
+    <div *ngIf='playerService.getPlayer().type == PlayerType.Guest'>
+      <form *ngIf='!gameService.isConnected()'>
         <div class="form-group">
           <h3>
             <label for="playerName">Enter your Game ID: </label>

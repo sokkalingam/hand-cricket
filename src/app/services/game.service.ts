@@ -79,7 +79,7 @@ export class GameService {
   }
 
   isConnected(): boolean {
-    return this.getGame().batsman != undefined && this.getGame().bowler != undefined;
+    return this.getGame().connected;
   }
 
   isGameOver(): boolean {

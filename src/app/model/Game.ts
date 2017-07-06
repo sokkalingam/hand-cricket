@@ -11,6 +11,8 @@ export class Game {
 	batsman: Player;
 	bowler: Player;
 
+  connected: boolean;
+
 	setBatsman(player: Player): void 	{
 		this.batsman = player;
 	}
