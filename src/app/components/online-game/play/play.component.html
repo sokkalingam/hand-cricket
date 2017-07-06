@@ -8,11 +8,14 @@
           {{playerService.getCurrentPlayer().name}}&emsp;{{playerService.getCurrentPlayer().wins}} : {{playerService.getOtherPlayer().wins}}   &emsp;{{playerService.getOtherPlayer().name}}
       </div>
       <online-game-status></online-game-status>
-      <div class="form-group well well-sm" *ngIf='gameService.isGameInProgress()'>
-        <label for="lastPlayedInput">Your Input: </label>
-        <input name='input' [(ngModel)]='input' type='number' (keydown.enter)='sendInput()' autocomplete='off' />
-        <button type="submit" class="btn btn-success" [disabled]='!playEnabled()'
-          (click)='sendInput()'>Play</button>
+      <div>
+        <button class="btn btn-primary" (click)='clickInput(0)' [disabled]='!playEnabled()'>0</button>
+        <button class="btn btn-primary" (click)='clickInput(1)' [disabled]='!playEnabled()'>1</button>
+        <button class="btn btn-primary" (click)='clickInput(2)' [disabled]='!playEnabled()'>2</button>
+        <button class="btn btn-primary" (click)='clickInput(3)' [disabled]='!playEnabled()'>3</button>
+        <button class="btn btn-primary" (click)='clickInput(4)' [disabled]='!playEnabled()'>4</button>
+        <button class="btn btn-primary" (click)='clickInput(5)' [disabled]='!playEnabled()'>5</button>
+        <button class="btn btn-primary" (click)='clickInput(6)' [disabled]='!playEnabled()'>6</button>
       </div>
       <div *ngIf='!gameService.isGameInProgress()'>
         <button (click)='restartGame()' class="btn btn-primary btn-lg">Restart Game</button>

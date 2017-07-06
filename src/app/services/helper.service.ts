@@ -7,6 +7,8 @@ import * as _ from 'lodash';
 @Injectable()
 export class HelperService {
 
+  noOfOutputs: number = 7;
+
   static getRandomId(len: number): string {
     var id = UUID.UUID();
     id = _.replace(id, /-/g, '');
@@ -17,5 +19,9 @@ export class HelperService {
 
   reloadPage(window: Window): void {
     window.location.reload();
+  }
+
+  getRandomNumber(): number {
+    return Math.floor(Math.random() * this.noOfOutputs);
   }
 }

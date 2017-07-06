@@ -12,6 +12,7 @@ import { GameStatus } from '../../../enum/GameStatus';
 import { ProgressBarService } from '../../../services/progress-bar.service';
 import { UpdateService } from '../../../services/update.service';
 import { GameService } from '../../../services/game.service';
+import { HelperService } from '../../../services/helper.service';
 
 @Component({
   selector: 'gameplay',
@@ -41,13 +42,14 @@ export class GameplayComponent {
 
   constructor(private progressBarService: ProgressBarService,
     private updateService: UpdateService,
-    private gameService: GameService) { }
+    private gameService: GameService,
+    private helperService: HelperService) { }
 
     /**
     * Returns a random number between 0 and 6, both included
     */
     getRandomNumber(): number {
-      return Math.floor(Math.random() * this.noOfOutputs);
+      return this.helperService.getRandomNumber();
     }
 
     restartGame(): void {
@@ -113,6 +115,11 @@ export class GameplayComponent {
       batsman.runs += bowler.lastDelivery;
       else
       batsman.runs += batsman.lastDelivery;
+    }
+
+    clickInput(num: number): void {
+      this.userInput = num;
+      this.play(this.game.batsman.type == PlayerType.User)
     }
 
     play(userBatting: boolean): void {
