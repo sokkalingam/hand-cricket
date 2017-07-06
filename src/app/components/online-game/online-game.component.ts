@@ -15,12 +15,15 @@ import { PlayerService } from '../../services/player.service';
 })
 
 export class OnlineGameComponent implements OnInit {
-  JSON = JSON;
+
+  secondsCounter: number;
 
   constructor(private socketService: SocketService,
               private gameService: GameService,
               private playerService: PlayerService) {
     playerService.setPlayer(new Player(PlayerType.User));
+    this.secondsCounter = socketService.retryTimeOutInSeconds;
+    this.countDownTimer();
   }
 
   ngOnInit(): void {
@@ -39,6 +42,14 @@ export class OnlineGameComponent implements OnInit {
 
   isGameConnected(): boolean {
     return this.isOnline() && this.gameService.isConnected();
+  }
+
+  countDownTimer(): void {
+    var that = this;
+    setInterval(() => {
+      if (that.secondsCounter > 0)
+        that.secondsCounter--;
+    }, 1000);
   }
 
 }
