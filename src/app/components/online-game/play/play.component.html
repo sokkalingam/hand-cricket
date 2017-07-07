@@ -8,7 +8,7 @@
           {{playerService.getCurrentPlayer().name}}&emsp;{{playerService.getCurrentPlayer().wins}} : {{playerService.getOtherPlayer().wins}}   &emsp;{{playerService.getOtherPlayer().name}}
       </div>
       <online-game-status></online-game-status>
-      <div>
+      <div *ngIf='gameService.isGameInProgress()'>
         <button class="btn btn-primary" (click)='clickInput(0)' [disabled]='!playEnabled()'>0</button>
         <button class="btn btn-primary" (click)='clickInput(1)' [disabled]='!playEnabled()'>1</button>
         <button class="btn btn-primary" (click)='clickInput(2)' [disabled]='!playEnabled()'>2</button>
