@@ -17,6 +17,7 @@ import { HelperService } from '../../../services/helper.service';
 @Component({
   selector: 'gameplay',
   templateUrl: './gameplay.component.html',
+  styleUrls: ['./gameplay.component.css'],
   providers: [ProgressBarService, UpdateService, GameService]
 })
 
@@ -24,6 +25,8 @@ export class GameplayComponent {
   @Input() user: Player;
   @Input() computer: Player;
   @Input() game: Game;
+
+  Math = Math;
 
   /**
   * Init Enums
@@ -112,9 +115,9 @@ export class GameplayComponent {
 
     addRuns(batsman: Player, bowler: Player): void {
       if (batsman.lastDelivery == 0)
-      batsman.runs += bowler.lastDelivery;
+        batsman.runs += bowler.lastDelivery;
       else
-      batsman.runs += batsman.lastDelivery;
+        batsman.runs += batsman.lastDelivery;
     }
 
     clickInput(num: number): void {
