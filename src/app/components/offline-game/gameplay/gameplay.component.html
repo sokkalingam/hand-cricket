@@ -38,20 +38,6 @@
 <div class="row text-center">
 
   <div class="col-xs-5">
-    <!-- <table class="table">
-      <thead>
-        <tr class="active">
-          <th class="text-center"><h3>User</h3></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td><h4>{{game.batsman.type == PlayerType.User ? "Batting" : "Bowling"}}</h4></td></tr>
-        <tr><td><h3>{{user.runs}} <small>runs</small></h3></td></tr>
-        <tr><td><h4>{{user.balls}} <small>balls</small></h4></td></tr>
-        <tr><td><small>Last Played: {{user?.lastDelivery}}</small></td></tr>
-        <tr><td><h3 *ngIf='user.status == PlayerStatus.Out' class='text-danger'>OUT</h3></td></tr>
-      </tbody>
-    </table> -->
     <div class="whole">
   		<div class="type standard">
   		<p>User</p>
@@ -63,9 +49,9 @@
   		</div>
   		<div class="content">
   			<ul>
-  				<li><span class="num">{{user.balls ? user.balls : 0}}</span> balls</li>
+          <li class='batting' *ngIf='PlayerType.User == game.batsman.type'>BATTING</li>
+          <li class='bowling' *ngIf='PlayerType.User == game.bowler.type'>BOWLING</li>
           <li>Last Played <span class="num">{{user.lastDelivery}}</span></li>
-          <li class='playType'>{{PlayerType.User == game.batsman.type ? "BATTING" : "BOWLING"}}</li>
           <span *ngIf='game.gameStatus != GameStatus.IN_PROGRESS'>
             <li *ngIf='game.gameStatus == GameStatus.DRAW' class='draw'>DRAW</li>
             <li *ngIf='game.gameStatus == GameStatus.COMPUTER_WON' class='lost'>LOST</li>
@@ -108,9 +94,9 @@
     		</div>
     		<div class="content">
     			<ul>
-    				<li><span class="num">{{computer.balls ? computer.balls : 0}}</span> balls</li>
+            <li class='batting' *ngIf='PlayerType.Computer == game.batsman.type'>BATTING</li>
+            <li class='bowling' *ngIf='PlayerType.Computer == game.bowler.type'>BOWLING</li>
             <li>Last Played <span class="num">{{computer.lastDelivery}}</span></li>
-            <li class='playType'>{{PlayerType.Computer == game.batsman.type ? "BATTING" : "BOWLING"}}</li>
             <span *ngIf='game.gameStatus != GameStatus.IN_PROGRESS'>
               <li *ngIf='game.gameStatus == GameStatus.DRAW' class='draw'>DRAW</li>
               <li *ngIf='game.gameStatus == GameStatus.COMPUTER_WON' class='won'>WON</li>
