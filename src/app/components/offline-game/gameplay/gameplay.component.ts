@@ -17,7 +17,7 @@ import { HelperService } from '../../../services/helper.service';
 @Component({
   selector: 'gameplay',
   templateUrl: './gameplay.component.html',
-  styleUrls: ['./gameplay.component.css'],
+  styleUrls: ['./gameplay.component.css', '../../../shared/css/price_table.css'],
   providers: [ProgressBarService, UpdateService, GameService]
 })
 
