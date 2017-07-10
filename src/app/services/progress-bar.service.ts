@@ -15,6 +15,8 @@ export class ProgressBarService {
   }
 
   getBarHeight(runs: number, targetScore: number): number {
+    if (targetScore == null)
+      targetScore = this.getNextTargetScore(runs);
     return Math.min(100, (runs / (targetScore ? targetScore : 1 )) * 100);
   }
 

@@ -37,6 +37,14 @@ export class PlayerService {
     return this.gs.getGame().bowler.id == this.player.id;
   }
 
+  isOppBatsman(): boolean {
+    return this.gs.getGame().batsman.id == this.getOtherPlayer().id;
+  }
+
+  isOppBowler(): boolean {
+    return this.gs.getGame().bowler.id == this.getOtherPlayer().id;
+  }
+
   getCurrentPlayer(): Player {
     var game = this.gs.getGame();
     if (game.batsman && game.batsman.id == this.player.id)

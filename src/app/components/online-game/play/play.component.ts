@@ -8,10 +8,14 @@ import { GameService } from '../../../services/game.service';
 import { PlayService } from '../../../services/play.service';
 import { PlayerService } from '../../../services/player.service';
 import { HelperService } from '../../../services/helper.service';
+import { ProgressBarService } from '../../../services/progress-bar.service';
 
 @Component({
   selector: 'play',
-  templateUrl: './play.component.html'
+  templateUrl: './play.component.html',
+  styleUrls: ['../../../shared/css/price_table.css',
+  '../../../shared/css/vertical-progress-bar.css'],
+  providers: [ProgressBarService]
 })
 
 export class PlayComponent {
@@ -27,14 +31,13 @@ export class PlayComponent {
               private gameService: GameService,
               private playService: PlayService,
               private playerService: PlayerService,
-              private helperService: HelperService) {
+              private helperService: HelperService,
+              private progressBarService: ProgressBarService) {
     this.game = gameService.getGame();
     this.player = playerService.getPlayer();
     this.socketService.ping();
-    this.socketService.subscribeToHighlight();
     this.socketService.subscribeToNotice();
     this.socketService.subscribeToWait();
-    this.socketService.subscribeToResult();
     this.socketService.subscribetoPing();
   }
 
@@ -82,8 +85,6 @@ export class PlayComponent {
 
   clearInputAndUpdates(): void {
     this.input = undefined;
-    this.playService.notice = undefined;
-    this.playService.hightlight = undefined;
   }
 
 }

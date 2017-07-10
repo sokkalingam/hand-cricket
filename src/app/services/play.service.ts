@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class PlayService {
 
-  templateMessage = 'Game Updates will be displayed here';
-  notice: string = this.templateMessage;
-  hightlight: string;
+  notice: string;
   wait: boolean = false;
 
   setWait(wait: boolean): void {
@@ -13,9 +11,16 @@ export class PlayService {
   }
 
   reset(): void {
-    this.notice = this.templateMessage;
-    this.hightlight = '';
+    this.notice = '';
     this.wait = false;
+  }
+
+  getCurrentPlayerNotice(): string {
+    return this.notice.split(';')[0];
+  }
+
+  getOtherPlayerNotice(): string {
+    return this.notice.split(';')[1];
   }
 
 }
