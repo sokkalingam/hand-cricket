@@ -3,15 +3,13 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ProgressBarService {
 
-  scoreIncrement: number = 20;
+  nextTargetScore: number = 20;
 
   getNextTargetScore(currentScore: number): number {
-    var nextTargetScore: number = this.scoreIncrement;
-    if (!currentScore) return nextTargetScore;
-    while (nextTargetScore < (currentScore * 1.3)) {
-      nextTargetScore *= 2;
-    }
-    return nextTargetScore;
+    if (!currentScore) return this.nextTargetScore;
+    while (this.nextTargetScore < (currentScore * 1.3))
+      this.nextTargetScore *= 2;
+    return this.nextTargetScore;
   }
 
   getBarHeight(runs: number, targetScore: number): number {
