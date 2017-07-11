@@ -9,6 +9,7 @@ import { PlayService } from '../../../services/play.service';
 import { PlayerService } from '../../../services/player.service';
 import { HelperService } from '../../../services/helper.service';
 import { ProgressBarService } from '../../../services/progress-bar.service';
+import { ChatService } from '../../../services/chat.service';
 
 @Component({
   selector: 'play',
@@ -32,7 +33,8 @@ export class PlayComponent {
               private playService: PlayService,
               private playerService: PlayerService,
               private helperService: HelperService,
-              private progressBarService: ProgressBarService) {
+              private progressBarService: ProgressBarService,
+              private chatService: ChatService) {
     this.game = gameService.getGame();
     this.player = playerService.getPlayer();
     this.socketService.ping();
@@ -85,6 +87,10 @@ export class PlayComponent {
 
   clearInputAndUpdates(): void {
     this.input = undefined;
+  }
+
+  showChat(): void {
+    this.chatService.showChat = true;
   }
 
 }

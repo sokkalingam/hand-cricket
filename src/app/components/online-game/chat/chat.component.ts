@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { Message } from '../../../model/Message';
 import { Player } from '../../../model/Player';
@@ -7,6 +7,7 @@ import { Game } from '../../../model/Game';
 import { SocketService } from '../../../services/socket.service';
 import { GameService } from '../../../services/game.service';
 import { PlayerService } from '../../../services/player.service';
+import { ChatService } from '../../../services/chat.service';
 
 import * as _ from 'lodash';
 
@@ -16,10 +17,9 @@ import * as _ from 'lodash';
   styleUrls: ['chat.component.css']
 })
 
-export class ChatComponent {
+export class ChatComponent implements OnInit {
 
   player: Player;
-  messages: Message[] = [];
   text: string = '';
   chatConnected: boolean;
 
@@ -27,10 +27,12 @@ export class ChatComponent {
 
   constructor(private socketService: SocketService,
               private gameService: GameService,
-              private playerService: PlayerService) {
-    this.player = playerService.getCurrentPlayer();
-    this.socketService.subscribetoChat(this.messages, this.scrollDown);
-    this.socketService.connectChat(this.composeMessage(''));
+              private playerService: PlayerService,
+              private chatService: ChatService) {}
+
+  ngOnInit(): void {
+    this.player = this.playerService.getCurrentPlayer();
+    this.socketService.subscribetoChat();
   }
 
   composeMessage(text: string): Message {
@@ -72,9 +74,4 @@ export class ChatComponent {
     return !this.fromHost(message) && !this.fromChatBot(message);
   }
 
-  scrollDown(messages: Message[]): void {
-    var messageElement = document.getElementById(_.last(messages).date.toString());
-    console.log(messageElement);
-    messageElement.scrollIntoView();
-  }
 }

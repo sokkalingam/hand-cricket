@@ -23,10 +23,10 @@ body {
 }
 
 .top_menu {
-  background-color: #fff;
+  background-color: #222;
   width: 100%;
-  padding: 5px 0 5px;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
+  color: #999;
 }
 .top_menu .buttons {
   margin: 3px 0 0 20px;
@@ -61,7 +61,9 @@ body {
   padding: 5px 5px 0 5px;
   margin: 0;
   height: 315px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: #222;
 }
 .messages .message {
   clear: both;
@@ -144,7 +146,7 @@ body {
 .bottom_wrapper {
   /*position: relative;*/
   width: 100%;
-  background-color: #fff;
+  background-color: #222;
   padding: 5px 5px;
   /*position: absolute;*/
   bottom: 0;
@@ -165,7 +167,8 @@ body {
   width: calc(100% - 40px);
   position: absolute;
   outline-width: 0;
-  color: gray;
+  color: #eae4e4;
+  background-color: #222;
 }
 .bottom_wrapper .send_message {
   width: 100px;

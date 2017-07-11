@@ -9,6 +9,7 @@ import { SocketService } from '../../services/socket.service';
 import { GameService } from '../../services/game.service';
 import { PlayerService } from '../../services/player.service';
 import { CountdownService } from '../../services/countdown.service';
+import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'online-game',
@@ -20,7 +21,8 @@ export class OnlineGameComponent implements OnInit, OnDestroy {
   constructor(private socketService: SocketService,
               private gameService: GameService,
               private playerService: PlayerService,
-              private countdownService: CountdownService) {
+              private countdownService: CountdownService,
+              private chatService: ChatService) {
     playerService.setPlayer(new Player(PlayerType.User));
   }
 
@@ -33,6 +35,7 @@ export class OnlineGameComponent implements OnInit, OnDestroy {
     this.socketService.quitGame();
     this.socketService.disconnect();
     this.gameService.resetGame();
+    this.chatService.clearMessages();
   }
 
   connect(): void {
