@@ -108,24 +108,24 @@
     </div>
 
     <div class='row text-center'>
-      <div *ngIf='gameService.isGameInProgress()'>
-        <button class="btn btn-success" (click)='clickInput(0)' [disabled]='!playEnabled()'>0</button>
-        <button class="btn btn-success" (click)='clickInput(1)' [disabled]='!playEnabled()'>1</button>
-        <button class="btn btn-success" (click)='clickInput(2)' [disabled]='!playEnabled()'>2</button>
-        <button class="btn btn-success" (click)='clickInput(3)' [disabled]='!playEnabled()'>3</button>
-        <button class="btn btn-success" (click)='clickInput(4)' [disabled]='!playEnabled()'>4</button>
-        <button class="btn btn-success" (click)='clickInput(5)' [disabled]='!playEnabled()'>5</button>
-        <button class="btn btn-success" (click)='clickInput(6)' [disabled]='!playEnabled()'>6</button>
-      </div>
-      <div *ngIf='!gameService.isGameInProgress()'>
-        <button (click)='restartGame()' class="btn btn-primary btn-lg">Restart Game</button>
-      </div>
-    </div>
+        <span *ngIf='gameService.isGameInProgress()'>
+          <button class="btn btn-success" (click)='clickInput(0)' [disabled]='!playEnabled()'>0</button>
+          <button class="btn btn-success" (click)='clickInput(1)' [disabled]='!playEnabled()'>1</button>
+          <button class="btn btn-success" (click)='clickInput(2)' [disabled]='!playEnabled()'>2</button>
+          <button class="btn btn-success" (click)='clickInput(3)' [disabled]='!playEnabled()'>3</button>
+          <button class="btn btn-success" (click)='clickInput(4)' [disabled]='!playEnabled()'>4</button>
+          <button class="btn btn-success" (click)='clickInput(5)' [disabled]='!playEnabled()'>5</button>
+          <button class="btn btn-success" (click)='clickInput(6)' [disabled]='!playEnabled()'>6</button>
+        </span>
 
-    <div class='row text-center padding'>
-      <button class="btn btn-primary" type="button" (click)='chatService.openChat()'>
-        Chat &nbsp;<span class="badge">{{chatService.newMessages}}</span>
-      </button>
+        <button class="btn btn-primary btn-lg" type="button" (click)='chatService.openChat()'>
+          Chat &nbsp;<span class="badge">{{chatService.newMessages}}</span>
+        </button>
+
+        <span *ngIf='!gameService.isGameInProgress()'>
+          <button (click)='restartGame()' class="btn btn-danger btn-lg">Restart Game</button>
+        </span>
+
     </div>
 
   </div>

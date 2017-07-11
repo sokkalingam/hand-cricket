@@ -29,8 +29,11 @@ export class ChatService {
   }
 
   scrollDown(): void {
-    var messageElement = document.getElementById(_.last(this.messages).date.toString());
-    console.log(messageElement);
-    messageElement.scrollIntoView();
+    var that = this;
+    setTimeout(() => {
+      var messageElement = document.getElementById(_.last(that.messages).date.toString());
+      console.log(messageElement);
+      messageElement.scrollIntoView();
+    }, 50);
   }
 }
