@@ -40,6 +40,7 @@ export class JoinGameComponent {
         this.gameService.getGame().id = gameId,
         this.socketService.subscribetoGame();
         this.playService.reset();
+        this.socketService.ping();
       },
       (error) => console.log(error)
     );
@@ -60,6 +61,7 @@ export class JoinGameComponent {
         this.gameService.setGame(game);
         this.socketService.subscribetoGame();
         this.playService.reset();
+        this.socketService.ping();
       },
       (error) => {
         console.log(error);

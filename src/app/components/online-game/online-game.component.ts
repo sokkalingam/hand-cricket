@@ -32,7 +32,6 @@ export class OnlineGameComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.socketService.quitGame();
     this.socketService.disconnect();
     this.gameService.resetGame();
     this.chatService.clearMessages();

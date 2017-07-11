@@ -37,10 +37,8 @@ export class PlayComponent {
               private chatService: ChatService) {
     this.game = gameService.getGame();
     this.player = playerService.getPlayer();
-    this.socketService.ping();
     this.socketService.subscribeToNotice();
     this.socketService.subscribeToWait();
-    this.socketService.subscribetoPing();
   }
 
   isBatsman(): boolean {
