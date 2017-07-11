@@ -30,10 +30,6 @@ export class GameService {
     return this.game;
   }
 
-  resetGame(): void {
-    this.game = undefined;
-  }
-
   makeBatsman(game: Game, player: Player): Player {
     if (player.balls == undefined) player.balls = 0;
     if (player.runs == undefined)  player.runs  = 0;
@@ -56,7 +52,7 @@ export class GameService {
   getGameId(player: Player): Observable<string> {
     return this.http.post(this.appService.baseUrl + '/game/hostGame', player)
       .map((response: Response) => {
-        console.log(response.text());
+        console.log('getGameId: ' + JSON.stringify(response));
         return response.text();
     });
   }
@@ -64,8 +60,17 @@ export class GameService {
   joinGame(player: Player, id: string): Observable<Game> {
     return this.http.post(this.appService.baseUrl + '/game/joinGame/' + id, player)
       .map((response: Response) => {
-        console.log(response.json());
+        console.log('joinGame: ' + JSON.stringify(response));
         return response.json();
+      });
+  }
+
+  restartGame(): Observable<string> {
+    console.log(`${this.appService.baseUrl}/game/${this.getGame().id}/restart`);
+    return this.http.get(`${this.appService.baseUrl}/game/${this.getGame().id}/restart`)
+      .map((response: Response) => {
+        console.log('restartGame: ' + JSON.stringify(response));
+        return response.text();
       });
   }
 
