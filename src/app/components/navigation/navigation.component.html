@@ -1,4 +1,4 @@
-<nav class="navbar">
+<!-- <nav class="navbar">
     <ul class="nav nav-tabs">
       <li routerLinkActive="active">
         <a routerLink="/offlineGame">Play Computer</a>
@@ -7,4 +7,12 @@
         <a routerLink="/onlineGame">Play Online</a>
       </li>
     </ul>
-</nav>
+</nav> -->
+
+<span class='menu-open' (click)="openNav()">&#9776;</span>
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+  <a routerLinkActive="active" routerLink="/offlineGame" (click)="closeNav()">Play Computer</a>
+  <a routerLinkActive="active" routerLink="/onlineGame" (click)="closeNav()">Play Online</a>
+</div>
