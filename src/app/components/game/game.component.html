@@ -1,6 +1,7 @@
 
 <!-- Select Batting Or Bowling -->
-<play-select [user]='user' [computer]='computer' [game]='game'></play-select>
+<play-select [user]='user' [computer]='computer' [game]='game' *ngIf='game.gameStatus == GameStatus.NOT_STARTED'>
+</play-select>
 
 <div *ngIf='game.gameStatus != GameStatus.NOT_STARTED'>
 

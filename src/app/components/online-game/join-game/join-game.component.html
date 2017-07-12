@@ -1,41 +1,51 @@
-<!-- Get Player Details -->
-<div *ngIf='collectInfo()'>
-  <h3><div class='text-success'>You are connected to server</div></h3>
-  <form>
-  <div class="form-group">
-    <h3>
-      <label for="playerName">Enter your name: </label>
-      <input type='text' class='form-control' name='name' [(ngModel)]='player.name' />
-    </h3>
+<div class="row">
+  <div class="col-md-6">
+    <!-- Get Player Details -->
+    <div *ngIf='collectInfo()'>
+      <h3><div class='text-success'>You are connected to server</div></h3>
+      <form>
+        <div class="form-group">
+          <h3>
+            <label for="playerName">Enter your name: </label>
+            <input type='text' class='form-control' name='name' [(ngModel)]='player.name' />
+          </h3>
+        </div>
+        <button type="button" class="btn btn-success btn-lg"
+        [disabled]='player.name?.trim().length == 0' (click)='infoSaved = true'>Save</button>
+      </form>
+    </div>
+
+    <!-- Ask Host or Join -->
+    <div *ngIf='!collectInfo() && !player.type'>
+      <h3>Would you like to Host or Join a Game?</h3>
+      <button type="button" class="btn btn-primary btn-lg" (click)='setHost()'>Host</button>
+      <button type="button" class="btn btn-success btn-lg" (click)='setGuest()'>Join</button>
+    </div>
+
+    <!-- Display Game ID -->
+    <div *ngIf='player.type == PlayerType.Host && !gameService.isConnected(gameService.getGame())'>
+      <h3>Share this Game ID to your friend: <span class="text-primary">{{gameService.getGame()?.id}}</span></h3>
+      <h4 class='text-danger'>Waiting for your friend to joing the game...</h4>
+    </div>
+
+    <!-- Receive Game ID -->
+    <div *ngIf='player.type == PlayerType.Guest'>
+      <form *ngIf='!gameService.isConnected(gameService.getGame())'>
+        <div class="form-group">
+          <h3>
+            <label for="playerName">Enter your Game ID: </label>
+            <input type='text' class='form-control' name='gameId' [(ngModel)]='gameService.getGame().id' (ngModelChange)='errorMessage = ""'/>
+          </h3>
+          <span class='text-danger'>{{errorMessage}}</span>
+        </div>
+        <button type="button" class="btn btn-success btn-lg"
+        [disabled]='gameService.getGame().id?.trim().length == 0' (click)='joinGame()'>Enter Game</button>
+      </form>
+    </div>
+
   </div>
-  <button type="button" class="btn btn-success btn-lg"
-    *ngIf='player.name?.length > 0' (click)='infoSaved = true'>Save</button>
-  </form>
-</div>
 
-<!-- Ask Host or Join -->
-<div *ngIf='!collectInfo() && !player.type'>
-  <h3>Would you like to Host or Join a Game?</h3>
-  <button type="button" class="btn btn-primary btn-lg" (click)='setHost()'>Host</button>
-  <button type="button" class="btn btn-success btn-lg" (click)='setGuest()'>Join</button>
-</div>
-
-<!-- Display Game ID -->
-<div *ngIf='player.type == PlayerType.Host && !gameService.isConnected(gameService.getGame())'>
-  <h3>Share this Game ID to your friend: <span class="text-primary">{{gameService.getGame()?.id}}</span></h3>
-  <h4 class='text-danger'>Waiting for your friend to joing the game...</h4>
-</div>
-
-<!-- Receive Game ID -->
-<div *ngIf='player.type == PlayerType.Guest'>
-  <form *ngIf='!gameService.isConnected(gameService.getGame())'>
-  <div class="form-group">
-    <h3>
-      <label for="playerName">Enter your Game ID: </label>
-      <input type='text' class='form-control' name='gameId' [(ngModel)]='gameService.getGame().id' />
-    </h3>
+  <div class="col-md-3 col-md-push-1">
+    <img src='../../../assets/batting1.jpg' />
   </div>
-  <button type="button" class="btn btn-success btn-lg"
-    (click)='joinGame()'>Enter Game</button>
-  </form>
 </div>

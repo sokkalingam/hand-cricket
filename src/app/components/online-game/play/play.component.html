@@ -7,9 +7,9 @@
       <online-game-status></online-game-status>
       <div class="form-group well well-sm" *ngIf='gameService.isGameInProgress()'>
         <label for="lastPlayedInput">Your Input: </label>
-        <input name='input' [(ngModel)]='input' type='number' />
-        <button type="submit" class="btn btn-success"
-          (click)='sendInput()' [disabled]='!playEnabled()'>Play</button>
+        <input name='input' [(ngModel)]='input' type='number' (keydown.enter)='sendInput()' />
+        <button type="submit" class="btn btn-success" [disabled]='!playEnabled()'
+          (click)='sendInput()'>Play</button>
       </div>
       <div *ngIf='!gameService.isGameInProgress()'>
         <button (click)='restartGame()' class="btn btn-primary btn-lg">Restart Game</button>

@@ -8,6 +8,8 @@ import { SocketService } from '../../../services/socket.service';
 import { GameService } from '../../../services/game.service';
 import { PlayerService } from '../../../services/player.service';
 
+import * as _ from 'lodash';
+
 @Component({
   selector: 'chat',
   templateUrl: 'chat.component.html',
@@ -27,7 +29,7 @@ export class ChatComponent {
               private gameService: GameService,
               private playerService: PlayerService) {
     this.player = playerService.getCurrentPlayer();
-    this.socketService.subscribetoChat(this.messages);
+    this.socketService.subscribetoChat(this.messages, this.scrollDown);
     this.socketService.connectChat(this.composeMessage(''));
   }
 
@@ -41,20 +43,20 @@ export class ChatComponent {
     this.text = '';
   }
 
-  connectToChat(): void {
-    if (this.chatSubsription) return;
-    this.chatSubsription = this.socketService.subscribetoChat(this.messages);
-    this.socketService.connectChat(this.composeMessage(''));
-    this.chatConnected = true;
-  }
-
-  disconnectToChat(): void {
-    if (!this.chatSubsription) return;
-    this.socketService.disconnectChat(this.composeMessage(''));
-    this.chatSubsription.unsubscribe();
-    this.chatSubsription = undefined;
-    this.chatConnected = false;
-  }
+  // connectToChat(): void {
+  //   if (this.chatSubsription) return;
+  //   this.chatSubsription = this.socketService.subscribetoChat(this.messages);
+  //   this.socketService.connectChat(this.composeMessage(''));
+  //   this.chatConnected = true;
+  // }
+  //
+  // disconnectToChat(): void {
+  //   if (!this.chatSubsription) return;
+  //   this.socketService.disconnectChat(this.composeMessage(''));
+  //   this.chatSubsription.unsubscribe();
+  //   this.chatSubsription = undefined;
+  //   this.chatConnected = false;
+  // }
 
   isChatConnected(): boolean { return this.chatSubsription != undefined; }
 
@@ -70,9 +72,9 @@ export class ChatComponent {
     return !this.fromHost(message) && !this.fromChatBot(message);
   }
 
-  scrollToBottom(lastMessage: Message): void {
-    var lastMessageElement = document.getElementById(lastMessage.date.toString());
-    console.log(lastMessageElement);
-    lastMessageElement.scrollIntoView();
+  scrollDown(messages: Message[]): void {
+    var messageElement = document.getElementById(_.last(messages).date.toString());
+    console.log(messageElement);
+    messageElement.scrollIntoView();
   }
 }

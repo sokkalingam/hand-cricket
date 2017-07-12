@@ -84,10 +84,11 @@ export class SocketService {
     });
   }
 
-  subscribetoChat(messages: Message[]): any {
+  subscribetoChat(messages: Message[], scrollDown: any): any {
     return this.stompClient.subscribe(`/chat/${this.gameService.getGame().id}`, (response: any) => {
       console.log('Chat Subscription: ' + JSON.stringify(response));
       messages.push(JSON.parse(response.body));
+      setTimeout(scrollDown, 50, messages);
     });
   }
 
