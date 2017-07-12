@@ -14,7 +14,8 @@ import { ChatService } from '../../../services/chat.service';
 @Component({
   selector: 'play',
   templateUrl: './play.component.html',
-  styleUrls: ['../../../shared/css/price_table.css',
+  styleUrls: ['./play.component.css',
+    '../../../shared/css/price_table.css',
   '../../../shared/css/vertical-progress-bar.css'],
   providers: [ProgressBarService]
 })
