@@ -61,7 +61,7 @@
             [class.draw]='user.wins == computer.wins'>
             Wins {{user.wins}}
           </li>
-          <li *ngIf='user.lastDelivery'>Played <span class="num">{{user.lastDelivery}}</span></li>
+          <li *ngIf='user.lastDelivery != null'>Played <span class="num">{{user.lastDelivery}}</span></li>
           <span *ngIf='game.gameStatus != GameStatus.IN_PROGRESS'>
             <li *ngIf='game.gameStatus == GameStatus.DRAW' class='draw'>DRAW</li>
             <li *ngIf='game.gameStatus == GameStatus.COMPUTER_WON' class='lost'>LOST</li>
@@ -116,7 +116,7 @@
               [class.draw]='user.wins == computer.wins'>
               Wins {{computer.wins}}
             </li>
-            <li *ngIf='computer.lastDelivery'>Played <span class="num">{{computer.lastDelivery}}</span></li>
+            <li *ngIf='computer.lastDelivery != null'>Played <span class="num">{{computer.lastDelivery}}</span></li>
             <span *ngIf='game.gameStatus != GameStatus.IN_PROGRESS'>
               <li *ngIf='game.gameStatus == GameStatus.DRAW' class='draw'>DRAW</li>
               <li *ngIf='game.gameStatus == GameStatus.COMPUTER_WON' class='won'>WON</li>
