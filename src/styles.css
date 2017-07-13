@@ -29,6 +29,34 @@ html, body {
   margin: 10px;
 }
 
-.glyphicon {
-  font-size: 30px;
+.text-green {
+  color: #57d357
+}
+
+.text-blue {
+  color: #55c6e8;
+}
+
+.text-red {
+  color: #ff6666;
+}
+
+.text-yellow {
+  color: #ffdd2d;
+}
+
+.title-img {
+  top: 5px;
+  background-image: url('assets/title.png');
+  width: 100%;
+  height:55px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+}
+
+hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

@@ -124,7 +124,10 @@
 
         <span class="chat-notification text-primary" (click)='chatService.openChat()'>
           <span class="glyphicon glyphicon-comment"></span>
-          <p class="badge">{{chatService.newMessages}}</p>
+        </span>
+        <span *ngIf='chatService.newMessages' class="chat-notification-icon" id="badge"
+          (click)='chatService.openChat()'>
+          <a class="badge-num">{{chatService.newMessages}}</a>
         </span>
 
     </div>

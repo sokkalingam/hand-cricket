@@ -2,7 +2,7 @@
   <div class="col-md-6">
     <!-- Get Player Details -->
     <div *ngIf='collectInfo()'>
-      <h3><div class='text-success'>You are connected to server</div></h3>
+      <h3><div class='text-green'>You are connected to server</div></h3>
       <form>
         <div class="form-group">
           <h3>
@@ -15,7 +15,7 @@
       </form>
     </div>
 
-    <h3 *ngIf='gameService.getGame().connected == false'><div class='text-danger'>Opponent disconnected from game</div></h3>
+    <h3 *ngIf='gameService.getGame().connected == false'><div class='text-red'>Opponent disconnected from game</div></h3>
 
     <!-- Ask Host or Join -->
     <div *ngIf='!collectInfo() && !playerService.getPlayer().type'>
@@ -26,8 +26,8 @@
 
     <!-- Display Game ID -->
     <div *ngIf='playerService.getPlayer().type == PlayerType.Host && !gameService.isConnected()'>
-      <h3>Share this Game ID with your friend: <span class="text-primary">{{gameService.getGame()?.id}}</span></h3>
-      <h4 class='text-danger'>Waiting for your friend to join the game...</h4>
+      <h3>Share this Game ID with your friend: <span class="text-yellow">{{gameService.getGame()?.id}}</span></h3>
+      <h4 class='text-red'>Waiting for your friend to join the game...</h4>
     </div>
 
     <!-- Receive Game ID -->
@@ -39,7 +39,7 @@
             <input type='text' class='form-control' name='gameId' [(ngModel)]='gameService.getGame().id'
               (ngModelChange)='errorMessage = ""' autocomplete='off' [maxlength]='5'/>
           </h3>
-          <span class='text-danger'>{{errorMessage}}</span>
+          <span class='text-red'>{{errorMessage}}</span>
         </div>
         <button type="button" class="btn btn-success btn-lg"
         [disabled]='gameService.getGame().id?.trim().length == 0' (click)='joinGame()'>Enter Game</button>
