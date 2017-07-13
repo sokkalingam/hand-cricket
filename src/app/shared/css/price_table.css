@@ -182,3 +182,8 @@ line-height: 52px;
   background-color: #ffb523;
   color: black;
 }
+
+.not-out {
+  position: relative;
+  top:-25px;
+}

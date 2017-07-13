@@ -62,6 +62,14 @@ export class PlayerService {
       return game.bowler;
   }
 
+  currentPlayerBatting(): boolean {
+    return this.getCurrentPlayer().id == this.gs.getGame().batsman.id;
+  }
+
+  otherPlayerBatting(): boolean {
+    return this.getOtherPlayer().id == this.gs.getGame().batsman.id;
+  }
+
   currentPlayerWon(): boolean {
     return this.getCurrentPlayer().status.toString() === PlayerStatus[PlayerStatus.Won];
   }
