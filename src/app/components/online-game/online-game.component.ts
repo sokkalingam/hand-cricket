@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
 import { Player } from '../../model/Player';
 import { Game } from '../../model/Game';
@@ -14,20 +14,22 @@ import { PlayerService } from '../../services/player.service';
   templateUrl: './online-game.component.html'
 })
 
-export class OnlineGameComponent implements OnInit {
-
-  secondsCounter: number;
+export class OnlineGameComponent implements OnInit, OnDestroy {
 
   constructor(private socketService: SocketService,
               private gameService: GameService,
               private playerService: PlayerService) {
     playerService.setPlayer(new Player(PlayerType.User));
-    this.secondsCounter = socketService.retryTimeOutInSeconds;
-    this.countDownTimer();
   }
 
   ngOnInit(): void {
     this.connect();
+  }
+
+  ngOnDestroy(): void {
+    this.socketService.quitGame();
+    this.socketService.disconnect();
+    this.gameService.resetGame();
   }
 
   connect(): void {
@@ -41,15 +43,7 @@ export class OnlineGameComponent implements OnInit {
   isOnline(): boolean { return this.socketService.isConnected(); }
 
   isGameConnected(): boolean {
-    return this.isOnline() && this.gameService.isConnected();
-  }
-
-  countDownTimer(): void {
-    var that = this;
-    setInterval(() => {
-      if (that.secondsCounter > 0)
-        that.secondsCounter--;
-    }, 1000);
+    return this.gameService.isConnected();
   }
 
 }

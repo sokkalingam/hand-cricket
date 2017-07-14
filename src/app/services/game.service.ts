@@ -24,6 +24,10 @@ export class GameService {
     this.game = game;
   }
 
+  resetGame(): void {
+    this.game = undefined;
+  }
+
   getGame(): Game {
     if (!this.game)
       this.game = new Game();
