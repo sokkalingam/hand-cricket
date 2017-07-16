@@ -6,14 +6,12 @@ import { HelperService } from '../services/helper.service';
 export class Player {
 
 	id: string;
-
   name: string;
-  lastDelivery: number;
-  type: PlayerType;
   runs: number;
   balls: number;
+  lastDelivery: number;
+  type: PlayerType;
   status: PlayerStatus;
-  stompClient: any;
 
   constructor(type: PlayerType) {
     this.id = HelperService.getRandomId(5);
@@ -22,9 +20,5 @@ export class Player {
   }
 
   isOut(): boolean { return this.status == PlayerStatus.Out; }
-
-  isConnected(): boolean {
-    return this.stompClient && this.stompClient.connected;
-  }
 
 }

@@ -1,17 +1,17 @@
 import { Component, Input } from '@angular/core';
 
-import { Update } from '../../model/Update';
-import { Player } from '../../model/Player';
-import { Game } from '../../model/Game';
+import { Update } from '../../../model/Update';
+import { Player } from '../../../model/Player';
+import { Game } from '../../../model/Game';
 
-import { UpdateType } from '../../enum/UpdateType';
-import { PlayerType } from '../../enum/PlayerType';
-import { PlayerStatus } from '../../enum/PlayerStatus';
-import { GameStatus } from '../../enum/GameStatus';
+import { UpdateType } from '../../../enum/UpdateType';
+import { PlayerType } from '../../../enum/PlayerType';
+import { PlayerStatus } from '../../../enum/PlayerStatus';
+import { GameStatus } from '../../../enum/GameStatus';
 
-import { ProgressBarService } from '../../services/progress-bar.service';
-import { UpdateService } from '../../services/update.service';
-import { GameService } from '../../services/game.service';
+import { ProgressBarService } from '../../../services/progress-bar.service';
+import { UpdateService } from '../../../services/update.service';
+import { GameService } from '../../../services/game.service';
 
 @Component({
   selector: 'gameplay',
@@ -58,14 +58,12 @@ export class GameplayComponent {
       return (this.userInput >= 0 && this.userInput <= 6);
     }
 
-    setOut(batsman: Player, bowler: Player): void {
+    setOut(batsman: Player): void {
       this.updateService.addUpdate(
         UpdateType.DANGER,
         `${PlayerType[batsman.type]} got Out, scored ${batsman.runs} runs in ${batsman.balls} balls`
       );
       batsman.status = PlayerStatus.Out;
-      this.game.addToBattedList(batsman);
-      this.game.addToBowledList(bowler);
     }
 
     setNotOut(player: Player): void {
@@ -138,6 +136,7 @@ export class GameplayComponent {
     }
 
     decideGameWinner(): void {
+
       if (this.getBatsman().runs > this.getBowler().runs) {
         if (this.getBatsman().type == PlayerType.User)
         this.setGameStatus(GameStatus.USER_WON);
@@ -168,7 +167,7 @@ export class GameplayComponent {
       this.addBalls(this.getBatsman());
 
       if (this.didInputsMatch(this.getBatsman(), this.getBowler())) {
-        this.setOut(this.getBatsman(), this.getBowler());
+        this.setOut(this.getBatsman());
       } else {
         this.setNotOut(this.getBatsman());
         this.addRuns(this.getBatsman(), this.getBowler());
@@ -176,7 +175,7 @@ export class GameplayComponent {
 
       this.decideGameWinner();
 
-      if (this.getBatsman().isOut()) {
+      if (this.getBatsman().isOut() && !this.getBowler().isOut()) {
         this.gameService.makeBatsman(this.game, bowler);
         this.gameService.makeBowler(this.game, batsman);
       }

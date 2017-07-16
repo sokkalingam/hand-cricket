@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Update } from '../../model/Update';
+import { Update } from '../../../model/Update';
 
 @Component({
   selector: 'game-update',

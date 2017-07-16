@@ -1,15 +1,15 @@
 import { Component, Input } from '@angular/core';
 
-import { Update } from '../../model/Update';
-import { Player } from '../../model/Player';
-import { Game } from '../../model/Game';
+import { Update } from '../../../model/Update';
+import { Player } from '../../../model/Player';
+import { Game } from '../../../model/Game';
 
-import { UpdateType } from '../../enum/UpdateType';
-import { PlayerType } from '../../enum/PlayerType';
-import { PlayerStatus } from '../../enum/PlayerStatus';
-import { GameStatus } from '../../enum/GameStatus';
+import { UpdateType } from '../../../enum/UpdateType';
+import { PlayerType } from '../../../enum/PlayerType';
+import { PlayerStatus } from '../../../enum/PlayerStatus';
+import { GameStatus } from '../../../enum/GameStatus';
 
-import { GameService } from '../../services/game.service';
+import { GameService } from '../../../services/game.service';
 
 @Component({
   selector: 'play-select',

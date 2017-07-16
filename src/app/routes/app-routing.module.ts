@@ -1,13 +1,13 @@
 import { NgModule }      from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { GameComponent } from '../components/game/game.component';
+import { OfflineGameComponent } from '../components/offline-game/offline-game.component';
 import { OnlineGameComponent } from '../components/online-game/online-game.component';
 
 const routes: Routes = [
   {
     path: 'offlineGame',
-    component: GameComponent
+    component: OfflineGameComponent
   },
   {
     path: 'onlineGame',

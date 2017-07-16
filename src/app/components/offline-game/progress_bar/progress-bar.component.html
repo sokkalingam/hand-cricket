@@ -5,7 +5,7 @@
   <div class="progress">
     <div class="progress-bar" role="progressbar" aria-valuenow="game.batsman.runs"
     aria-valuemin="0" aria-valuemax="game.targetScore"
-    [style.width]="( game.batsman.runs / game.targetScore ) * 100 + '%'">
+    [style.width]="( game.batsman.runs / (game.targetScore ? game.targetScore : 1 )) * 100 + '%'">
     {{game.batsman.runs}} runs
   </div>
 </div>

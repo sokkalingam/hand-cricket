@@ -8,13 +8,13 @@ import { AppRoutingModule } from './routes/app-routing.module';
 
 import { AppComponent }         from './app.component';
 import { NavigationComponent }  from './components/navigation/navigation.component';
-import { GameComponent } from './components/game/game.component';
-import { ProgressBarComponent } from './components/progress_bar/progress-bar.component';
-import { GameUpdateComponent } from './components/game-updates/game-update.component';
-import { ScoreBoardComponent } from './components/score-board/score-board.component';
-import { GameStatusComponent } from './components/game-status/game-status.component';
-import { GameplayComponent } from './components/gameplay/gameplay.component';
-import { PlaySelectComponent } from './components/play-select/play-select.component';
+import { OfflineGameComponent } from './components/offline-game/offline-game.component';
+import { ProgressBarComponent } from './components/offline-game/progress_bar/progress-bar.component';
+import { GameUpdateComponent } from './components/offline-game/game-updates/game-update.component';
+import { ScoreBoardComponent } from './components/offline-game/score-board/score-board.component';
+import { GameStatusComponent } from './components/offline-game/game-status/game-status.component';
+import { GameplayComponent } from './components/offline-game/gameplay/gameplay.component';
+import { PlaySelectComponent } from './components/offline-game/play-select/play-select.component';
 import { OnlineGameComponent } from './components/online-game/online-game.component';
 import { JoinGameComponent } from './components/online-game/join-game/join-game.component';
 import { ChatComponent } from './components/online-game/chat/chat.component';
@@ -39,7 +39,7 @@ import { CountdownService } from './services/countdown.service';
                 ],
   declarations: [ AppComponent,
                   NavigationComponent,
-                  GameComponent,
+                  OfflineGameComponent,
                   ProgressBarComponent,
                   GameUpdateComponent,
                   ScoreBoardComponent,
