@@ -12,6 +12,7 @@ export class Player {
   lastDelivery: number;
   type: PlayerType;
   status: PlayerStatus;
+  wins: number;
 
   constructor(type: PlayerType) {
     this.id = HelperService.getRandomId(5);
