@@ -52,6 +52,11 @@ export class SocketService {
         {}, number);
   }
 
+  ping(): void {
+    this.stompClient
+      .send(`/app/game/ping/${this.gameService.getGame().id}/${this.playerService.getPlayer().id}`, {}, 'ping');
+  }
+
   quitGame(): void {
     this.stompClient.send(`/app/game/quit/${this.gameService.getGame().id}`, {}, this.playerService.getPlayer().id);
   }
@@ -89,6 +94,12 @@ export class SocketService {
     return this.stompClient.subscribe(`/game/${this.gameService.getGame().id}`, (response: any) => {
       console.log('Game Subscription: ' + JSON.stringify(response));
       this.gameService.setGame(JSON.parse(response.body));
+    });
+  }
+
+  subscribetoPing(): any {
+    return this.stompClient.subscribe(`/game/ping/${this.gameService.getGame().id}/${this.playerService.getPlayer().id}`, (response: any) => {
+      console.log('Ping Subscription: ' + JSON.stringify(response));
     });
   }
 
