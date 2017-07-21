@@ -11,11 +11,12 @@ import { GameService } from './game.service';
 export class PlayerService {
 
   player: Player;
+  infoSaved: boolean;
 
   constructor(private gs: GameService) {}
 
   getPlayer(): Player {
-    return this.player;
+    return this.getCurrentPlayer();
   }
 
   setPlayer(player: Player): void {
@@ -23,26 +24,27 @@ export class PlayerService {
   }
 
   isBatsman(): boolean {
-    return this.gs.getGame().batsman.id == this.getPlayer().id;
+    return this.gs.getGame().batsman.id == this.player.id;
   }
 
   isBowler(): boolean {
-    return this.gs.getGame().bowler.id == this.getPlayer().id;
+    return this.gs.getGame().bowler.id == this.player.id;
   }
 
   getCurrentPlayer(): Player {
     var game = this.gs.getGame();
-    if (game.batsman.id == this.getPlayer().id)
+    if (game.batsman && game.batsman.id == this.player.id)
       return game.batsman;
-    if (game.bowler.id == this.getPlayer().id)
+    if (game.bowler && game.bowler.id == this.player.id)
       return game.bowler;
+    return this.player;
   }
 
   getOtherPlayer(): Player {
     var game = this.gs.getGame();
-    if (game.batsman.id != this.getPlayer().id)
+    if (game.batsman && game.batsman.id != this.player.id)
       return game.batsman;
-    if (game.bowler.id != this.getPlayer().id)
+    if (game.bowler && game.bowler.id != this.player.id)
       return game.bowler;
   }
 
