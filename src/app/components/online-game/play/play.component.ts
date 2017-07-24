@@ -7,6 +7,7 @@ import { SocketService } from '../../../services/socket.service';
 import { GameService } from '../../../services/game.service';
 import { PlayService } from '../../../services/play.service';
 import { PlayerService } from '../../../services/player.service';
+import { HelperService } from '../../../services/helper.service';
 
 @Component({
   selector: 'play',
@@ -25,7 +26,8 @@ export class PlayComponent {
   constructor(private socketService: SocketService,
               private gameService: GameService,
               private playService: PlayService,
-              private playerService: PlayerService) {
+              private playerService: PlayerService,
+              private helperService: HelperService) {
     this.game = gameService.getGame();
     this.player = playerService.getPlayer();
     this.socketService.ping();
@@ -53,11 +55,17 @@ export class PlayComponent {
   }
 
   playEnabled(): boolean {
-    return !this.playService.wait && this.input >= 0 && this.input <= 6;
+    return !this.playService.wait;
   }
 
   sendInput(): void {
     if (!this.playEnabled()) return;
+    this.socketService.sendInput(this.input);
+    this.clearInputAndUpdates();
+  }
+
+  clickInput(num: number) : void {
+    this.input = num;
     this.socketService.sendInput(this.input);
     this.clearInputAndUpdates();
   }

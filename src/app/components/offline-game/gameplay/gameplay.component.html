@@ -1,6 +1,6 @@
 <h3>Gameplay</h3>
 <game-status [game]='game'></game-status>
-<form (ngSubmit)='play(game.batsman.type == PlayerType.User)'>
+<div>
   <!-- <div class="row">
   <div class="col-xs-6"> -->
   <div class="form-group well well-sm">
@@ -19,16 +19,18 @@
   *ngIf='game.updates.length > 0 && game.updates[0].type == UpdateType.DANGER'>
   <label>{{game.updates[0].message.replace("User", "You")}}</label>
 </div>
-<div *ngIf='game.gameStatus == GameStatus.IN_PROGRESS' class="form-group well well-sm">
-  <div>
-    <input name='userInput' [(ngModel)]='userInput' type='number' />
-    <button type="submit" class="btn btn-success">Play</button>
-    <div>(Can only play numbers between 0 to 6)</div>
-  </div>
+<div *ngIf='game.gameStatus == GameStatus.IN_PROGRESS'>
+  <button class="btn btn-primary" (click)='clickInput(0)'>0</button>
+  <button class="btn btn-primary" (click)='clickInput(1)'>1</button>
+  <button class="btn btn-primary" (click)='clickInput(2)'>2</button>
+  <button class="btn btn-primary" (click)='clickInput(3)'>3</button>
+  <button class="btn btn-primary" (click)='clickInput(4)'>4</button>
+  <button class="btn btn-primary" (click)='clickInput(5)'>5</button>
+  <button class="btn btn-primary" (click)='clickInput(6)'>6</button>
 </div>
 <div *ngIf='(game.gameStatus == GameStatus.USER_WON) ||
 (game.gameStatus == GameStatus.COMPUTER_WON) ||
 (game.gameStatus == GameStatus.DRAW)'>
 <button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
 </div>
-</form>
+</div>
