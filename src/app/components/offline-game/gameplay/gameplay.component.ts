@@ -1,5 +1,12 @@
-import { Component, Input } from '@angular/core';
-
+import {  Component, Input } from '@angular/core';
+import {  trigger,
+          state,
+          style,
+          transition,
+          animate,
+          keyframes,
+          group
+       } from '@angular/animations';
 import { Update } from '../../../model/Update';
 import { Player } from '../../../model/Player';
 import { Game } from '../../../model/Game';
@@ -19,13 +26,49 @@ import { HelperService } from '../../../services/helper.service';
   templateUrl: './gameplay.component.html',
   styleUrls: ['./gameplay.component.css', '../../../shared/css/price_table.css',
   '../../../shared/css/vertical-progress-bar.css'],
-  providers: [ProgressBarService, UpdateService, GameService]
+  providers: [ProgressBarService, UpdateService, GameService],
+  animations: [
+    trigger('runs', [
+      transition('* => *', [
+        animate(300, keyframes([
+          style({opacity: 0, transform: 'translateY(100%)', offset: 0}),
+          style({opacity: 1, transform: 'translateY(-20px)',  offset: 0.3}),
+          style({opacity: 1, transform: 'translateY(0)',     offset: 1.0})
+        ]))
+      ])
+    ]),
+    trigger('played', [
+      transition('* => *', [
+        animate(300, keyframes([
+          style({opacity: 0, transform: 'translateX(-100%)', offset: 0}),
+          style({opacity: 1, transform: 'translateX(20px)',  offset: 0.3}),
+          style({opacity: 1, transform: 'translateX(0)',     offset: 1.0})
+        ]))
+      ])
+    ]),
+    trigger('out', [
+      transition('* => *', [
+        animate(300, keyframes([
+          style({opacity: 0, transform: 'translateY(-100%)', offset: 0}),
+          style({opacity: 1, transform: 'translateY(20px)',  offset: 0.3}),
+          style({opacity: 1, transform: 'translateY(-20px)',  offset: 0.6}),
+          style({opacity: 1, transform: 'translateX(0)',     offset: 1.0})
+        ]))
+      ])
+    ])
+  ]
 })
 
 export class GameplayComponent {
   @Input() user: Player;
   @Input() computer: Player;
   @Input() game: Game;
+
+  stateVal: string = 'begin';
+
+  // state(): void {
+  //   this.stateVal = this.stateVal === 'begin' ? 'end' : 'begin';
+  // }
 
   Math = Math;
 

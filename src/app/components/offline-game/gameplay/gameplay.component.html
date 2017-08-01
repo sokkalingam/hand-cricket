@@ -33,8 +33,6 @@
 <!-- <div class="row">
   <game-status [game]='game'></game-status>
 </div> -->
-
-
 <div class="row text-center">
 
   <div class="col-xs-5">
@@ -49,7 +47,7 @@
           <li class='bowling' *ngIf='PlayerType.User == game.bowler.type'>BOWLING</li>
         </ul>
       </div>
-  		<div class="header">
+  		<div class="header" [@runs]='user.runs'>
   			{{user.runs ? user.runs : 0}}<span class='not-out' *ngIf='PlayerType.User == game.batsman.type && !user.isOut()'>*</span>
   			<p class="month">runs</p>
   		</div>
@@ -61,13 +59,15 @@
             [class.draw]='user.wins == computer.wins'>
             Wins {{user.wins}}
           </li>
-          <li *ngIf='user.lastDelivery != null'>Played <span class="num">{{user.lastDelivery}}</span></li>
+          <li *ngIf='user.lastDelivery != null' [@played]='user.runs || computer.runs'>Played <span class="num">{{user.lastDelivery}}</span></li>
           <span *ngIf='game.gameStatus != GameStatus.IN_PROGRESS'>
             <li *ngIf='game.gameStatus == GameStatus.DRAW' class='draw'>DRAW</li>
             <li *ngIf='game.gameStatus == GameStatus.COMPUTER_WON' class='lost'>LOST</li>
             <li *ngIf='game.gameStatus == GameStatus.USER_WON' class='won'>WON</li>
           </span>
-  				<li *ngIf='user.status == PlayerStatus.Out && game.gameStatus == GameStatus.IN_PROGRESS' class="out">OUT</li>
+  				<li *ngIf='user.status == PlayerStatus.Out && game.gameStatus == GameStatus.IN_PROGRESS'
+          [@out]='user.status'
+          class="out">OUT</li>
   			</ul>
   		</div>
   	</div>
@@ -104,7 +104,7 @@
             <li class='bowling' *ngIf='PlayerType.Computer == game.bowler.type'>BOWLING</li>
           </ul>
         </div>
-    		<div class="header">
+    		<div class="header" [@runs]='computer.runs'>
     			{{computer.runs ? computer.runs : 0}}<span class='not-out' *ngIf='PlayerType.Computer == game.batsman.type && !computer.isOut()'>*</span>
     			<p class="month">runs</p>
     		</div>
@@ -116,13 +116,15 @@
               [class.draw]='user.wins == computer.wins'>
               Wins {{computer.wins}}
             </li>
-            <li *ngIf='computer.lastDelivery != null'>Played <span class="num">{{computer.lastDelivery}}</span></li>
+            <li *ngIf='computer.lastDelivery != null' [@played]='user.runs || computer.runs'>Played <span class="num">{{computer.lastDelivery}}</span></li>
             <span *ngIf='game.gameStatus != GameStatus.IN_PROGRESS'>
               <li *ngIf='game.gameStatus == GameStatus.DRAW' class='draw'>DRAW</li>
               <li *ngIf='game.gameStatus == GameStatus.COMPUTER_WON' class='won'>WON</li>
               <li *ngIf='game.gameStatus == GameStatus.USER_WON' class='lost'>LOST</li>
             </span>
-    				<li *ngIf='computer.status == PlayerStatus.Out && game.gameStatus == GameStatus.IN_PROGRESS' class="out">OUT</li>
+    				<li *ngIf='computer.status == PlayerStatus.Out && game.gameStatus == GameStatus.IN_PROGRESS'
+            [@out]='computer.status'
+            class="out">OUT</li>
     			</ul>
     		</div>
     	</div>

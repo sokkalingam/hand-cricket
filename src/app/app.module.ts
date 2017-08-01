@@ -3,6 +3,7 @@ import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './routes/app-routing.module';
 
@@ -36,7 +37,8 @@ import { ChatService } from './services/chat.service';
                   FormsModule,
                   AppRoutingModule,
                   RouterModule,
-                  HttpModule
+                  HttpModule,
+                  BrowserAnimationsModule
                 ],
   declarations: [ AppComponent,
                   NavigationComponent,
