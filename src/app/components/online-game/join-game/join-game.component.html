@@ -36,7 +36,8 @@
         <div class="form-group">
           <h3>
             <label for="playerName">Enter your Game ID: </label>
-            <input type='text' class='form-control' name='gameId' [(ngModel)]='gameService.getGame().id' (ngModelChange)='errorMessage = ""' autocomplete='off' [maxlength]='5'/>
+            <input type='text' class='form-control' name='gameId' [(ngModel)]='gameService.getGame().id'
+              (ngModelChange)='errorMessage = ""' autocomplete='off' [maxlength]='5'/>
           </h3>
           <span class='text-danger'>{{errorMessage}}</span>
         </div>
