@@ -44,10 +44,10 @@
       <div class="content">
   			<ul>
           <span *ngIf='PlayerType.User == game.batsman.type'>
-            <li class='batting' [@battingBowling]='game.batsman.type'>BATTING</li>
+            <li class='batting' [@battingBowling]='game.gameStatus || game.batsman.type'>BATTING</li>
           </span>
           <span *ngIf='PlayerType.User == game.bowler.type'>
-            <li class='bowling' [@battingBowling]='game.bowler.type'>BOWLING</li>
+            <li class='bowling' [@battingBowling]='game.gameStatus || game.bowler.type'>BOWLING</li>
           </span>
         </ul>
       </div>
@@ -109,10 +109,10 @@
         <div class="content">
     			<ul>
             <span *ngIf='PlayerType.Computer == game.batsman.type'>
-              <li class='batting' [@battingBowling]='game.batsman.type'>BATTING</li>
+              <li class='batting' [@battingBowling]='game.gameStatus || game.batsman.type'>BATTING</li>
             </span>
             <span *ngIf='PlayerType.Computer == game.bowler.type'>
-              <li class='bowling' [@battingBowling]='game.bowler.type'>BOWLING</li>
+              <li class='bowling' [@battingBowling]='game.gameStatus || game.bowler.type'>BOWLING</li>
             </span>
           </ul>
         </div>
