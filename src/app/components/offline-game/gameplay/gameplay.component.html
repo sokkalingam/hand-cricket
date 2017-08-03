@@ -35,7 +35,7 @@
 </div> -->
 <div class="row text-center">
 
-  <div class="col-xs-5">
+  <div class="col-xs-5" [@leftColumn]='gameAS.gameRestart'>
     <div class="whole">
   		<div class="type standard">
   		<p>User</p>
@@ -100,7 +100,7 @@
     </div>
   </div>
 
-  <div class="col-xs-5">
+  <div class="col-xs-5" [@rightColumn]='gameAS.gameRestart'>
     <div class="whole ">
   		<div class="type ultimate">
   		<p>Computer</p>
@@ -151,13 +151,13 @@
 
 <div class="row text-center">
   <div *ngIf='game.gameStatus == GameStatus.IN_PROGRESS'>
-    <button class="btn btn-primary" (click)='clickInput(0)'>0</button>
-    <button class="btn btn-primary" (click)='clickInput(1)'>1</button>
-    <button class="btn btn-primary" (click)='clickInput(2)'>2</button>
-    <button class="btn btn-primary" (click)='clickInput(3)'>3</button>
-    <button class="btn btn-primary" (click)='clickInput(4)'>4</button>
-    <button class="btn btn-primary" (click)='clickInput(5)'>5</button>
-    <button class="btn btn-primary" (click)='clickInput(6)'>6</button>
+    <button class="btn btn-primary" [@inputButton]='gameAS.inputs[0]' (click)='clickInput(0)'>0</button>
+    <button class="btn btn-primary" [@inputButton]='gameAS.inputs[1]' (click)='clickInput(1)'>1</button>
+    <button class="btn btn-primary" [@inputButton]='gameAS.inputs[2]' (click)='clickInput(2)'>2</button>
+    <button class="btn btn-primary" [@inputButton]='gameAS.inputs[3]' (click)='clickInput(3)'>3</button>
+    <button class="btn btn-primary" [@inputButton]='gameAS.inputs[4]' (click)='clickInput(4)'>4</button>
+    <button class="btn btn-primary" [@inputButton]='gameAS.inputs[5]' (click)='clickInput(5)'>5</button>
+    <button class="btn btn-primary" [@inputButton]='gameAS.inputs[6]' (click)='clickInput(6)'>6</button>
   </div>
   <div *ngIf='(game.gameStatus == GameStatus.USER_WON) ||
   (game.gameStatus == GameStatus.COMPUTER_WON) ||

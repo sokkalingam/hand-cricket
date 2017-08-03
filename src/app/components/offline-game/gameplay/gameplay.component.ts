@@ -13,6 +13,7 @@ import { ProgressBarService } from '../../../services/progress-bar.service';
 import { UpdateService } from '../../../services/update.service';
 import { GameService } from '../../../services/game.service';
 import { HelperService } from '../../../services/helper.service';
+import { GameAnimationService } from '../../../services/game-animation.service';
 
 import { GameAnimation } from '../../../animations/GameAnimation';
 
@@ -29,8 +30,6 @@ export class GameplayComponent {
   @Input() user: Player;
   @Input() computer: Player;
   @Input() game: Game;
-
-  stateVal: string = 'begin';
 
   Math = Math;
 
@@ -52,7 +51,8 @@ export class GameplayComponent {
   constructor(private progressBarService: ProgressBarService,
     private updateService: UpdateService,
     private gameService: GameService,
-    private helperService: HelperService) { }
+    private helperService: HelperService,
+    private gameAS: GameAnimationService) { }
 
     /**
     * Returns a random number between 0 and 6, both included
@@ -65,6 +65,7 @@ export class GameplayComponent {
       this.game.gameStatus = GameStatus.IN_PROGRESS;
       this.resetPlayer(this.getBatsman());
       this.resetPlayer(this.getBowler());
+      this.gameAS.gameRestart++;
     }
 
     resetPlayer(player: Player): void {
@@ -138,6 +139,7 @@ export class GameplayComponent {
     clickInput(num: number): void {
       this.userInput = num;
       this.play(this.game.batsman.type == PlayerType.User)
+      this.gameAS.inputs[num]++;
     }
 
     play(userBatting: boolean): void {

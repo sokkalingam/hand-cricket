@@ -57,5 +57,33 @@ export const GameAnimation = [
         style({opacity: 1, transform: 'scale(1)',  offset: 1})
       ]))
     ])
+  ]),
+  trigger('leftColumn', [
+    transition('* => *', [
+      animate(1000, keyframes([
+        style({opacity: 0, transform: 'translateX(-100%)', offset: 0}),
+        style({opacity: 1, transform: 'translateX(100px)',  offset: 0.3}),
+        style({opacity: 1, transform: 'translateX(-100px)',  offset: 0.6}),
+        style({opacity: 1, transform: 'translateX(0)',     offset: 1})
+      ]))
+    ])
+  ]),
+  trigger('rightColumn', [
+    transition('* => *', [
+      animate(1000, keyframes([
+        style({opacity: 0, transform: 'translateX(100%)', offset: 0}),
+        style({opacity: 1, transform: 'translateX(-100px)',  offset: 0.3}),
+        style({opacity: 1, transform: 'translateX(100px)',  offset: 0.6}),
+        style({opacity: 1, transform: 'translateX(0)',     offset: 1})
+      ]))
+    ])
+  ]),
+  trigger('inputButton', [
+    transition('* => *', [
+      animate(200, keyframes([
+        style({opacity: 1, transform: 'scale(2)', offset: 0.5}),
+        style({opacity: 1, transform: 'scale(1)',  offset: 1})
+      ]))
+    ])
   ])
 ];
