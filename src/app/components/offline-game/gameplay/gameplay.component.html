@@ -1,36 +1,92 @@
-<h3>Gameplay</h3>
+<!-- <h3>Gameplay</h3>
 <game-status [game]='game'></game-status>
 <div>
-  <!-- <div class="row">
-  <div class="col-xs-6"> -->
+
   <div class="form-group well well-sm">
     <label for="computerInput">Computer Played: </label>
     <span>{{computer.lastDelivery}}</span>
   </div>
-  <!-- </div> -->
-  <!-- <div class="col-xs-6"> -->
   <div class="form-group well well-sm">
     <label for="lastPlayedInput">You Last Played: </label>
     <span>{{user.lastDelivery}}</span>
   </div>
-  <!-- </div> -->
-  <!-- </div> -->
   <div class="form-group well well-sm alert-danger"
-  *ngIf='game.updates.length > 0 && game.updates[0].type == UpdateType.DANGER'>
-  <label>{{game.updates[0].message.replace("User", "You")}}</label>
+    *ngIf='game.updates.length > 0 && game.updates[0].type == UpdateType.DANGER'>
+    <label>{{game.updates[0].message.replace("User", "You")}}</label>
+  </div>
+  <div *ngIf='game.gameStatus == GameStatus.IN_PROGRESS'>
+    <button class="btn btn-primary" (click)='clickInput(0)'>0</button>
+    <button class="btn btn-primary" (click)='clickInput(1)'>1</button>
+    <button class="btn btn-primary" (click)='clickInput(2)'>2</button>
+    <button class="btn btn-primary" (click)='clickInput(3)'>3</button>
+    <button class="btn btn-primary" (click)='clickInput(4)'>4</button>
+    <button class="btn btn-primary" (click)='clickInput(5)'>5</button>
+    <button class="btn btn-primary" (click)='clickInput(6)'>6</button>
+  </div>
+  <div *ngIf='(game.gameStatus == GameStatus.USER_WON) ||
+  (game.gameStatus == GameStatus.COMPUTER_WON) ||
+  (game.gameStatus == GameStatus.DRAW)'>
+    <button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
+  </div>
+</div> -->
+
+<div class="row">
+  <game-status [game]='game'></game-status>
 </div>
-<div *ngIf='game.gameStatus == GameStatus.IN_PROGRESS'>
-  <button class="btn btn-primary" (click)='clickInput(0)'>0</button>
-  <button class="btn btn-primary" (click)='clickInput(1)'>1</button>
-  <button class="btn btn-primary" (click)='clickInput(2)'>2</button>
-  <button class="btn btn-primary" (click)='clickInput(3)'>3</button>
-  <button class="btn btn-primary" (click)='clickInput(4)'>4</button>
-  <button class="btn btn-primary" (click)='clickInput(5)'>5</button>
-  <button class="btn btn-primary" (click)='clickInput(6)'>6</button>
+
+
+<div class="row text-center my-row">
+
+  <div class="col-xs-5 bg-info my-col">
+      <h3>User</h3>
+      <h4>{{game.batsman.type == PlayerType.User ? "Batting" : "Bowling"}}</h4>
+      <h3>{{user.runs}} <small>runs</small></h3>
+      <h4>{{user.balls}} <small>balls</small></h4>
+      <small>Last Played: {{user?.lastDelivery}}</small>
+      <h3 *ngIf='user.status == PlayerStatus.Out' class='text-danger'>OUT</h3>
+  </div>
+
+  <div class="col-xs-2 my-col">
+    <div class="row">
+      <div class="progress progress-bar-vertical">
+        <div class="progress-bar" role="progressbar" aria-valuenow="game.batsman.runs"
+          aria-valuemin="0" aria-valuemax="game.targetScore"
+          [style.height]="progressBarService.getBarHeight(user.runs, game.targetScore)+ '%'">
+          {{user.runs}}
+        </div>
+        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="game.batsman.runs"
+          aria-valuemin="0" aria-valuemax="game.targetScore"
+          [style.height]="progressBarService.getBarHeight(computer.runs, game.targetScore) + '%'">
+          {{computer.runs}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-5 bg-warning my-col">
+    <h3>Computer</h3>
+    <h4>{{game.batsman.type == PlayerType.Computer ? "Batting" : "Bowling"}}</h4>
+    <h3>{{computer.runs}} <small>runs</small></h3>
+    <h4>{{computer.balls}} <small>balls</small></h4>
+    <small>Last Played: {{computer?.lastDelivery}}</small>
+    <h3 *ngIf='computer.status == PlayerStatus.Out' class='text-danger'>OUT</h3>
+  </div>
+
 </div>
-<div *ngIf='(game.gameStatus == GameStatus.USER_WON) ||
-(game.gameStatus == GameStatus.COMPUTER_WON) ||
-(game.gameStatus == GameStatus.DRAW)'>
-<button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
-</div>
+
+<div class="row text-center">
+  <div *ngIf='game.gameStatus == GameStatus.IN_PROGRESS'>
+    <button class="btn btn-primary" (click)='clickInput(0)'>0</button>
+    <button class="btn btn-primary" (click)='clickInput(1)'>1</button>
+    <button class="btn btn-primary" (click)='clickInput(2)'>2</button>
+    <button class="btn btn-primary" (click)='clickInput(3)'>3</button>
+    <button class="btn btn-primary" (click)='clickInput(4)'>4</button>
+    <button class="btn btn-primary" (click)='clickInput(5)'>5</button>
+    <button class="btn btn-primary" (click)='clickInput(6)'>6</button>
+  </div>
+  <div *ngIf='(game.gameStatus == GameStatus.USER_WON) ||
+  (game.gameStatus == GameStatus.COMPUTER_WON) ||
+  (game.gameStatus == GameStatus.DRAW)'>
+    <button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
+  </div>
 </div>
