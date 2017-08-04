@@ -21,11 +21,15 @@ export class OfflineGameComponent {
   PlayerType = PlayerType;
   GameStatus = GameStatus;
 
-  userInput: number;
-
   user: Player = new Player(PlayerType.User);
   computer: Player = new Player(PlayerType.Computer);
 
   game: Game = new Game();
+
+  constructor() {
+    this.user = new Player(PlayerType.User);
+    this.computer = new Player(PlayerType.Computer);
+    this.game = new Game();
+  }
 
 }
