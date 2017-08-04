@@ -2,7 +2,7 @@
 
 .progress-bar-vertical {
   /*width: 20px;*/
-  min-height: 300px;
+  min-height: 360px;
   display: flex;
   align-items: flex-end;
   /*margin-right: 20px;*/
@@ -15,12 +15,4 @@
   -webkit-transition: height 0.6s ease;
   -o-transition: height 0.6s ease;
   transition: height 0.6s ease;
-}
-
-.my-row {
-  min-height: 300px;
-}
-
-.my-col {
-  min-height: 300px;
 }

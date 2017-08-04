@@ -30,23 +30,42 @@
   </div>
 </div> -->
 
-<div class="row">
+<!-- <div class="row">
   <game-status [game]='game'></game-status>
-</div>
+</div> -->
 
 
-<div class="row text-center my-row">
+<div class="row text-center">
 
-  <div class="col-xs-5 bg-info my-col">
-      <h3>User</h3>
-      <h4>{{game.batsman.type == PlayerType.User ? "Batting" : "Bowling"}}</h4>
-      <h3>{{user.runs}} <small>runs</small></h3>
-      <h4>{{user.balls}} <small>balls</small></h4>
-      <small>Last Played: {{user?.lastDelivery}}</small>
-      <h3 *ngIf='user.status == PlayerStatus.Out' class='text-danger'>OUT</h3>
+  <div class="col-xs-5">
+    <div class="whole">
+  		<div class="type standard">
+  		<p>User</p>
+  		</div>
+  	<div class="plan">
+  		<div class="header">
+  			{{user.runs ? user.runs : 0}}
+  			<p class="month">runs</p>
+  		</div>
+  		<div class="content">
+  			<ul>
+          <li class='batting' *ngIf='PlayerType.User == game.batsman.type'>BATTING</li>
+          <li class='bowling' *ngIf='PlayerType.User == game.bowler.type'>BOWLING</li>
+          <li>Last Played <span class="num">{{user.lastDelivery}}</span></li>
+          <span *ngIf='game.gameStatus != GameStatus.IN_PROGRESS'>
+            <li *ngIf='game.gameStatus == GameStatus.DRAW' class='draw'>DRAW</li>
+            <li *ngIf='game.gameStatus == GameStatus.COMPUTER_WON' class='lost'>LOST</li>
+            <li *ngIf='game.gameStatus == GameStatus.USER_WON' class='won'>WON</li>
+          </span>
+  				<li *ngIf='user.status == PlayerStatus.Out && game.gameStatus == GameStatus.IN_PROGRESS' class="out">OUT</li>
+  			</ul>
+  		</div>
+  	</div>
   </div>
 
-  <div class="col-xs-2 my-col">
+</div>
+
+  <div class="col-xs-2">
     <div class="row">
       <div class="progress progress-bar-vertical">
         <div class="progress-bar" role="progressbar" aria-valuenow="game.batsman.runs"
@@ -63,13 +82,31 @@
     </div>
   </div>
 
-  <div class="col-xs-5 bg-warning my-col">
-    <h3>Computer</h3>
-    <h4>{{game.batsman.type == PlayerType.Computer ? "Batting" : "Bowling"}}</h4>
-    <h3>{{computer.runs}} <small>runs</small></h3>
-    <h4>{{computer.balls}} <small>balls</small></h4>
-    <small>Last Played: {{computer?.lastDelivery}}</small>
-    <h3 *ngIf='computer.status == PlayerStatus.Out' class='text-danger'>OUT</h3>
+  <div class="col-xs-5">
+    <div class="whole ">
+  		<div class="type ultimate">
+  		<p>Computer</p>
+  		</div>
+      <div class="plan">
+    		<div class="header">
+    			{{computer.runs ? computer.runs : 0}}
+    			<p class="month">runs</p>
+    		</div>
+    		<div class="content">
+    			<ul>
+            <li class='batting' *ngIf='PlayerType.Computer == game.batsman.type'>BATTING</li>
+            <li class='bowling' *ngIf='PlayerType.Computer == game.bowler.type'>BOWLING</li>
+            <li>Last Played <span class="num">{{computer.lastDelivery}}</span></li>
+            <span *ngIf='game.gameStatus != GameStatus.IN_PROGRESS'>
+              <li *ngIf='game.gameStatus == GameStatus.DRAW' class='draw'>DRAW</li>
+              <li *ngIf='game.gameStatus == GameStatus.COMPUTER_WON' class='won'>WON</li>
+              <li *ngIf='game.gameStatus == GameStatus.USER_WON' class='lost'>LOST</li>
+            </span>
+    				<li *ngIf='computer.status == PlayerStatus.Out && game.gameStatus == GameStatus.IN_PROGRESS' class="out">OUT</li>
+    			</ul>
+    		</div>
+    	</div>
+  </div>
   </div>
 
 </div>

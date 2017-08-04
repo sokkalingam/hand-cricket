@@ -1,7 +1,7 @@
-<!-- <div *ngIf='(game.gameStatus == GameStatus.IN_PROGRESS)'>
+<div *ngIf='(game.gameStatus == GameStatus.IN_PROGRESS)'>
   <div class="alert alert-info" role="alert" *ngIf='game.batsman.type == PlayerType.User'>You are now BATTING</div>
   <div class="alert alert-warning" role="alert" *ngIf='game.batsman.type == PlayerType.Computer'>You are now BOWLING</div>
-</div> -->
+</div>
 <div *ngIf='(game.gameStatus == GameStatus.USER_WON)' class="alert alert-success" role="alert">
   Game Over! You Won
 </div>
