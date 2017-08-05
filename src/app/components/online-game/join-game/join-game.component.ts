@@ -16,6 +16,7 @@ import { PlayService } from '../../../services/play.service';
 
 export class JoinGameComponent {
   errorMessage: string;
+  name: string;
   // enums
   PlayerType = PlayerType;
 
@@ -27,11 +28,10 @@ export class JoinGameComponent {
 
   saveInfo(): void {
     this.getNewPlayer();
-    this.playerService.infoSaved = true;
   }
 
   collectInfo(): boolean {
-    return !this.playerService.infoSaved;
+    return this.playerService.getPlayer().name == undefined;
   }
 
   getGameId(): void {
@@ -73,6 +73,7 @@ export class JoinGameComponent {
   getNewPlayer(): void {
     this.playerService.getNewPlayer().subscribe(
       (newPlayer: Player) => {
+        newPlayer.name = this.name;
         this.playerService.setPlayer(newPlayer);
       },
       (error) => {

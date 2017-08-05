@@ -17,6 +17,7 @@
 </div>
 
 <h3 *ngIf='!isOnline() && countdownService.timer == 0' class="text-red">Could not connect to server, please check back later</h3>
+
 <join-game *ngIf='isOnline() && !isGameConnected()'></join-game>
 <play *ngIf='isOnline() && isGameConnected()' [hidden]='chatService.showChat'></play>
 <chat *ngIf='isOnline() && isGameConnected()' [hidden]='!chatService.showChat'></chat>

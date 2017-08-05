@@ -15,11 +15,20 @@ import { ApplicationService } from './application.service';
 export class PlayerService {
 
   player: Player;
-  infoSaved: boolean;
+  name: string;
 
   constructor(private gs: GameService,
               private http: Http,
               private appService: ApplicationService) {}
+
+  resetPlayer(): void {
+    this.player.runs = 0;
+    this.player.balls = 0;
+    this.player.status = PlayerStatus.NotOut;
+    this.player.type = undefined;
+    this.player.wins = 0;
+    this.player.lastDelivery = undefined;
+  }
 
   getPlayer(): Player {
     return this.getCurrentPlayer();

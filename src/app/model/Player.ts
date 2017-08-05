@@ -16,6 +16,7 @@ export class Player {
 
   constructor(type: PlayerType) {
     this.type = type;
+    this.status = PlayerStatus.NotOut;
   }
 
   isOut(): boolean { return this.status == PlayerStatus.Out; }

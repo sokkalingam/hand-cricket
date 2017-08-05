@@ -23,7 +23,7 @@ export class OnlineGameComponent implements OnInit, OnDestroy {
               private playerService: PlayerService,
               private countdownService: CountdownService,
               private chatService: ChatService) {
-    playerService.setPlayer(new Player(PlayerType.User));
+    this.playerService.setPlayer(new Player(PlayerType.User));
   }
 
   ngOnInit(): void {
