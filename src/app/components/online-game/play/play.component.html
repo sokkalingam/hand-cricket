@@ -140,7 +140,7 @@
         </span>
 
         <span *ngIf='!gameService.isGameInProgress()'>
-          <button (click)='restartGame()' class="btn btn-danger btn-lg">Restart Game</button>
+          <button (click)='restartGame()' class="btn btn-danger btn-lg" [@restartButton]>Restart Game</button>
         </span>
 
         <span class="chat-notification text-primary" (click)='chatService.openChat()'>
@@ -154,70 +154,3 @@
     </div>
 
   </div>
-
-  <!-- <div class='col-md-6'>
-    <chat></chat>
-  </div> -->
-
-<!-- </div> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div>
-
-  <div class="row">
-
-    <div class="col-xs-6">
-      <h3>Live Gameplay</h3>
-      <div class="alert alert-info" *ngIf='playerService.getCurrentPlayer().wins || playerService.getOtherPlayer().wins'>
-          {{playerService.getCurrentPlayer().name}}&emsp;{{playerService.getCurrentPlayer().wins}} : {{playerService.getOtherPlayer().wins}}   &emsp;{{playerService.getOtherPlayer().name}}
-      </div>
-      <online-game-status></online-game-status>
-      <div *ngIf='gameService.isGameInProgress()'>
-        <button class="btn btn-primary" (click)='clickInput(0)' [disabled]='!playEnabled()'>0</button>
-        <button class="btn btn-primary" (click)='clickInput(1)' [disabled]='!playEnabled()'>1</button>
-        <button class="btn btn-primary" (click)='clickInput(2)' [disabled]='!playEnabled()'>2</button>
-        <button class="btn btn-primary" (click)='clickInput(3)' [disabled]='!playEnabled()'>3</button>
-        <button class="btn btn-primary" (click)='clickInput(4)' [disabled]='!playEnabled()'>4</button>
-        <button class="btn btn-primary" (click)='clickInput(5)' [disabled]='!playEnabled()'>5</button>
-        <button class="btn btn-primary" (click)='clickInput(6)' [disabled]='!playEnabled()'>6</button>
-      </div>
-      <div *ngIf='!gameService.isGameInProgress()'>
-        <button (click)='restartGame()' class="btn btn-primary btn-lg">Restart Game</button>
-      </div>
-    </div>
-
-    <div class="col-xs-6">
-      <h3>Game Updates</h3>
-        <div *ngIf="playService.hightlight" class="alert alert-danger">
-          {{playService.hightlight}}
-        </div>
-        <div *ngIf="playService.notice" class="alert alert-warning">
-          {{playService.notice}}
-        </div>
-    </div>
-
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <online-score-board></online-score-board>
-    </div>
-    <div class="col-md-6">
-      <chat></chat>
-    </div>
-  </div>
-
-</div> -->
