@@ -43,15 +43,19 @@
   		<p>User</p>
   		</div>
   	<div class="plan">
+      <div class="content">
+  			<ul>
+          <li class='batting' *ngIf='PlayerType.User == game.batsman.type'>BATTING</li>
+          <li class='bowling' *ngIf='PlayerType.User == game.bowler.type'>BOWLING</li>
+        </ul>
+      </div>
   		<div class="header">
   			{{user.runs ? user.runs : 0}}
   			<p class="month">runs</p>
   		</div>
   		<div class="content">
   			<ul>
-          <li class='batting' *ngIf='PlayerType.User == game.batsman.type'>BATTING</li>
-          <li class='bowling' *ngIf='PlayerType.User == game.bowler.type'>BOWLING</li>
-          <li>Last Played <span class="num">{{user.lastDelivery}}</span></li>
+          <li>Played <span class="num">{{user.lastDelivery}}</span></li>
           <span *ngIf='game.gameStatus != GameStatus.IN_PROGRESS'>
             <li *ngIf='game.gameStatus == GameStatus.DRAW' class='draw'>DRAW</li>
             <li *ngIf='game.gameStatus == GameStatus.COMPUTER_WON' class='lost'>LOST</li>
@@ -88,15 +92,19 @@
   		<p>Computer</p>
   		</div>
       <div class="plan">
+        <div class="content">
+    			<ul>
+            <li class='batting' *ngIf='PlayerType.Computer == game.batsman.type'>BATTING</li>
+            <li class='bowling' *ngIf='PlayerType.Computer == game.bowler.type'>BOWLING</li>
+          </ul>
+        </div>
     		<div class="header">
     			{{computer.runs ? computer.runs : 0}}
     			<p class="month">runs</p>
     		</div>
     		<div class="content">
     			<ul>
-            <li class='batting' *ngIf='PlayerType.Computer == game.batsman.type'>BATTING</li>
-            <li class='bowling' *ngIf='PlayerType.Computer == game.bowler.type'>BOWLING</li>
-            <li>Last Played <span class="num">{{computer.lastDelivery}}</span></li>
+            <li>Played <span class="num">{{computer.lastDelivery}}</span></li>
             <span *ngIf='game.gameStatus != GameStatus.IN_PROGRESS'>
               <li *ngIf='game.gameStatus == GameStatus.DRAW' class='draw'>DRAW</li>
               <li *ngIf='game.gameStatus == GameStatus.COMPUTER_WON' class='won'>WON</li>

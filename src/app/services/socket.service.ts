@@ -68,17 +68,6 @@ export class SocketService {
     console.log('StompClient: ' + JSON.stringify(this.stompClient));
     this.stompClient.connect({}, function (frame: any) {
       console.log('Connected: ' + frame);
-      // that.stompClient.subscribe(`/game-updates/ABCDE/12345`, function (greeting: any) {
-      //   console.log('Received Greeting: ' + JSON.stringify(greeting));
-      // });
-      // that.stompClient.subscribe(`/live-updates/ABCDE`, function (greeting: any) {
-      //   console.log('Received Greeting: ' + JSON.stringify(greeting));
-      //   messages.push(greeting.body);
-      // });
-      // that.stompClient.subscribe(`/chat/${game.id}`, (message: Message) => {
-      //   console.log(JSON.stringify(message));
-      //   messages.push(message);
-      // });
     }, function (err: any) {
       console.log('Socket Disconnected', err);
       if (that.gameService.isConnected())
@@ -94,6 +83,7 @@ export class SocketService {
     return this.stompClient.subscribe(`/game/${this.gameService.getGame().id}`, (response: any) => {
       console.log('Game Subscription: ' + JSON.stringify(response));
       this.gameService.setGame(JSON.parse(response.body));
+      this.playService.reset();
     });
   }
 
@@ -124,22 +114,6 @@ export class SocketService {
       (response: any) => {
         console.log('Wait Subscription: ' + JSON.stringify(response));
         this.playService.setWait(response.body === 'true');
-    });
-  }
-
-  subscribeToResult(): any {
-    return this.stompClient.subscribe(`/game/result/${this.gameService.getGame().id}/${this.playerService.getPlayer().id}`,
-      (response: any) => {
-        console.log('Result Subscription: ' + JSON.stringify(response));
-        this.playService.notice = response.body;
-    });
-  }
-
-  subscribeToHighlight(): any {
-    return this.stompClient.subscribe(`/game/${this.gameService.getGame().id}/player/${this.playerService.getPlayer().id}/alert`,
-      (response: any) => {
-        console.log('Highlight Subscription: ' + JSON.stringify(response));
-        this.playService.hightlight = response.body;
     });
   }
 

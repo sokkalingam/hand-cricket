@@ -9,6 +9,10 @@ body {
   background-size: 100% 100%;
 }
 
+#main-container {
+  overflow-x: hidden;
+}
+
 .container {
   background-color: white;
   height:100%;
