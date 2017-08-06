@@ -38,7 +38,7 @@ export class OnlineGameComponent implements OnInit, OnDestroy {
   }
 
   connect(): void {
-    this.socketService.connect();
+    this.socketService.initConnect();
   }
 
   disconnect(): void {

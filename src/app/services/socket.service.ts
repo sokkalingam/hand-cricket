@@ -63,20 +63,26 @@ export class SocketService {
     this.stompClient.send(`/app/game/quit/${this.gameService.getGame().id}`, {}, this.playerService.getPlayer().id);
   }
 
+  initConnect(): void {
+    if (this.socket && this.stompClient) return;
+    this.connect();
+    this.countdownService.countdown();
+  }
+
   connect(): any {
     var that = this;
     this.socket = new SockJS(`${this.appService.baseUrl}/game/socket-registration`);
     this.stompClient = Stomp.over(this.socket);
-    console.log('StompClient: ' + JSON.stringify(this.stompClient));
+    console.log(new Date());
     this.stompClient.connect({}, function (frame: any) {
       console.log('Connected: ' + frame);
+      that.countdownService.clearTimer();
     }, function (err: any) {
       console.log('Socket Disconnected', err);
       if (that.gameService.isConnected())
         window.location.reload();
       else {
         setTimeout(_.bind(that.connect, that), that.retryTimeOutInSeconds * 1000);
-        that.countdownService.countdown();
       }
     });
   }
@@ -121,8 +127,10 @@ export class SocketService {
   }
 
   disconnect(): void {
-    this.stompClient.disconnect();
-    console.log("Disconnected");
+    if (this.isConnected()) {
+      this.stompClient.disconnect();
+      console.log("Disconnected");
+    }
   }
 
   isConnected(): boolean {
