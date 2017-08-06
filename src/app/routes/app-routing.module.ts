@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { OfflineGameComponent } from '../components/offline-game/offline-game.component';
 import { OnlineGameComponent } from '../components/online-game/online-game.component';
+import { FeedbackComponent } from '../components/feedback/feedback.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'onlineGame',
     component: OnlineGameComponent
+  },
+  {
+    path: 'feedback',
+    component: FeedbackComponent
   },
   { path: '**',
     redirectTo: '/offlineGame',
