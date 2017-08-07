@@ -1,4 +1,4 @@
-<div *ngIf='!submitted'>
+<div *ngIf='!buttonClicked'>
   <h3 class="text-green">Feedback</h3>
   <form>
     <div class="form-group">
@@ -20,10 +20,15 @@
   </form>
 
 
-<button (click)='submitFeedback()' class="submit-button btn btn-primary btn-lg"
-[disabled]='!email.body?.length || buttonClicked'>Submit</button>
+  <button (click)='submitFeedback()' class="submit-button btn btn-primary btn-lg"
+  [disabled]='!email.body?.length'>Submit</button>
 
 </div>
+
+<div class='text-center' *ngIf='buttonClicked && !submitted'>
+  <img src="../../../assets/loading.gif" />
+</div>
+
 
 <div *ngIf='submitted' class="text-center">
   <h3>Thank you for your valuable feedback. We will read every one of them.</h3>
