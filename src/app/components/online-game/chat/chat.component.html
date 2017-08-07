@@ -1,15 +1,16 @@
 <!-- <button *ngIf='!chatConnected' class="btn btn-primary" (click)='connectToChat()'>Connect to Chat</button>
 <button *ngIf='chatConnected' class="btn btn-danger" (click)='disconnectToChat()'>Disconnect from Chat</button> -->
 
-<h3>Chat</h3>
-
 <!-- Chat template -->
 <div class="chat_window">
-  <!-- <div class="top_menu">
+  <div class="text-right .size30" (click)='chatService.showChat = false'>
+    <span class="glyphicon glyphicon-remove-circle"></span>
+  </div>
+  <div class="top_menu">
     <div class="title">Chat</div>
-  </div> -->
+  </div>
   <ul class="messages" id='message_window'>
-    <div *ngFor='let message of messages'>
+    <div *ngFor='let message of chatService.messages'>
       <li id='{{message.date}}' class="message appeared"
         [class.left]='fromGuest(message)'
         [class.right]='fromHost(message)'

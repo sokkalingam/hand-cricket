@@ -12,6 +12,7 @@ import { ApplicationService } from './application.service';
 import { PlayService } from './play.service';
 import { HelperService } from './helper.service';
 import { CountdownService } from './countdown.service';
+import { ChatService } from './chat.service';
 
 import * as _ from 'lodash';
 
@@ -31,7 +32,8 @@ export class SocketService {
               private appService: ApplicationService,
               private playService: PlayService,
               private herlperService: HelperService,
-              private countdownService: CountdownService) {}
+              private countdownService: CountdownService,
+              private chatService: ChatService) {}
 
   connectChat(message: Message) {
     this.stompClient.send(`/app/chat/${this.gameService.getGame().id}/connect`, {}, JSON.stringify(message));
@@ -93,11 +95,12 @@ export class SocketService {
     });
   }
 
-  subscribetoChat(messages: Message[], scrollDown: any): any {
+  subscribetoChat(): any {
     return this.stompClient.subscribe(`/chat/${this.gameService.getGame().id}`, (response: any) => {
       console.log('Chat Subscription: ' + JSON.stringify(response));
-      messages.push(JSON.parse(response.body));
-      setTimeout(scrollDown, 50, messages);
+      this.chatService.addMessage(JSON.parse(response.body));
+      this.chatService.countMessage();
+      this.chatService.scrollDown();
     });
   }
 

@@ -1,0 +1,31 @@
+.glyphicon-comment {
+  font-size: 50px;
+  position: absolute;
+  left: 5px;
+  top: -11px;
+}
+
+.chat-notification {
+  position: relative;
+  cursor: pointer;
+}
+
+.chat-notification p {
+  position: absolute;
+  font-size: 17px;
+  left: 30px;
+  top: -6px;
+}
+
+.badge {
+  color: #337ab7;
+  background-color: #ffffff;
+}
+
+.notice {
+  color: #23d5ff;
+}
+
+.last-played {
+  color: #ffa900;
+}

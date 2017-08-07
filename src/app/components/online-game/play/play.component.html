@@ -27,10 +27,10 @@
                 [class.draw]='playerService.getCurrentPlayer().wins == playerService.getOtherPlayer().wins'>
                 Wins {{playerService.getCurrentPlayer().wins}}
               </li>
-              <li *ngIf='!playService.notice && playerService.getCurrentPlayer().lastDelivery != null'>
+              <li class='last-played' *ngIf='!playService.notice && playerService.getCurrentPlayer().lastDelivery != null'>
                 Played <span class="num">{{playerService.getCurrentPlayer().lastDelivery}}</span>
               </li>
-              <li *ngIf='playService.notice'>
+              <li *ngIf='playService.notice' class='notice'>
                 {{playService.getCurrentPlayerNotice()}}
               </li>
               <span *ngIf='!gameService.isGameInProgress()'>
@@ -87,10 +87,10 @@
                   [class.draw]='playerService.getCurrentPlayer().wins == playerService.getOtherPlayer().wins'>
                   Wins {{playerService.getOtherPlayer().wins}}
                 </li>
-                <li *ngIf='!playService.notice && playerService.getOtherPlayer().lastDelivery != null'>
+                <li class='last-played' *ngIf='!playService.notice && playerService.getOtherPlayer().lastDelivery != null'>
                   Played <span class="num">{{playerService.getOtherPlayer().lastDelivery}}</span>
                 </li>
-                <li *ngIf='playService.notice'>
+                <li *ngIf='playService.notice' class='notice'>
                   {{playService.getOtherPlayerNotice()}}
                 </li>
                 <span *ngIf='!gameService.isGameInProgress()'>
@@ -107,19 +107,26 @@
 
     </div>
 
-    <div class='row text-center'>
-      <div *ngIf='gameService.isGameInProgress()'>
-        <button class="btn btn-primary" (click)='clickInput(0)' [disabled]='!playEnabled()'>0</button>
-        <button class="btn btn-primary" (click)='clickInput(1)' [disabled]='!playEnabled()'>1</button>
-        <button class="btn btn-primary" (click)='clickInput(2)' [disabled]='!playEnabled()'>2</button>
-        <button class="btn btn-primary" (click)='clickInput(3)' [disabled]='!playEnabled()'>3</button>
-        <button class="btn btn-primary" (click)='clickInput(4)' [disabled]='!playEnabled()'>4</button>
-        <button class="btn btn-primary" (click)='clickInput(5)' [disabled]='!playEnabled()'>5</button>
-        <button class="btn btn-primary" (click)='clickInput(6)' [disabled]='!playEnabled()'>6</button>
-      </div>
-      <div *ngIf='!gameService.isGameInProgress()'>
-        <button (click)='restartGame()' class="btn btn-primary btn-lg">Restart Game</button>
-      </div>
+    <div class='row text-center' style="padding-right:50px">
+        <span *ngIf='gameService.isGameInProgress()'>
+          <button class="btn btn-success" (click)='clickInput(0)' [disabled]='!playEnabled()'>0</button>
+          <button class="btn btn-success" (click)='clickInput(1)' [disabled]='!playEnabled()'>1</button>
+          <button class="btn btn-success" (click)='clickInput(2)' [disabled]='!playEnabled()'>2</button>
+          <button class="btn btn-success" (click)='clickInput(3)' [disabled]='!playEnabled()'>3</button>
+          <button class="btn btn-success" (click)='clickInput(4)' [disabled]='!playEnabled()'>4</button>
+          <button class="btn btn-success" (click)='clickInput(5)' [disabled]='!playEnabled()'>5</button>
+          <button class="btn btn-success" (click)='clickInput(6)' [disabled]='!playEnabled()'>6</button>
+        </span>
+
+        <span *ngIf='!gameService.isGameInProgress()'>
+          <button (click)='restartGame()' class="btn btn-danger btn-lg">Restart Game</button>
+        </span>
+
+        <span class="chat-notification text-primary" (click)='chatService.openChat()'>
+          <span class="glyphicon glyphicon-comment"></span>
+          <p class="badge">{{chatService.newMessages}}</p>
+        </span>
+
     </div>
 
   </div>

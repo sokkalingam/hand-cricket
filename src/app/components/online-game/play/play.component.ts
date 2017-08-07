@@ -9,11 +9,13 @@ import { PlayService } from '../../../services/play.service';
 import { PlayerService } from '../../../services/player.service';
 import { HelperService } from '../../../services/helper.service';
 import { ProgressBarService } from '../../../services/progress-bar.service';
+import { ChatService } from '../../../services/chat.service';
 
 @Component({
   selector: 'play',
   templateUrl: './play.component.html',
-  styleUrls: ['../../../shared/css/price_table.css',
+  styleUrls: ['./play.component.css',
+    '../../../shared/css/price_table.css',
   '../../../shared/css/vertical-progress-bar.css'],
   providers: [ProgressBarService]
 })
@@ -32,13 +34,12 @@ export class PlayComponent {
               private playService: PlayService,
               private playerService: PlayerService,
               private helperService: HelperService,
-              private progressBarService: ProgressBarService) {
+              private progressBarService: ProgressBarService,
+              private chatService: ChatService) {
     this.game = gameService.getGame();
     this.player = playerService.getPlayer();
-    this.socketService.ping();
     this.socketService.subscribeToNotice();
     this.socketService.subscribeToWait();
-    this.socketService.subscribetoPing();
   }
 
   isBatsman(): boolean {
@@ -85,6 +86,10 @@ export class PlayComponent {
 
   clearInputAndUpdates(): void {
     this.input = undefined;
+  }
+
+  showChat(): void {
+    this.chatService.showChat = true;
   }
 
 }
