@@ -20,11 +20,12 @@
   </form>
 
 
-<button (click)='submitFeedback()' class="submit-button btn btn-primary btn-lg" [disabled]='!email.body?.length'>Submit</button>
+<button (click)='submitFeedback()' class="submit-button btn btn-primary btn-lg"
+[disabled]='!email.body?.length || buttonClicked'>Submit</button>
 
 </div>
 
 <div *ngIf='submitted' class="text-center">
   <h3>Thank you for your valuable feedback. We will read every one of them.</h3>
-  <h4 class="text-red">Hand Cricket Team</h4>
+  <h3 class="text-red">Hand Cricket Team</h3>
 </div>
