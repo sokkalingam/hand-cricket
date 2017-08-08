@@ -23,6 +23,7 @@ import { PlayComponent } from './components/online-game/play/play.component';
 import { OnlineGameStatusComponent } from './components/online-game/online-game-status/online-game-status.component';
 import { OnlineScoreBoardComponent } from './components/online-game/online-score-board/online-score-board.component';
 import { FeedbackComponent }  from './components/feedback/feedback.component';
+import { HowToPlayComponent }  from './components/howtoplay/howtoplay.component';
 
 import { SocketService } from './services/socket.service';
 import { GameService } from './services/game.service';
@@ -57,7 +58,8 @@ import { GameAnimationService } from './services/game-animation.service';
                   PlayComponent,
                   OnlineGameStatusComponent,
                   OnlineScoreBoardComponent,
-                  FeedbackComponent
+                  FeedbackComponent,
+                  HowToPlayComponent
                 ],
   providers:    [ SocketService,
                   GameService,
