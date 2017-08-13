@@ -11,15 +11,20 @@
   </div>
   <ul class="messages" id='message_window'>
     <div *ngFor='let message of chatService.messages'>
-      <li id='{{message.date}}' class="message appeared"
-        [class.left]='fromGuest(message)'
-        [class.right]='fromHost(message)'
-        [class.center]='fromChatBot(message)'>
-        <div *ngIf='!fromChatBot(message)' class="avatar"></div>
-        <div class="text_wrapper">
-          <div class="text">{{message.message}}</div>
-        </div>
-      </li>
+      <span *ngIf='fromGuest(message)'>
+        <li id='{{message.date}}' class="message appeared left" [@received]='chatService.messages'>
+          <div class="text_wrapper">
+            <div class="text">{{message.message}}</div>
+          </div>
+        </li>
+      </span>
+      <span *ngIf='fromHost(message)'>
+        <li id='{{message.date}}' class="message appeared right" [@sent]='chatService.messages'>
+          <div class="text_wrapper">
+            <div class="text">{{message.message}}</div>
+          </div>
+        </li>
+      </span>
     </div>
   </ul>
   <div class="bottom_wrapper clearfix">

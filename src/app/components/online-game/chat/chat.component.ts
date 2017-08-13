@@ -9,12 +9,16 @@ import { GameService } from '../../../services/game.service';
 import { PlayerService } from '../../../services/player.service';
 import { ChatService } from '../../../services/chat.service';
 
+import { ChatAnimation } from '../../../animations/ChatAnimation';
+
+
 import * as _ from 'lodash';
 
 @Component({
   selector: 'chat',
   templateUrl: 'chat.component.html',
-  styleUrls: ['chat.component.css']
+  styleUrls: ['chat.component.css'],
+  animations: [ChatAnimation]
 })
 
 export class ChatComponent implements OnInit {
