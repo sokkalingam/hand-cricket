@@ -10,8 +10,8 @@ import {  trigger,
 export const ChatAnimation = [
   trigger('sent', [
     transition('* => *', [
-      animate(400, keyframes([
-        style({opacity: 1, transform: 'translateX(100%)', offset: 0}),
+      animate(300, keyframes([
+        style({opacity: 0, transform: 'translateX(100%)', offset: 0}),
         style({opacity: 1, transform: 'translateX(-30px)',  offset: 0.4}),
         style({opacity: 1, transform: 'translateX(0)',     offset: 1.0})
       ]))
@@ -19,8 +19,8 @@ export const ChatAnimation = [
   ]),
   trigger('received', [
     transition('* => *', [
-      animate(400, keyframes([
-        style({opacity: 1, transform: 'translateX(-100%)', offset: 0}),
+      animate(300, keyframes([
+        style({opacity: 0, transform: 'translateX(-100%)', offset: 0}),
         style({opacity: 1, transform: 'translateX(30px)',  offset: 0.4}),
         style({opacity: 1, transform: 'translateX(0)',     offset: 1.0})
       ]))
