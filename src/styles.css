@@ -29,6 +29,12 @@ html, body {
   margin: 10px;
 }
 
+.equal {
+  display: flex;
+  display: -webkit-flex;
+  flex-wrap: wrap;
+}
+
 .text-green {
   color: #57d357
 }

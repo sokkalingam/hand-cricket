@@ -35,6 +35,7 @@ import { HelperService } from './services/helper.service';
 import { CountdownService } from './services/countdown.service';
 import { ChatService } from './services/chat.service';
 import { GameAnimationService } from './services/game-animation.service';
+import { StatsService } from './services/stats.service';
 
 // External Modules
 import { ShareButtonsModule } from 'ngx-sharebuttons';
@@ -75,7 +76,8 @@ import { ShareButtonsModule } from 'ngx-sharebuttons';
                   HelperService,
                   CountdownService,
                   ChatService,
-                  GameAnimationService
+                  GameAnimationService,
+                  StatsService
                 ],
   bootstrap:    [ AppComponent ]
 })
