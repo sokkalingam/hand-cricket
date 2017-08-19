@@ -85,10 +85,10 @@ export const GameAnimation = [
   ]),
   trigger('inputButton', [
     transition('* => *', [
-      animate(500, keyframes([
-        style({opacity: 1, transform: 'rotate(180deg)', offset: 0.5}),
-        style({opacity: 1, transform: 'scale(2)', offset: 0.8}),
-        style({opacity: 1, transform: 'scale(1)', offset: 1})
+      animate(300, keyframes([
+        style({opacity: 1, transform: 'scale(1)', marginLeft: '0px', marginRight: '0px', offset: 0}),
+        style({opacity: 1, transform: 'scale(2)', marginLeft: '15px', marginRight: '15px', offset: 0.5}),
+        style({opacity: 1, transform: 'scale(1)', marginLeft: '0px', marginRight: '0px', offset: 1})
       ]))
     ])
   ]),
