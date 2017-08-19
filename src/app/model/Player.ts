@@ -12,7 +12,7 @@ export class Player {
   lastDelivery: number;
   type: PlayerType;
   status: PlayerStatus;
-  wins: number;
+  wins: number = 0;
 
   constructor(type: PlayerType) {
     this.type = type;

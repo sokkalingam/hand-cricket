@@ -11,7 +11,11 @@
   </div>
 </div> -->
 
-<h3 *ngIf='!isOnline() && countdownService.timer > 0' class="text-blue">Attempting to connect to server... {{countdownService.timer}}s</h3>
+<div *ngIf='!isOnline() && countdownService.timer > 0'>
+  <h3 class="text-red">Attempting to connect to server... {{countdownService.timer}}s</h3>
+  <h4 class="text-blue">Game is hosted on a free server, hence it may take up to a minute to connect</h4>
+</div>
+
 <h3 *ngIf='!isOnline() && countdownService.timer == 0' class="text-red">Could not connect to server, please check back later</h3>
 <join-game *ngIf='isOnline() && !isGameConnected()'></join-game>
 <play *ngIf='isOnline() && isGameConnected()' [hidden]='chatService.showChat'></play>

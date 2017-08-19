@@ -7,7 +7,7 @@ export class CountdownService {
 
   countdown(): void {
     if (this.timer) return;
-    this.timer = 45;
+    this.timer = 60;
     var that = this;
     this.interval = setInterval(() => {
       if (that.timer > 0)

@@ -50,12 +50,18 @@
         </ul>
       </div>
   		<div class="header">
-  			{{user.runs ? user.runs : 0}}
+  			{{user.runs ? user.runs : 0}}<span class='not-out' *ngIf='PlayerType.User == game.batsman.type && !user.isOut()'>*</span>
   			<p class="month">runs</p>
   		</div>
   		<div class="content">
   			<ul>
-          <li>Played <span class="num">{{user.lastDelivery}}</span></li>
+          <li *ngIf='user.wins || computer.wins'
+            [class.won]='user.wins > computer.wins'
+            [class.lost]='user.wins < computer.wins'
+            [class.draw]='user.wins == computer.wins'>
+            Wins {{user.wins}}
+          </li>
+          <li *ngIf='user.lastDelivery != null'>Played <span class="num">{{user.lastDelivery}}</span></li>
           <span *ngIf='game.gameStatus != GameStatus.IN_PROGRESS'>
             <li *ngIf='game.gameStatus == GameStatus.DRAW' class='draw'>DRAW</li>
             <li *ngIf='game.gameStatus == GameStatus.COMPUTER_WON' class='lost'>LOST</li>
@@ -99,12 +105,18 @@
           </ul>
         </div>
     		<div class="header">
-    			{{computer.runs ? computer.runs : 0}}
+    			{{computer.runs ? computer.runs : 0}}<span class='not-out' *ngIf='PlayerType.Computer == game.batsman.type && !computer.isOut()'>*</span>
     			<p class="month">runs</p>
     		</div>
     		<div class="content">
     			<ul>
-            <li>Played <span class="num">{{computer.lastDelivery}}</span></li>
+            <li *ngIf='user.wins || computer.wins'
+              [class.won]='user.wins < computer.wins'
+              [class.lost]='user.wins > computer.wins'
+              [class.draw]='user.wins == computer.wins'>
+              Wins {{computer.wins}}
+            </li>
+            <li *ngIf='computer.lastDelivery != null'>Played <span class="num">{{computer.lastDelivery}}</span></li>
             <span *ngIf='game.gameStatus != GameStatus.IN_PROGRESS'>
               <li *ngIf='game.gameStatus == GameStatus.DRAW' class='draw'>DRAW</li>
               <li *ngIf='game.gameStatus == GameStatus.COMPUTER_WON' class='won'>WON</li>

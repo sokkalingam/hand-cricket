@@ -16,7 +16,7 @@
             </ul>
           </div>
       		<div class="header">
-      			{{playerService.getCurrentPlayer().runs}}
+      			{{playerService.getCurrentPlayer().runs}}<span class='not-out' *ngIf='playerService.currentPlayerBatting() && !playerService.isCurrentPlayerOut()'>*</span>
       			<p class="month">runs</p>
       		</div>
       		<div class="content">
@@ -76,7 +76,7 @@
               </ul>
             </div>
         		<div class="header">
-        			{{playerService.getOtherPlayer().runs}}
+        			{{playerService.getOtherPlayer().runs}}<span class='not-out' *ngIf='playerService.otherPlayerBatting() && !playerService.isOtherPlayerOut()'>*</span>
         			<p class="month">runs</p>
         		</div>
         		<div class="content">

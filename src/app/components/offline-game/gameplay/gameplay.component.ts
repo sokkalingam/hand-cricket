@@ -57,7 +57,16 @@ export class GameplayComponent {
     }
 
     restartGame(): void {
-      location.reload();
+      this.game.gameStatus = GameStatus.IN_PROGRESS;
+      this.resetPlayer(this.getBatsman());
+      this.resetPlayer(this.getBowler());
+    }
+
+    resetPlayer(player: Player): void {
+      player.runs = 0;
+      player.balls = 0;
+      player.lastDelivery = undefined;
+      player.status = PlayerStatus.NotOut;
     }
 
     isInputValid(): boolean {
@@ -100,7 +109,7 @@ export class GameplayComponent {
     }
 
     setTargetScore(): void {
-      if (this.getBowler().runs == undefined)
+      if (!this.getBowler().balls)
       this.game.targetScore = this.progressBarService.getNextTargetScore(this.getBatsman().runs);
       else
       this.game.targetScore = this.getBowler().runs;
@@ -148,12 +157,14 @@ export class GameplayComponent {
 
     decideGameWinner(): void {
 
-      if (this.getBatsman().runs > this.getBowler().runs) {
+      if (this.getBowler().isOut() && this.getBatsman().runs > this.getBowler().runs) {
         if (this.getBatsman().type == PlayerType.User)
         this.setGameStatus(GameStatus.USER_WON);
         else
         if (this.getBatsman().type == PlayerType.Computer)
         this.setGameStatus(GameStatus.COMPUTER_WON);
+
+        this.getBatsman().wins++;
       }
 
       if (this.getBatsman().isOut() &&
@@ -163,9 +174,11 @@ export class GameplayComponent {
         else
         if (this.getBatsman().type == PlayerType.Computer)
         this.setGameStatus(GameStatus.USER_WON);
+
+        this.getBowler().wins++;
       }
 
-      if (this.getBatsman().isOut() &&
+      if (this.getBatsman().isOut() && this.getBowler().isOut() &&
       this.getBatsman().runs == this.getBowler().runs &&
       this.getBatsman().runs != undefined)
       this.setGameStatus(GameStatus.DRAW);
