@@ -85,9 +85,10 @@ export const GameAnimation = [
   ]),
   trigger('inputButton', [
     transition('* => *', [
-      animate(200, keyframes([
-        style({opacity: 1, transform: 'scale(2)', offset: 0.5}),
-        style({opacity: 1, transform: 'scale(1)',  offset: 1})
+      animate(500, keyframes([
+        style({opacity: 1, transform: 'rotate(180deg)', offset: 0.5}),
+        style({opacity: 1, transform: 'scale(2)', offset: 0.8}),
+        style({opacity: 1, transform: 'scale(1)', offset: 1})
       ]))
     ])
   ]),
@@ -98,6 +99,15 @@ export const GameAnimation = [
         style({opacity: 1, transform: 'translateX(0)', offset: 0.5}),
         style({opacity: 1, transform: 'scale(2)', offset: 0.8}),
         style({opacity: 1, transform: 'scale(1)',  offset: 1})
+      ]))
+    ])
+  ]),
+  trigger('dailyLeaders', [
+    transition('* => *', [
+      animate(2000, keyframes([
+        style({opacity: 1, transform: 'translateY(200%)', offset: 0}),
+        style({opacity: 1, transform: 'translateY(200%)', offset: 0.5}),
+        style({opacity: 1, transform: 'translateY(0)', offset: 1})
       ]))
     ])
   ])
