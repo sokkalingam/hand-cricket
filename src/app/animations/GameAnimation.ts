@@ -28,11 +28,12 @@ export const GameAnimation = [
   ]),
   trigger('out', [
     transition('* => *', [
-      animate(800, keyframes([
-        style({opacity: 0, transform: 'translateY(-100%)', offset: 0}),
-        style({opacity: 1, transform: 'translateY(20px)',  offset: 0.3}),
-        style({opacity: 1, transform: 'translateY(-20px)',  offset: 0.6}),
-        style({opacity: 1, transform: 'translateX(0)',     offset: 1.0})
+      animate(1000, keyframes([
+        style({opacity: 0, transform: 'translateX(-100%)', offset: 0}),
+        style({opacity: 1, transform: 'translateX(20px)',  offset: 0.3}),
+        style({opacity: 1, transform: 'translateX(0)',     offset: 0.4}),
+        style({opacity: 1, transform: 'scale(2)',  offset: 0.7}),
+        style({opacity: 1, transform: 'scale(1)',  offset: 1})
       ]))
     ])
   ]),
