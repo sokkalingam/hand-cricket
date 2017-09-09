@@ -7,14 +7,15 @@ export class Player {
 
 	id: string;
   name: string;
-  runs: number;
-  balls: number;
+  runs: number = 0;
+  balls: number = 0;
   lastDelivery: number;
   type: PlayerType;
   status: PlayerStatus;
   wins: number = 0;
 
   constructor(type: PlayerType) {
+	  this.id = HelperService.getRandomId(5);
     this.type = type;
     this.status = PlayerStatus.NotOut;
   }

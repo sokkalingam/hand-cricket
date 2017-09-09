@@ -83,15 +83,18 @@ export class GameService {
   }
 
   isGameOver(): boolean {
-    return this.getGame().gameStatus.toString() === GameStatus[GameStatus.GAME_OVER];
+    return this.getGame().gameStatus.toString() === GameStatus[GameStatus.GAME_OVER]
+      || this.getGame().gameStatus === GameStatus.GAME_OVER;
   }
 
   isGameDraw(): boolean {
-    return this.getGame().gameStatus.toString() === GameStatus[GameStatus.DRAW];
+    return this.getGame().gameStatus.toString() === GameStatus[GameStatus.DRAW]
+      ||  this.getGame().gameStatus === GameStatus.DRAW;
   }
 
   isGameInProgress(): boolean {
-    return this.getGame().gameStatus.toString() === GameStatus[GameStatus.IN_PROGRESS];
+    return this.getGame().gameStatus.toString() === GameStatus[GameStatus.IN_PROGRESS]
+      || this.getGame().gameStatus === GameStatus.IN_PROGRESS;
   }
 
 }

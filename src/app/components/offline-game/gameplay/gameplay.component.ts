@@ -11,6 +11,7 @@ import { GameStatus } from '../../../enum/GameStatus';
 
 import { ProgressBarService } from '../../../services/progress-bar.service';
 import { GameService } from '../../../services/game.service';
+import { PlayerService } from '../../../services/player.service';
 import { HelperService } from '../../../services/helper.service';
 import { GameAnimationService } from '../../../services/game-animation.service';
 import { StatsService } from '../../../services/stats.service';
@@ -23,7 +24,7 @@ import { PlaySelectAnimation } from '../../../animations/PlaySelectAnimation';
   templateUrl: './gameplay.component.html',
   styleUrls: ['./gameplay.component.css', '../../../shared/css/price_table.css',
   '../../../shared/css/vertical-progress-bar.css'],
-  providers: [ProgressBarService, GameService],
+  providers: [ProgressBarService],
   animations: [GameAnimation, PlaySelectAnimation]
 })
 
@@ -48,6 +49,7 @@ export class GameplayComponent implements OnInit {
 
   constructor(private progressBarService: ProgressBarService,
     private gameService: GameService,
+    private playerService: PlayerService,
     private helperService: HelperService,
     private gameAS: GameAnimationService,
     private statsService: StatsService) { }
@@ -210,10 +212,7 @@ export class GameplayComponent implements OnInit {
     }
 
     toss(): void {
-      if (Math.random() < 0.5)
-        this.choseToBat();
-      else
-        this.choseToBowl();
+      (Math.random() < 0.5) ? this.choseToBat() : this.choseToBowl();
     }
 
     resetPlayer(player: Player): void {
