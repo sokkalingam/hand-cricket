@@ -31,6 +31,7 @@ import { PlayerService } from './services/player.service';
 import { HelperService } from './services/helper.service';
 import { CountdownService } from './services/countdown.service';
 import { ChatService } from './services/chat.service';
+import { GameAnimationService } from './services/game-animation.service';
 
 @NgModule({
   imports:      [ BrowserModule,
@@ -63,7 +64,8 @@ import { ChatService } from './services/chat.service';
                   PlayerService,
                   HelperService,
                   CountdownService,
-                  ChatService
+                  ChatService,
+                  GameAnimationService
                 ],
   bootstrap:    [ AppComponent ]
 })
