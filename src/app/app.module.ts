@@ -25,6 +25,7 @@ import { OnlineScoreBoardComponent } from './components/online-game/online-score
 import { FeedbackComponent }  from './components/feedback/feedback.component';
 import { HowToPlayComponent }  from './components/howtoplay/howtoplay.component';
 import { ShareComponent }  from './components/share/share.component';
+import { PlayTableComponent }  from './components/shared/play-table/play-table.component';
 
 import { SocketService } from './services/socket.service';
 import { GameService } from './services/game.service';
@@ -66,7 +67,8 @@ import { ShareButtonsModule } from 'ngx-sharebuttons';
                   OnlineScoreBoardComponent,
                   FeedbackComponent,
                   HowToPlayComponent,
-                  ShareComponent
+                  ShareComponent,
+                  PlayTableComponent
                 ],
   providers:    [ SocketService,
                   GameService,
