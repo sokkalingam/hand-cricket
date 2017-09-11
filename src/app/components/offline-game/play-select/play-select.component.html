@@ -1,7 +1,7 @@
 <div *ngIf='!user.name' class="form-group">
   <h3>
     <label for="playerName">Enter your name: </label>
-    <input type='text' class='form-control' name='name' [(ngModel)]='name' autocomplete='off' [maxlength]='11' />
+    <input type='text' class='form-control' name='name' [(ngModel)]='name' autocomplete='off' [maxlength]='8' />
   </h3>
   <button type="button" class="btn btn-success btn-lg"
   [disabled]='name?.trim().length == 0' (click)='saveInfo()'>Save</button>
