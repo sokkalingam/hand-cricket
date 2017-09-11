@@ -10,6 +10,9 @@ import { PlayerService } from '../../../services/player.service';
 import { HelperService } from '../../../services/helper.service';
 import { ProgressBarService } from '../../../services/progress-bar.service';
 import { ChatService } from '../../../services/chat.service';
+import { GameAnimationService } from '../../../services/game-animation.service';
+
+import { GameAnimation } from '../../../animations/GameAnimation';
 
 @Component({
   selector: 'play',
@@ -17,7 +20,8 @@ import { ChatService } from '../../../services/chat.service';
   styleUrls: ['./play.component.css',
     '../../../shared/css/price_table.css',
   '../../../shared/css/vertical-progress-bar.css'],
-  providers: [ProgressBarService]
+  providers: [ProgressBarService],
+  animations: [GameAnimation]
 })
 
 export class PlayComponent {
@@ -35,7 +39,8 @@ export class PlayComponent {
               private playerService: PlayerService,
               private helperService: HelperService,
               private progressBarService: ProgressBarService,
-              private chatService: ChatService) {
+              private chatService: ChatService,
+              private gameAS: GameAnimationService) {
     this.game = gameService.getGame();
     this.player = playerService.getPlayer();
     this.socketService.subscribeToNotice();
@@ -72,6 +77,7 @@ export class PlayComponent {
     this.input = num;
     this.socketService.sendInput(this.input);
     this.clearInputAndUpdates();
+    this.gameAS.inputs[num]++;
   }
 
   restartGame(): void {
@@ -79,6 +85,7 @@ export class PlayComponent {
     this.gameService.restartGame().subscribe(
       (text: string) => {
         console.log(text);
+        this.gameAS.gameRestart++;
       },
       (error) => console.log(error)
     );

@@ -1,38 +1,3 @@
-<!-- <h3>Gameplay</h3>
-<game-status [game]='game'></game-status>
-<div>
-
-  <div class="form-group well well-sm">
-    <label for="computerInput">Computer Played: </label>
-    <span>{{computer.lastDelivery}}</span>
-  </div>
-  <div class="form-group well well-sm">
-    <label for="lastPlayedInput">You Last Played: </label>
-    <span>{{user.lastDelivery}}</span>
-  </div>
-  <div class="form-group well well-sm alert-danger"
-    *ngIf='game.updates.length > 0 && game.updates[0].type == UpdateType.DANGER'>
-    <label>{{game.updates[0].message.replace("User", "You")}}</label>
-  </div>
-  <div *ngIf='game.gameStatus == GameStatus.IN_PROGRESS'>
-    <button class="btn btn-primary" (click)='clickInput(0)'>0</button>
-    <button class="btn btn-primary" (click)='clickInput(1)'>1</button>
-    <button class="btn btn-primary" (click)='clickInput(2)'>2</button>
-    <button class="btn btn-primary" (click)='clickInput(3)'>3</button>
-    <button class="btn btn-primary" (click)='clickInput(4)'>4</button>
-    <button class="btn btn-primary" (click)='clickInput(5)'>5</button>
-    <button class="btn btn-primary" (click)='clickInput(6)'>6</button>
-  </div>
-  <div *ngIf='(game.gameStatus == GameStatus.USER_WON) ||
-  (game.gameStatus == GameStatus.COMPUTER_WON) ||
-  (game.gameStatus == GameStatus.DRAW)'>
-    <button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
-  </div>
-</div> -->
-
-<!-- <div class="row">
-  <game-status [game]='game'></game-status>
-</div> -->
 <div class="row text-center">
 
   <div class="col-xs-5" [@leftColumn]='gameAS.gameRestart'>
@@ -44,10 +9,10 @@
       <div class="content">
   			<ul>
           <span *ngIf='PlayerType.User == game.batsman.type'>
-            <li class='batting' [@battingBowling]='game.gameStatus || game.batsman.type'>BATTING</li>
+            <li class='batting' [@battingBowling]='user.status || computer.status'>BATTING</li>
           </span>
           <span *ngIf='PlayerType.User == game.bowler.type'>
-            <li class='bowling' [@battingBowling]='game.gameStatus || game.bowler.type'>BOWLING</li>
+            <li class='bowling' [@battingBowling]='user.status || computer.status'>BOWLING</li>
           </span>
         </ul>
       </div>
@@ -109,10 +74,10 @@
         <div class="content">
     			<ul>
             <span *ngIf='PlayerType.Computer == game.batsman.type'>
-              <li class='batting' [@battingBowling]='game.gameStatus || game.batsman.type'>BATTING</li>
+              <li class='batting' [@battingBowling]='user.status || computer.status'>BATTING</li>
             </span>
             <span *ngIf='PlayerType.Computer == game.bowler.type'>
-              <li class='bowling' [@battingBowling]='game.gameStatus || game.bowler.type'>BOWLING</li>
+              <li class='bowling' [@battingBowling]='user.status || computer.status'>BOWLING</li>
             </span>
           </ul>
         </div>

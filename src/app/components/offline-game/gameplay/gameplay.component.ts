@@ -10,7 +10,6 @@ import { PlayerStatus } from '../../../enum/PlayerStatus';
 import { GameStatus } from '../../../enum/GameStatus';
 
 import { ProgressBarService } from '../../../services/progress-bar.service';
-import { UpdateService } from '../../../services/update.service';
 import { GameService } from '../../../services/game.service';
 import { HelperService } from '../../../services/helper.service';
 import { GameAnimationService } from '../../../services/game-animation.service';
@@ -22,7 +21,7 @@ import { GameAnimation } from '../../../animations/GameAnimation';
   templateUrl: './gameplay.component.html',
   styleUrls: ['./gameplay.component.css', '../../../shared/css/price_table.css',
   '../../../shared/css/vertical-progress-bar.css'],
-  providers: [ProgressBarService, UpdateService, GameService],
+  providers: [ProgressBarService, GameService],
   animations: [GameAnimation]
 })
 
@@ -43,13 +42,7 @@ export class GameplayComponent {
 
   userInput: number;
 
-  /**
-  * 0 to 6, total of 7 different outputs from computer
-  */
-  noOfOutputs: number = 7;
-
   constructor(private progressBarService: ProgressBarService,
-    private updateService: UpdateService,
     private gameService: GameService,
     private helperService: HelperService,
     private gameAS: GameAnimationService) { }
@@ -80,10 +73,6 @@ export class GameplayComponent {
     }
 
     setOut(batsman: Player): void {
-      this.updateService.addUpdate(
-        UpdateType.DANGER,
-        `${PlayerType[batsman.type]} got Out, scored ${batsman.runs} runs in ${batsman.balls} balls`
-      );
       batsman.status = PlayerStatus.Out;
     }
 
@@ -109,8 +98,6 @@ export class GameplayComponent {
     }
 
     didInputsMatch(batsman: Player, bowler: Player): boolean {
-      var message: string = `${PlayerType[batsman.type]} batted ${batsman.lastDelivery}, ${PlayerType[bowler.type]} bowled ${bowler.lastDelivery}`;
-      this.updateService.addUpdate(UpdateType.INFO, message);
       return batsman.lastDelivery == bowler.lastDelivery;
     }
 
@@ -119,10 +106,6 @@ export class GameplayComponent {
       this.game.targetScore = this.progressBarService.getNextTargetScore(this.getBatsman().runs);
       else
       this.game.targetScore = this.getBowler().runs;
-    }
-
-    getUpdates(): void {
-      this.game.updates = this.updateService.getUpdates();
     }
 
     addBalls(player: Player): void {
@@ -159,7 +142,6 @@ export class GameplayComponent {
 
     runGameThings(): void {
       this.setTargetScore();
-      this.getUpdates();
     }
 
     decideGameWinner(): void {
