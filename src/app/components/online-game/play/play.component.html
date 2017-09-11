@@ -4,60 +4,13 @@
     <div class="row text-center">
 
       <div class="col-xs-5" [@leftColumn]='gameAS.gameRestart'>
-        <div class="whole">
-      		<div class="type standard">
-      		<p>{{playerService.getCurrentPlayer().name}}</p>
-      		</div>
-      	<div class="plan">
-          <div class="content">
-      			<ul>
-              <span *ngIf='playerService.isBatsman()'>
-                <li class='batting' [@battingBowling]='playerService.getCurrentPlayer().status || playerService.getOtherPlayer().status'>BATTING</li>
-              </span>
-              <span *ngIf='playerService.isBowler()'>
-                <li class='bowling'  [@battingBowling]='playerService.getCurrentPlayer().status || playerService.getOtherPlayer().status'>BOWLING</li>
-              </span>
-            </ul>
-          </div>
-      		<div class="header" [@runs]='playerService.getCurrentPlayer().runs'>
-      			{{playerService.getCurrentPlayer().runs}}<span class='not-out' *ngIf='playerService.currentPlayerBatting() && !playerService.isCurrentPlayerOut()'>*</span>
-      			<p class="month">runs</p>
-      		</div>
-      		<div class="content">
-      			<ul>
-              <span *ngIf='playerService.getCurrentPlayer().wins || playerService.getOtherPlayer().wins'>
-                <li [@wins]='playerService.getCurrentPlayer().wins'
-                  [class.won]='playerService.getCurrentPlayer().wins > playerService.getOtherPlayer().wins'
-                  [class.lost]='playerService.getCurrentPlayer().wins < playerService.getOtherPlayer().wins'
-                  [class.draw]='playerService.getCurrentPlayer().wins == playerService.getOtherPlayer().wins'>
-                  Wins {{playerService.getCurrentPlayer().wins}}
-                </li>
-              </span>
-              <span *ngIf='!playService.notice && playerService.getCurrentPlayer().lastDelivery != null'>
-                <li class='last-played' [@played]='playerService.getCurrentPlayer().runs || playerService.getOtherPlayer().runs'>
-                  Played <span class="num">{{playerService.getCurrentPlayer().lastDelivery}}</span>
-                </li>
-              </span>
-              <span *ngIf='playService.notice'>
-                <li class='notice' [@yourTurn]='playService.getCurrentPlayerNotice()'>
-                  {{playService.getCurrentPlayerNotice()}}
-                </li>
-              </span>
-              <span *ngIf='!gameService.isGameInProgress()'>
-                <li *ngIf='gameService.isGameDraw()' class='draw'>DRAW</li>
-                <li *ngIf='playerService.currentPlayerWon()' class='won'>WON</li>
-                <li *ngIf='playerService.currentPlayerLost()' class='lost'>LOST</li>
-              </span>
-              <span *ngIf='playerService.isCurrentPlayerOut() && gameService.isGameInProgress()'>
-                <li [@out]='playerService.getCurrentPlayer().status' class="out">OUT</li>
-              </span>
-
-      			</ul>
-      		</div>
-      	</div>
+        <play-table [player]='playerService.getCurrentPlayer()'
+                    [otherPlayer]='playerService.getOtherPlayer()'
+                    [game]='gameService.getGame()'
+                    [notice]='playService.notice'
+                    [playerNotice]='playService.getCurrentPlayerNotice()'>
+        </play-table>
       </div>
-
-    </div>
 
       <div class="col-xs-2">
         <div class="row">
@@ -77,58 +30,12 @@
       </div>
 
       <div class="col-xs-5" [@rightColumn]='gameAS.gameRestart'>
-        <div class="whole">
-      		<div class="type ultimate">
-      		<p>{{playerService.getOtherPlayer().name}}</p>
-      		</div>
-          <div class="plan">
-            <div class="content">
-        			<ul>
-                <span *ngIf='playerService.isOppBatsman()'>
-                  <li class='batting' [@battingBowling]='playerService.getCurrentPlayer().status || playerService.getOtherPlayer().status'>BATTING</li>
-                </span>
-                <span *ngIf='playerService.isOppBowler()'>
-                  <li class='bowling'  [@battingBowling]='playerService.getCurrentPlayer().status || playerService.getOtherPlayer().status'>BOWLING</li>
-                </span>
-              </ul>
-            </div>
-        		<div class="header" [@runs]='playerService.getOtherPlayer().runs'>
-        			{{playerService.getOtherPlayer().runs}}<span class='not-out' *ngIf='playerService.otherPlayerBatting() && !playerService.isOtherPlayerOut()'>*</span>
-        			<p class="month">runs</p>
-        		</div>
-        		<div class="content">
-        			<ul>
-                <span *ngIf='playerService.getCurrentPlayer().wins || playerService.getOtherPlayer().wins'>
-                  <li [@wins]='playerService.getOtherPlayer().wins'
-                    [class.won]='playerService.getCurrentPlayer().wins < playerService.getOtherPlayer().wins'
-                    [class.lost]='playerService.getCurrentPlayer().wins > playerService.getOtherPlayer().wins'
-                    [class.draw]='playerService.getCurrentPlayer().wins == playerService.getOtherPlayer().wins'>
-                    Wins {{playerService.getOtherPlayer().wins}}
-                  </li>
-                </span>
-                <span *ngIf='!playService.notice && playerService.getOtherPlayer().lastDelivery != null'>
-                  <li class='last-played' [@played]='playerService.getCurrentPlayer().runs || playerService.getOtherPlayer().runs'>
-                    Played <span class="num">{{playerService.getOtherPlayer().lastDelivery}}</span>
-                  </li>
-                </span>
-                <span *ngIf='playService.notice'>
-                  <li class='notice' [@yourTurn]='playService.getOtherPlayerNotice()'>
-                    {{playService.getOtherPlayerNotice()}}
-                  </li>
-                </span>
-
-                <span *ngIf='!gameService.isGameInProgress()'>
-                  <li *ngIf='gameService.isGameDraw()' class='draw'>DRAW</li>
-                  <li *ngIf='playerService.currentPlayerWon()' class='lost'>LOST</li>
-                  <li *ngIf='playerService.currentPlayerLost()' class='won'>WON</li>
-                </span>
-                <span *ngIf='playerService.isOtherPlayerOut() && gameService.isGameInProgress()'>
-                  <li [@out]='playerService.getOtherPlayer().status' class="out">OUT</li>
-                </span>
-        			</ul>
-        		</div>
-        	</div>
-      </div>
+        <play-table [player]='playerService.getOtherPlayer()'
+                    [otherPlayer]='playerService.getCurrentPlayer()'
+                    [game]='gameService.getGame()'
+                    [notice]='playService.notice'
+                    [playerNotice]='playService.getOtherPlayerNotice()'>
+        </play-table>
       </div>
 
     </div>

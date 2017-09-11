@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { Game } from '../../../model/Game';
 import { Player } from '../../../model/Player';
@@ -24,7 +24,7 @@ import { GameAnimation } from '../../../animations/GameAnimation';
   animations: [GameAnimation]
 })
 
-export class PlayComponent {
+export class PlayComponent implements OnInit {
 
   player: Player;
   game: Game;
@@ -40,9 +40,11 @@ export class PlayComponent {
               private helperService: HelperService,
               private progressBarService: ProgressBarService,
               private chatService: ChatService,
-              private gameAS: GameAnimationService) {
-    this.game = gameService.getGame();
-    this.player = playerService.getPlayer();
+              private gameAS: GameAnimationService) { }
+
+  ngOnInit(): void {
+    this.game = this.gameService.getGame();
+    this.player = this.playerService.getPlayer();
     this.socketService.subscribeToNotice();
     this.socketService.subscribeToWait();
   }

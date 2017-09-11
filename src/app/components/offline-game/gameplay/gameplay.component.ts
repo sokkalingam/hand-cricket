@@ -22,7 +22,7 @@ import { PlaySelectAnimation } from '../../../animations/PlaySelectAnimation';
 @Component({
   selector: 'gameplay',
   templateUrl: './gameplay.component.html',
-  styleUrls: ['./gameplay.component.css', '../../../shared/css/price_table.css',
+  styleUrls: ['./gameplay.component.css',
   '../../../shared/css/vertical-progress-bar.css'],
   providers: [ProgressBarService],
   animations: [GameAnimation, PlaySelectAnimation]
@@ -152,29 +152,22 @@ export class GameplayComponent implements OnInit {
     decideGameWinner(): void {
 
       if (this.getBowler().isOut() && this.getBatsman().runs > this.getBowler().runs) {
-        if (this.getBatsman().type == PlayerType.User)
-        this.setGameStatus(GameStatus.USER_WON);
-        else
-        if (this.getBatsman().type == PlayerType.Computer)
-        this.setGameStatus(GameStatus.COMPUTER_WON);
-
+        this.getBatsman().status = PlayerStatus.Won;
+        this.getBowler().status = PlayerStatus.Lost;
+        this.setGameStatus(GameStatus.GAME_OVER);
         this.getBatsman().wins++;
       }
-
-      if (this.getBatsman().isOut() &&
-      this.getBatsman().runs < this.getBowler().runs) {
-        if (this.getBatsman().type == PlayerType.User)
-        this.setGameStatus(GameStatus.COMPUTER_WON);
-        else
-        if (this.getBatsman().type == PlayerType.Computer)
-        this.setGameStatus(GameStatus.USER_WON);
-
+      else
+      if (this.getBatsman().isOut() && this.getBatsman().runs < this.getBowler().runs) {
+        this.getBowler().status = PlayerStatus.Won;
+        this.getBatsman().status = PlayerStatus.Lost;
+        this.setGameStatus(GameStatus.GAME_OVER);
         this.getBowler().wins++;
       }
-
+      else
       if (this.getBatsman().isOut() && this.getBowler().isOut() &&
-      this.getBatsman().runs == this.getBowler().runs &&
-      this.getBatsman().runs != undefined)
+          this.getBatsman().runs == this.getBowler().runs &&
+          this.getBatsman().runs != undefined)
         this.setGameStatus(GameStatus.DRAW);
     }
 
