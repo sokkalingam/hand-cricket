@@ -55,21 +55,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.text = '';
   }
 
-  // connectToChat(): void {
-  //   if (this.chatSubsription) return;
-  //   this.chatSubsription = this.socketService.subscribetoChat(this.messages);
-  //   this.socketService.connectChat(this.composeMessage(''));
-  //   this.chatConnected = true;
-  // }
-  //
-  // disconnectToChat(): void {
-  //   if (!this.chatSubsription) return;
-  //   this.socketService.disconnectChat(this.composeMessage(''));
-  //   this.chatSubsription.unsubscribe();
-  //   this.chatSubsription = undefined;
-  //   this.chatConnected = false;
-  // }
-
   isChatConnected(): boolean { return this.chatSubsription != undefined; }
 
   fromHost(message: Message): boolean {
