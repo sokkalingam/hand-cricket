@@ -17,9 +17,7 @@ import { GameAnimation } from '../../../animations/GameAnimation';
 @Component({
   selector: 'play',
   templateUrl: './play.component.html',
-  styleUrls: ['./play.component.css',
-    '../../../shared/css/price_table.css',
-  '../../../shared/css/vertical-progress-bar.css'],
+  styleUrls: ['./play.component.css'],
   providers: [ProgressBarService],
   animations: [GameAnimation]
 })

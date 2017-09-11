@@ -22,8 +22,7 @@ import { PlaySelectAnimation } from '../../../animations/PlaySelectAnimation';
 @Component({
   selector: 'gameplay',
   templateUrl: './gameplay.component.html',
-  styleUrls: ['./gameplay.component.css',
-  '../../../shared/css/vertical-progress-bar.css'],
+  styleUrls: ['./gameplay.component.css'],
   providers: [ProgressBarService],
   animations: [GameAnimation, PlaySelectAnimation]
 })
