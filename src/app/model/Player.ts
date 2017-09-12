@@ -7,6 +7,7 @@ export class Player {
 
 	id: string;
   name: string;
+	email: string;
   runs: number = 0;
   balls: number = 0;
   lastDelivery: number;

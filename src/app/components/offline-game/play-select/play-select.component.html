@@ -1,8 +1,13 @@
 <div *ngIf='!user.name' class="form-group">
   <h3>
-    <label for="playerName">Enter your name: </label>
+    <label for="playerName" class='text-green'>Enter your name</label>
     <input type='text' class='form-control' name='name' [(ngModel)]='name' autocomplete='off' [maxlength]='8' />
   </h3>
+  <h4>
+    <label for="playerEmail" class='text-blue'>Enter your email (optional)</label>
+    <input type='text' class='form-control' name='email' [(ngModel)]='user.email' autocomplete='off' [maxlength]='20' />
+    <h5 class='text-yellow'>To get notified when your score is beaten</h5>
+  </h4>
   <button type="button" class="btn btn-success btn-lg"
   [disabled]='name?.trim().length == 0' (click)='saveInfo()'>Save</button>
 </div>
