@@ -37,13 +37,7 @@
 
     <div class='row text-center' style="padding-right:50px">
         <span *ngIf='gameService.isGameInProgress()'>
-          <button class="btn btn-success" (click)='clickInput(0)' [@inputButton]='gameAS.inputs[0]' [disabled]='!playEnabled()'>0</button>
-          <button class="btn btn-success" (click)='clickInput(1)' [@inputButton]='gameAS.inputs[1]' [disabled]='!playEnabled()'>1</button>
-          <button class="btn btn-success" (click)='clickInput(2)' [@inputButton]='gameAS.inputs[2]' [disabled]='!playEnabled()'>2</button>
-          <button class="btn btn-success" (click)='clickInput(3)' [@inputButton]='gameAS.inputs[3]' [disabled]='!playEnabled()'>3</button>
-          <button class="btn btn-success" (click)='clickInput(4)' [@inputButton]='gameAS.inputs[4]' [disabled]='!playEnabled()'>4</button>
-          <button class="btn btn-success" (click)='clickInput(5)' [@inputButton]='gameAS.inputs[5]' [disabled]='!playEnabled()'>5</button>
-          <button class="btn btn-success" (click)='clickInput(6)' [@inputButton]='gameAS.inputs[6]' [disabled]='!playEnabled()'>6</button>
+          <numpad (numPressedEvent)='clickInput($event)' [disable]='!playEnabled()'></numpad>
         </span>
 
         <span *ngIf='!gameService.isGameInProgress()'>

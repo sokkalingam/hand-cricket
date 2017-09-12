@@ -21,13 +21,7 @@
 
 <div class="row text-center" *ngIf='showInputs'>
   <div *ngIf='gameService.isGameInProgress()'>
-    <button class="btn btn-primary" [@inputButton]='gameAS.inputs[0]' (click)='clickInput(0)'>0</button>
-    <button class="btn btn-primary" [@inputButton]='gameAS.inputs[1]' (click)='clickInput(1)'>1</button>
-    <button class="btn btn-primary" [@inputButton]='gameAS.inputs[2]' (click)='clickInput(2)'>2</button>
-    <button class="btn btn-primary" [@inputButton]='gameAS.inputs[3]' (click)='clickInput(3)'>3</button>
-    <button class="btn btn-primary" [@inputButton]='gameAS.inputs[4]' (click)='clickInput(4)'>4</button>
-    <button class="btn btn-primary" [@inputButton]='gameAS.inputs[5]' (click)='clickInput(5)'>5</button>
-    <button class="btn btn-primary" [@inputButton]='gameAS.inputs[6]' (click)='clickInput(6)'>6</button>
+    <numpad (numPressedEvent)='clickInput($event)'></numpad>
   </div>
 
   <div *ngIf='!gameService.isGameInProgress()'>

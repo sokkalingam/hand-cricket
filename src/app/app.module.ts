@@ -26,6 +26,7 @@ import { HowToPlayComponent }  from './components/howtoplay/howtoplay.component'
 import { ShareComponent }  from './components/share/share.component';
 import { PlayTableComponent }  from './components/shared/play-table/play-table.component';
 import { ProgressBarComponent }  from './components/shared/progress-bar/progress-bar.component';
+import { NumpadComponent }  from './components/shared/numpad/numpad.component';
 
 import { SocketService } from './services/socket.service';
 import { GameService } from './services/game.service';
@@ -68,7 +69,8 @@ import { ShareButtonsModule } from 'ngx-sharebuttons';
                   HowToPlayComponent,
                   ShareComponent,
                   PlayTableComponent,
-                  ProgressBarComponent
+                  ProgressBarComponent,
+                  NumpadComponent
                 ],
   providers:    [ SocketService,
                   GameService,

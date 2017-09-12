@@ -1,0 +1,4 @@
+<button *ngFor='let num of numbers' [@inputButton]='gameAS.inputs[num]'
+  (click)='clickInput(num)' [disabled]='disable' class='btn btn-success'>
+  {{num}}
+</button>
