@@ -11,10 +11,14 @@ import { GameStatus } from '../../../enum/GameStatus';
 
 import { GameService } from '../../../services/game.service';
 
+import { PlaySelectAnimation } from '../../../animations/PlaySelectAnimation';
+
 @Component({
   selector: 'play-select',
   templateUrl: './play-select.component.html',
-  providers: [GameService]
+  styleUrls: ['./play-select.component.css'],
+  providers: [GameService],
+  animations: [PlaySelectAnimation]
 })
 
 export class PlaySelectComponent {

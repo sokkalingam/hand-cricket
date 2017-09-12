@@ -127,6 +127,6 @@
   <div *ngIf='(game.gameStatus == GameStatus.USER_WON) ||
   (game.gameStatus == GameStatus.COMPUTER_WON) ||
   (game.gameStatus == GameStatus.DRAW)'>
-    <button type="button" class="btn btn-danger" (click)='restartGame()'>Restart Game</button>
+    <button type="button" class="btn btn-danger" (click)='restartGame()' [@restartButton]>Restart Game</button>
   </div>
 </div>
