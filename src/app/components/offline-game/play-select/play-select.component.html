@@ -9,7 +9,7 @@
     <h5 class='text-yellow'>To get notified when your score is beaten</h5>
   </h4>
   <button type="button" class="btn btn-success btn-lg"
-  [disabled]='name?.trim().length == 0' (click)='saveInfo()'>Save</button>
+  [disabled]='!name || name.trim().length == 0' (click)='saveInfo()'>Save</button>
 </div>
 
 <div *ngIf='user.name' class='text-center'>
