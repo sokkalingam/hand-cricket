@@ -4,28 +4,5 @@
 </play-select>
 
 <div *ngIf='game.gameStatus != GameStatus.NOT_STARTED'>
-
   <gameplay [user]='user' [computer]='computer' [game]='game'></gameplay>
-
-
-  <!-- <div class="row">
-    <div class="col-xs-6">
-      <gameplay [user]='user' [computer]='computer' [game]='game'></gameplay>
-    </div>
-    <div class="col-xs-6">
-      <game-update [updates]='game.updates'></game-update>
-    </div>
-  </div>
-
-  <div class="row">
-    <div *ngIf="user.runs != undefined || computer.runs != undefined">
-      <div class="col-xs-6">
-        <score-board [user]='user' [computer]='computer'></score-board>
-      </div>
-      <div class="col-xs-6">
-        <progress-bar [game]='game'></progress-bar>
-      </div>
-    </div>
-  </div> -->
-
 </div>

@@ -16,8 +16,4 @@ export class NavigationComponent {
     document.getElementById("mySidenav").style.width = "0";
   }
 
-  reloadPage(): void {
-    location.reload();
-  }
-
 }
