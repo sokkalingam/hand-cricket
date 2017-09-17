@@ -1,0 +1,30 @@
+<div *ngIf='!submitted'>
+  <h3 class="text-green">Feedback</h3>
+  <form>
+    <div class="form-group">
+      <textarea class="form-control" rows="3" name='body' [(ngModel)]='email.body'></textarea>
+    </div>
+  </form>
+
+  <h4 class="text-yellow">Optional Fields</h4>
+
+  <form class="form-inline">
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" class="form-control" [(ngModel)]='email.name' name='name' placeholder="Jane Doe">
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" class="form-control" [(ngModel)]='email.email' name='email' placeholder="jane.doe@example.com">
+    </div>
+  </form>
+
+
+<button (click)='submitFeedback()' class="submit-button btn btn-primary btn-lg" [disabled]='!email.body?.length'>Submit</button>
+
+</div>
+
+<div *ngIf='submitted' class="text-center">
+  <h3>Thank you for your valuable feedback. We will read every one of them.</h3>
+  <h4 class="text-red">Hand Cricket Team</h4>
+</div>

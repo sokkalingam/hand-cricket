@@ -22,6 +22,7 @@ import { ChatComponent } from './components/online-game/chat/chat.component';
 import { PlayComponent } from './components/online-game/play/play.component';
 import { OnlineGameStatusComponent } from './components/online-game/online-game-status/online-game-status.component';
 import { OnlineScoreBoardComponent } from './components/online-game/online-score-board/online-score-board.component';
+import { FeedbackComponent }  from './components/feedback/feedback.component';
 
 import { SocketService } from './services/socket.service';
 import { GameService } from './services/game.service';
@@ -55,7 +56,8 @@ import { GameAnimationService } from './services/game-animation.service';
                   ChatComponent,
                   PlayComponent,
                   OnlineGameStatusComponent,
-                  OnlineScoreBoardComponent
+                  OnlineScoreBoardComponent,
+                  FeedbackComponent
                 ],
   providers:    [ SocketService,
                   GameService,
