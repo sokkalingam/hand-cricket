@@ -10,10 +10,17 @@ export class CountdownService {
     this.timer = 60;
     var that = this;
     this.interval = setInterval(() => {
-      if (that.timer > 0)
+      if (that.timer > 0) {
         that.timer--;
-      else
-        clearInterval(that.interval);
+      } else {
+        that.clearTimer();
+      }
     }, 1000);
   }
+
+  clearTimer(): void {
+    clearInterval(this.interval);
+    this.timer = 0;
+  }
+
 }
