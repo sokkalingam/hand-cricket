@@ -38,9 +38,11 @@
                   Played <span class="num">{{playerService.getCurrentPlayer().lastDelivery}}</span>
                 </li>
               </span>
-              <li *ngIf='playService.notice' class='notice'>
-                {{playService.getCurrentPlayerNotice()}}
-              </li>
+              <span *ngIf='playService.notice'>
+                <li class='notice' [@yourTurn]='playService.getCurrentPlayerNotice()'>
+                  {{playService.getCurrentPlayerNotice()}}
+                </li>
+              </span>
               <span *ngIf='!gameService.isGameInProgress()'>
                 <li *ngIf='gameService.isGameDraw()' class='draw'>DRAW</li>
                 <li *ngIf='playerService.currentPlayerWon()' class='won'>WON</li>
@@ -109,9 +111,12 @@
                     Played <span class="num">{{playerService.getOtherPlayer().lastDelivery}}</span>
                   </li>
                 </span>
-                <li *ngIf='playService.notice' class='notice'>
-                  {{playService.getOtherPlayerNotice()}}
-                </li>
+                <span *ngIf='playService.notice'>
+                  <li class='notice' [@yourTurn]='playService.getOtherPlayerNotice()'>
+                    {{playService.getOtherPlayerNotice()}}
+                  </li>
+                </span>
+
                 <span *ngIf='!gameService.isGameInProgress()'>
                   <li *ngIf='gameService.isGameDraw()' class='draw'>DRAW</li>
                   <li *ngIf='playerService.currentPlayerWon()' class='lost'>LOST</li>
