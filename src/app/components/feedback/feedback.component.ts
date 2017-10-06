@@ -15,7 +15,8 @@ import { ApplicationService } from '../../services/application.service';
 
 export class FeedbackComponent implements OnInit {
   email: Email;
-  submitted: boolean = false;
+  buttonClicked: boolean;
+  submitted: boolean;
 
   constructor(private http: Http,
               private appService: ApplicationService) {
@@ -23,9 +24,12 @@ export class FeedbackComponent implements OnInit {
 
   ngOnInit(): void {
     this.email = new Email();
+    this.buttonClicked = false;
+    this.submitted = false;
   }
 
   submitFeedback(): void {
+    this.buttonClicked = true;
     this.sendEmail(this.email).subscribe(
       (str: string) => {
         console.log(str);
