@@ -23,6 +23,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.appService.wakeServer();
     this.email = new Email();
     this.buttonClicked = false;
     this.submitted = false;
@@ -48,4 +49,5 @@ export class FeedbackComponent implements OnInit {
         return response.text();;
       });
   }
+
 }
