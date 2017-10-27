@@ -113,9 +113,10 @@ export class GameplayComponent {
     }
 
     addRuns(batsman: Player, bowler: Player): void {
-      if (batsman.lastDelivery == 0)
-        batsman.runs += bowler.lastDelivery;
-      else
+      // When Batsman plays 0, he scores 0 for that play, not bowler's runs.
+      // if (batsman.lastDelivery == 0)
+      //   batsman.runs += bowler.lastDelivery;
+      // else
         batsman.runs += batsman.lastDelivery;
     }
 
