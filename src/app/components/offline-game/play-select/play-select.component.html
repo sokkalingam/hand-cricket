@@ -1,4 +1,4 @@
-<div *ngIf='game.gameStatus == GameStatus.NOT_STARTED' class='text-center'>
+<div class='text-center'>
   <h3>What would you like to do first?</h3>
   <button type="button" class="btn btn-primary btn-lg" (click)='choseToBat()' [@battingButton]>Batting</button>
   <button type="button" class="btn btn-success btn-lg" (click)='choseToBowl()' [@bowlingButton]>Bowling</button>

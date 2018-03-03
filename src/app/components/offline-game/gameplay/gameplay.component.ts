@@ -15,6 +15,7 @@ import { HelperService } from '../../../services/helper.service';
 import { GameAnimationService } from '../../../services/game-animation.service';
 
 import { GameAnimation } from '../../../animations/GameAnimation';
+import { PlaySelectAnimation } from '../../../animations/PlaySelectAnimation';
 
 @Component({
   selector: 'gameplay',
@@ -22,7 +23,7 @@ import { GameAnimation } from '../../../animations/GameAnimation';
   styleUrls: ['./gameplay.component.css', '../../../shared/css/price_table.css',
   '../../../shared/css/vertical-progress-bar.css'],
   providers: [ProgressBarService, GameService],
-  animations: [GameAnimation]
+  animations: [GameAnimation, PlaySelectAnimation]
 })
 
 export class GameplayComponent {
@@ -52,20 +53,6 @@ export class GameplayComponent {
     */
     getRandomNumber(): number {
       return this.helperService.getRandomNumber();
-    }
-
-    restartGame(): void {
-      this.game.gameStatus = GameStatus.IN_PROGRESS;
-      this.resetPlayer(this.getBatsman());
-      this.resetPlayer(this.getBowler());
-      this.gameAS.gameRestart++;
-    }
-
-    resetPlayer(player: Player): void {
-      player.runs = 0;
-      player.balls = 0;
-      player.lastDelivery = undefined;
-      player.status = PlayerStatus.NotOut;
     }
 
     isInputValid(): boolean {
@@ -195,11 +182,33 @@ export class GameplayComponent {
     }
 
     choseToBat(): void {
+      this.restartGame();
       this.gameService.setPlayersAndGame(this.game, this.user, this.computer);
     }
 
     choseToBowl(): void {
+      this.restartGame();
       this.gameService.setPlayersAndGame(this.game, this.computer, this.user);
+    }
+
+    toss(): void {
+      if (Math.random() < 0.5)
+        this.choseToBat();
+      else
+        this.choseToBowl();
+    }
+
+    resetPlayer(player: Player): void {
+      player.runs = 0;
+      player.balls = 0;
+      player.lastDelivery = undefined;
+      player.status = PlayerStatus.NotOut;
+    }
+
+    restartGame(): void {
+      this.game.gameStatus = GameStatus.IN_PROGRESS;
+      this.resetPlayer(this.user);
+      this.resetPlayer(this.computer);
     }
 
   }
