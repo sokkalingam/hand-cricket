@@ -1,4 +1,4 @@
-import {  Component, Input } from '@angular/core';
+import {  Component, Input, OnInit } from '@angular/core';
 
 import { Update } from '../../../model/Update';
 import { Player } from '../../../model/Player';
@@ -26,10 +26,12 @@ import { PlaySelectAnimation } from '../../../animations/PlaySelectAnimation';
   animations: [GameAnimation, PlaySelectAnimation]
 })
 
-export class GameplayComponent {
+export class GameplayComponent implements OnInit {
   @Input() user: Player;
   @Input() computer: Player;
   @Input() game: Game;
+
+  showInputs: boolean;
 
   Math = Math;
 
@@ -48,6 +50,10 @@ export class GameplayComponent {
     private helperService: HelperService,
     private gameAS: GameAnimationService) { }
 
+    ngOnInit(): void {
+      this.showInputs = true;
+    }
+
     /**
     * Returns a random number between 0 and 6, both included
     */
@@ -61,10 +67,17 @@ export class GameplayComponent {
 
     setOut(batsman: Player): void {
       batsman.status = PlayerStatus.Out;
+      this.hideInputs();
     }
 
     setNotOut(player: Player): void {
       player.status = PlayerStatus.NotOut;
+    }
+
+    hideInputs(): void {
+      this.showInputs = false;
+      var that = this;
+      setTimeout(() => that.showInputs = true, 1000);
     }
 
     getBatsman(): Player { return this.game.getBatsman(); }
