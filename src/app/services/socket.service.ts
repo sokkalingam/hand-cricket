@@ -73,7 +73,6 @@ export class SocketService {
     var that = this;
     this.socket = new SockJS(`${this.appService.baseUrl}/game/socket-registration`);
     this.stompClient = Stomp.over(this.socket);
-    console.log(new Date());
     this.stompClient.connect({}, function (frame: any) {
       console.log('Connected: ' + frame);
       that.countdownService.clearTimer();
@@ -131,6 +130,8 @@ export class SocketService {
       this.stompClient.disconnect();
       console.log("Disconnected");
     }
+    this.stompClient = null;
+    this.socket = null;
   }
 
   isConnected(): boolean {

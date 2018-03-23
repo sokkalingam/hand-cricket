@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 
 import { Message } from '../../../model/Message';
 import { Player } from '../../../model/Player';
@@ -21,7 +21,7 @@ import * as _ from 'lodash';
   animations: [ChatAnimation]
 })
 
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
 
   player: Player;
   text: string = '';
@@ -37,6 +37,12 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.player = this.playerService.getCurrentPlayer();
     this.socketService.subscribetoChat();
+  }
+
+  ngOnDestroy(): void {
+    this.chatService.messages = [];
+    this.chatService.newMessages = 0;
+    this.chatService.showChat = false;
   }
 
   composeMessage(text: string): Message {
