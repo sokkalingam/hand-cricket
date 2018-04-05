@@ -24,6 +24,7 @@ import { OnlineGameStatusComponent } from './components/online-game/online-game-
 import { OnlineScoreBoardComponent } from './components/online-game/online-score-board/online-score-board.component';
 import { FeedbackComponent }  from './components/feedback/feedback.component';
 import { HowToPlayComponent }  from './components/howtoplay/howtoplay.component';
+import { ShareComponent }  from './components/share/share.component';
 
 import { SocketService } from './services/socket.service';
 import { GameService } from './services/game.service';
@@ -35,13 +36,17 @@ import { CountdownService } from './services/countdown.service';
 import { ChatService } from './services/chat.service';
 import { GameAnimationService } from './services/game-animation.service';
 
+// External Modules
+import { ShareButtonsModule } from 'ngx-sharebuttons';
+
 @NgModule({
   imports:      [ BrowserModule,
                   FormsModule,
                   AppRoutingModule,
                   RouterModule,
                   HttpModule,
-                  BrowserAnimationsModule
+                  BrowserAnimationsModule,
+                  ShareButtonsModule.forRoot()
                 ],
   declarations: [ AppComponent,
                   NavigationComponent,
@@ -59,7 +64,8 @@ import { GameAnimationService } from './services/game-animation.service';
                   OnlineGameStatusComponent,
                   OnlineScoreBoardComponent,
                   FeedbackComponent,
-                  HowToPlayComponent
+                  HowToPlayComponent,
+                  ShareComponent
                 ],
   providers:    [ SocketService,
                   GameService,
