@@ -13,6 +13,7 @@ import { ProgressBarService } from '../../../services/progress-bar.service';
 import { GameService } from '../../../services/game.service';
 import { HelperService } from '../../../services/helper.service';
 import { GameAnimationService } from '../../../services/game-animation.service';
+import { StatsService } from '../../../services/stats.service';
 
 import { GameAnimation } from '../../../animations/GameAnimation';
 import { PlaySelectAnimation } from '../../../animations/PlaySelectAnimation';
@@ -48,10 +49,13 @@ export class GameplayComponent implements OnInit {
   constructor(private progressBarService: ProgressBarService,
     private gameService: GameService,
     private helperService: HelperService,
-    private gameAS: GameAnimationService) { }
+    private gameAS: GameAnimationService,
+    private statsService: StatsService) { }
 
     ngOnInit(): void {
       this.showInputs = true;
+      this.statsService.getMaxWinsPlayer();
+      this.statsService.getMaxRunsPlayer();
     }
 
     /**
@@ -170,7 +174,10 @@ export class GameplayComponent implements OnInit {
       if (this.getBatsman().isOut() && this.getBowler().isOut() &&
       this.getBatsman().runs == this.getBowler().runs &&
       this.getBatsman().runs != undefined)
-      this.setGameStatus(GameStatus.DRAW);
+        this.setGameStatus(GameStatus.DRAW);
+
+      if (this.game.gameStatus != GameStatus.IN_PROGRESS)
+        this.submitScore();
     }
 
     batAndBowl(batsman: Player, bowler: Player): void {
@@ -222,6 +229,17 @@ export class GameplayComponent implements OnInit {
       this.game.gameStatus = GameStatus.IN_PROGRESS;
       this.resetPlayer(this.user);
       this.resetPlayer(this.computer);
+    }
+
+    submitScore(): void {
+      this.statsService.submitScore(this.user).subscribe(
+        (res: boolean) => {
+          console.log('PlayerStats Submit: ' + res);
+          this.statsService.getMaxWinsPlayer();
+          this.statsService.getMaxRunsPlayer();
+        },
+        (error: any) => console.log(error)
+      );
     }
 
   }

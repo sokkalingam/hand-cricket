@@ -27,6 +27,8 @@ export class PlaySelectComponent {
   @Input() computer: Player;
   @Input() game: Game;
 
+  name: string;
+
   GameStatus = GameStatus;
 
   constructor(private gameService: GameService) {}
@@ -48,6 +50,10 @@ export class PlaySelectComponent {
       this.choseToBat();
     else
       this.choseToBowl();
+  }
+
+  saveInfo(): void {
+    this.user.name = this.name;
   }
 
 }

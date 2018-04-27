@@ -1,4 +1,13 @@
-<div class='text-center'>
+<div *ngIf='!user.name' class="form-group">
+  <h3>
+    <label for="playerName">Enter your name: </label>
+    <input type='text' class='form-control' name='name' [(ngModel)]='name' autocomplete='off' [maxlength]='5' />
+  </h3>
+  <button type="button" class="btn btn-success btn-lg"
+  [disabled]='name?.trim().length == 0' (click)='saveInfo()'>Save</button>
+</div>
+
+<div *ngIf='user.name' class='text-center'>
   <h3>What would you like to do first?</h3>
   <button type="button" class="btn btn-primary btn-lg" (click)='choseToBat()' [@battingButton]>Batting</button>
   <button type="button" class="btn btn-success btn-lg" (click)='choseToBowl()' [@bowlingButton]>Bowling</button>

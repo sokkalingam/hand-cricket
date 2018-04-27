@@ -1,1 +1,21 @@
+.daily-leaders {
+  position: relative;
+  font-size: 15px;
+  top: 10px;
+  font-family: 'Open Sans';
+  color: #fff;
+}
 
+.leader-col {
+  background-color: #2b2937;
+  border-radius: 5px 0px 0px 5px;
+}
+
+.max-runs {
+  background-color: #1abc9c;
+}
+
+.max-wins {
+  background-color: #5d6a9a;
+  border-radius: 0px 5px 5px 0px;
+}

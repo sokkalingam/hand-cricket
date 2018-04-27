@@ -124,11 +124,27 @@
     <button class="btn btn-primary" [@inputButton]='gameAS.inputs[5]' (click)='clickInput(5)'>5</button>
     <button class="btn btn-primary" [@inputButton]='gameAS.inputs[6]' (click)='clickInput(6)'>6</button>
   </div>
+  
   <div *ngIf='(game.gameStatus == GameStatus.USER_WON) ||
     (game.gameStatus == GameStatus.COMPUTER_WON) ||
     (game.gameStatus == GameStatus.DRAW)'>
     <button type="button" class="btn btn-primary btn-lg" (click)='choseToBat()' [@battingButton]>Batting</button>
     <button type="button" class="btn btn-warning btn-lg" (click)='choseToBowl()' [@bowlingButton]>Bowling</button>
     <button type="button" class="btn btn-danger btn-lg" (click)='toss()' [@tossCoinButton]>Toss Coin</button>
+  </div>
+
+  <div class='equal text-center daily-leaders'>
+    <div class='col-xs-4 leader-col'>
+      <div>DAILY</div>
+      <div>LEADERS</div>
+    </div>
+    <div class='col-xs-4 max-runs'>
+      <div>{{statsService.playerMaxRuns?.name | uppercase}}</div>
+      <div>{{statsService.playerMaxRuns?.runs}} runs</div>
+    </div>
+    <div class='col-xs-4 max-wins'>
+      <div>{{statsService.playerMaxWins?.name | uppercase}}</div>
+      <div>{{statsService.playerMaxWins?.wins}} wins</div>
+    </div>
   </div>
 </div>
