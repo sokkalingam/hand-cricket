@@ -54,8 +54,7 @@ export class GameplayComponent implements OnInit {
 
     ngOnInit(): void {
       this.showInputs = true;
-      this.statsService.getMaxWinsPlayer();
-      this.statsService.getMaxRunsPlayer();
+      this.statsService.getMaxWinsAndRunsPlayer();
     }
 
     /**
@@ -175,9 +174,6 @@ export class GameplayComponent implements OnInit {
       this.getBatsman().runs == this.getBowler().runs &&
       this.getBatsman().runs != undefined)
         this.setGameStatus(GameStatus.DRAW);
-
-      if (this.game.gameStatus != GameStatus.IN_PROGRESS)
-        this.submitScore();
     }
 
     batAndBowl(batsman: Player, bowler: Player): void {
@@ -199,6 +195,8 @@ export class GameplayComponent implements OnInit {
         this.gameService.makeBatsman(this.game, bowler);
         this.gameService.makeBowler(this.game, batsman);
       }
+
+      this.submitScore();
     }
 
     choseToBat(): void {
@@ -232,14 +230,21 @@ export class GameplayComponent implements OnInit {
     }
 
     submitScore(): void {
-      this.statsService.submitScore(this.user).subscribe(
-        (res: boolean) => {
-          console.log('PlayerStats Submit: ' + res);
-          this.statsService.getMaxWinsPlayer();
-          this.statsService.getMaxRunsPlayer();
-        },
-        (error: any) => console.log(error)
-      );
+
+      if (this.statsService.playerMaxRuns == null ||
+          this.statsService.playerMaxWins == null ||
+          this.user.runs > this.statsService.playerMaxRuns.runs ||
+          this.user.wins > this.statsService.playerMaxWins.wins) {
+
+            this.statsService.submitScore(this.user).subscribe(
+              (res: boolean) => {
+                console.log('PlayerStats Submit: ' + res);
+                this.statsService.getMaxWinsAndRunsPlayer();
+              },
+              (error: any) => console.log(error)
+            );
+
+          }
     }
 
   }

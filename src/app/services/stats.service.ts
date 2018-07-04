@@ -18,6 +18,11 @@ export class StatsService {
               private http: Http) {
   }
 
+  getMaxWinsAndRunsPlayer(): void {
+    this.getMaxWinsPlayer();
+    this.getMaxRunsPlayer();
+  }
+
   getMaxWinsPlayer(): void {
     this.http.get(this.appService.baseUrl + '/playerStats/maxWins').map(
       (response: Response) => {
