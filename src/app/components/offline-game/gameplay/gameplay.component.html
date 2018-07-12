@@ -139,12 +139,22 @@
       <div>LEADERS</div>
     </div>
     <div class='col-xs-4 max-runs'>
-      <div>{{statsService.playerMaxRuns?.name | uppercase}}</div>
-      <div>{{statsService.playerMaxRuns?.runs}} runs</div>
+      <div *ngIf='statsService.playerMaxRuns'>
+        <div>{{statsService.playerMaxRuns?.name | uppercase}}</div>
+        <div>{{statsService.playerMaxRuns?.runs}} runs</div>
+      </div>
+      <div *ngIf='!statsService.playerMaxRuns'>
+        <div>NONE</div>
+      </div>
     </div>
     <div class='col-xs-4 max-wins'>
-      <div>{{statsService.playerMaxWins?.name | uppercase}}</div>
-      <div>{{statsService.playerMaxWins?.wins}} wins</div>
+      <div *ngIf='statsService.playerMaxWins'>
+        <div>{{statsService.playerMaxWins?.name | uppercase}}</div>
+        <div>{{statsService.playerMaxWins?.wins}} wins</div>
+      </div>
+      <div *ngIf='!statsService.playerMaxWins'>
+        <div>NONE</div>
+      </div>
     </div>
   </div>
 </div>
