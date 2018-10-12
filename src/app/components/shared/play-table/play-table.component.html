@@ -1,0 +1,44 @@
+<div class="whole">
+  <div class="type standard">
+    <p>{{player.name}}</p>
+  </div>
+  <div class="plan">
+    <div class="content">
+      <ul>
+        <span *ngIf='player.id == game.batsman.id'>
+          <li class='batting' [@battingBowling]='player.status || otherPlayer.status'>BATTING</li>
+        </span>
+        <span *ngIf='player.id == game.bowler.id'>
+          <li class='bowling' [@battingBowling]='player.status || otherPlayer.status'>BOWLING</li>
+        </span>
+      </ul>
+    </div>
+    <div class="header" [@runs]='player.runs'>
+      {{player.runs ? player.runs : 0}}<span class='not-out' *ngIf='player.id == game.batsman.id && !player.isOut()'>*</span>
+      <p class="month">runs</p>
+    </div>
+    <div class="content">
+      <ul>
+        <span *ngIf='player.wins'>
+          <li [@wins]='player.wins'
+          [class.won]='player.wins > otherPlayer.wins'
+          [class.lost]='player.wins < otherPlayer.wins'
+          [class.draw]='player.wins == otherPlayer.wins'>
+          Wins {{player.wins}}
+        </li>
+      </span>
+      <span *ngIf='player.lastDelivery != null'>
+        <li [@played]='player.runs || otherPlayer.runs'>Played <span class="num">{{player.lastDelivery}}</span></li>
+      </span>
+      <span *ngIf='game.gameStatus != GameStatus.IN_PROGRESS'>
+        <li *ngIf='game.gameStatus == GameStatus.DRAW' class='draw'>DRAW</li>
+        <li *ngIf='game.gameStatus == GameStatus.COMPUTER_WON' class='lost'>LOST</li>
+        <li *ngIf='game.gameStatus == GameStatus.USER_WON' class='won'>WON</li>
+      </span>
+      <span *ngIf='player.status == PlayerStatus.Out && game.gameStatus == GameStatus.IN_PROGRESS'>
+        <li [@out]='player.status' class="out">OUT</li>
+      </span>
+    </ul>
+  </div>
+</div>
+</div>
