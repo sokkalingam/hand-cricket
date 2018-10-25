@@ -27,6 +27,7 @@ export class JoinGameComponent {
   }
 
   saveInfo(): void {
+    this.name = this.name.substring(0, 11);
     this.getNewPlayer();
   }
 
