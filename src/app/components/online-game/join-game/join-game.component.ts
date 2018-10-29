@@ -20,10 +20,10 @@ export class JoinGameComponent {
   // enums
   PlayerType = PlayerType;
 
-  constructor(private gameService: GameService,
-              private playerService: PlayerService,
-              private socketService: SocketService,
-              private playService: PlayService) {
+  constructor(public gameService: GameService,
+              public playerService: PlayerService,
+              public socketService: SocketService,
+              public playService: PlayService) {
   }
 
   saveInfo(): void {

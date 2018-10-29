@@ -29,10 +29,10 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   chatSubsription: any;
 
-  constructor(private socketService: SocketService,
-              private gameService: GameService,
-              private playerService: PlayerService,
-              private chatService: ChatService) {}
+  constructor(public socketService: SocketService,
+              public gameService: GameService,
+              public playerService: PlayerService,
+              public chatService: ChatService) {}
 
   ngOnInit(): void {
     this.player = this.playerService.getCurrentPlayer();

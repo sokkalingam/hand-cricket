@@ -46,12 +46,12 @@ export class GameplayComponent implements OnInit {
 
   userInput: number;
 
-  constructor(private progressBarService: ProgressBarService,
-    private gameService: GameService,
-    private playerService: PlayerService,
-    private helperService: HelperService,
-    private gameAS: GameAnimationService,
-    private statsService: StatsService) { }
+  constructor(public progressBarService: ProgressBarService,
+    public gameService: GameService,
+    public playerService: PlayerService,
+    public helperService: HelperService,
+    public gameAS: GameAnimationService,
+    public statsService: StatsService) { }
 
     ngOnInit(): void {
       this.showInputs = true;
