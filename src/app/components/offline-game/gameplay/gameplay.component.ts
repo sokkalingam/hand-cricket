@@ -169,6 +169,7 @@ export class GameplayComponent implements OnInit {
           this.getBatsman().runs == this.getBowler().runs &&
           this.getBatsman().runs != undefined)
         this.setGameStatus(GameStatus.DRAW);
+
     }
 
     batAndBowl(batsman: Player, bowler: Player): void {

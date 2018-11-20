@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Player } from '../../../model/Player';
 import { Game } from '../../../model/Game';
@@ -17,7 +17,7 @@ import { PlaySelectAnimation } from '../../../animations/PlaySelectAnimation';
   animations: [GameAnimation, PlaySelectAnimation]
 })
 
-export class PlayTableComponent implements OnInit {
+export class PlayTableComponent {
   @Input() player: Player;
   @Input() otherPlayer: Player;
   @Input() game: Game;
@@ -29,16 +29,28 @@ export class PlayTableComponent implements OnInit {
 
   JSON = JSON;
 
-  constructor() {
-    console.log('constructor', this.player, this.otherPlayer, this.game, this.notice, this.playerNotice);
-  }
-
-  ngOnInit(): void {
-    console.log('oninit', this.player, this.otherPlayer, this.game, this.notice, this.playerNotice);
-  }
-
-  gameInProgress(): boolean {
+  isGameInProgress(): boolean {
     return this.game.gameStatus == GameStatus.IN_PROGRESS
       || this.game.gameStatus.toString() == GameStatus[GameStatus.IN_PROGRESS];
+  }
+
+  isGameDraw(): boolean {
+    return this.game.gameStatus == GameStatus.DRAW
+      || this.game.gameStatus.toString() == GameStatus[GameStatus.DRAW];
+  }
+
+  isPlayerWon(): boolean {
+    return this.player.status == PlayerStatus.Won
+      || this.player.status.toString() == PlayerStatus[PlayerStatus.Won];
+  }
+
+  isPlayerLost(): boolean {
+    return this.player.status == PlayerStatus.Lost
+      || this.player.status.toString() == PlayerStatus[PlayerStatus.Lost];
+  }
+
+  isPlayerOut(): boolean {
+    return this.player.status == PlayerStatus.Out
+      || this.player.status.toString() == PlayerStatus[PlayerStatus.Out];
   }
 }

@@ -14,7 +14,7 @@
       </ul>
     </div>
     <div class="header" [@runs]='player.runs'>
-      {{player.runs ? player.runs : 0}}<span class='not-out' *ngIf='player.id == game.batsman.id && gameInProgress()'>*</span>
+      {{player.runs ? player.runs : 0}}<span class='not-out' *ngIf='player.id == game.batsman.id && isGameInProgress()'>*</span>
       <p class="month">runs</p>
     </div>
     <div class="content">
@@ -37,12 +37,12 @@
           {{playerNotice}}
         </li>
       </span>
-      <span *ngIf='game.gameStatus != GameStatus.IN_PROGRESS'>
-        <li *ngIf='game.gameStatus == GameStatus.DRAW' class='draw'>DRAW</li>
-        <li *ngIf='player.status == PlayerStatus.Lost' class='lost'>LOST</li>
-        <li *ngIf='player.status == PlayerStatus.Won' class='won'>WON</li>
+      <span *ngIf='!isGameInProgress()'>
+        <li *ngIf='isGameDraw()' class='draw'>DRAW</li>
+        <li *ngIf='isPlayerLost()' class='lost'>LOST</li>
+        <li *ngIf='isPlayerWon()' class='won'>WON</li>
       </span>
-      <span *ngIf='player.status == PlayerStatus.Out && game.gameStatus == GameStatus.IN_PROGRESS'>
+      <span *ngIf='isPlayerOut() && isGameInProgress()'>
         <li [@out]='player.status' class="out">OUT</li>
       </span>
     </ul>
