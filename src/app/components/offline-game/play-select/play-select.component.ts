@@ -53,7 +53,7 @@ export class PlaySelectComponent {
   }
 
   saveInfo(): void {
-    this.name = this.name.substring(0, 11);
+    this.name = this.name.substring(0, 8);
     this.user.name = this.name;
   }
 
