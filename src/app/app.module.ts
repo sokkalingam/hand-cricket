@@ -10,7 +10,6 @@ import { AppRoutingModule } from './routes/app-routing.module';
 import { AppComponent }         from './app.component';
 import { NavigationComponent }  from './components/navigation/navigation.component';
 import { OfflineGameComponent } from './components/offline-game/offline-game.component';
-import { ProgressBarComponent } from './components/offline-game/progress_bar/progress-bar.component';
 import { GameUpdateComponent } from './components/offline-game/game-updates/game-update.component';
 import { ScoreBoardComponent } from './components/offline-game/score-board/score-board.component';
 import { GameStatusComponent } from './components/offline-game/game-status/game-status.component';
@@ -26,6 +25,7 @@ import { FeedbackComponent }  from './components/feedback/feedback.component';
 import { HowToPlayComponent }  from './components/howtoplay/howtoplay.component';
 import { ShareComponent }  from './components/share/share.component';
 import { PlayTableComponent }  from './components/shared/play-table/play-table.component';
+import { ProgressBarComponent }  from './components/shared/progress-bar/progress-bar.component';
 
 import { SocketService } from './services/socket.service';
 import { GameService } from './services/game.service';
@@ -53,7 +53,6 @@ import { ShareButtonsModule } from 'ngx-sharebuttons';
   declarations: [ AppComponent,
                   NavigationComponent,
                   OfflineGameComponent,
-                  ProgressBarComponent,
                   GameUpdateComponent,
                   ScoreBoardComponent,
                   GameStatusComponent,
@@ -68,7 +67,8 @@ import { ShareButtonsModule } from 'ngx-sharebuttons';
                   FeedbackComponent,
                   HowToPlayComponent,
                   ShareComponent,
-                  PlayTableComponent
+                  PlayTableComponent,
+                  ProgressBarComponent
                 ],
   providers:    [ SocketService,
                   GameService,

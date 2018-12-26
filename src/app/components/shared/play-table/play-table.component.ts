@@ -12,8 +12,7 @@ import { PlaySelectAnimation } from '../../../animations/PlaySelectAnimation';
 @Component({
   selector: 'play-table',
   templateUrl: './play-table.component.html',
-  styleUrls: ['./play-table.component.css',
-              '../../../shared/css/price_table.css'],
+  styleUrls: ['./play-table.component.css'],
   animations: [GameAnimation, PlaySelectAnimation]
 })
 

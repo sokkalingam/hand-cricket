@@ -5,21 +5,13 @@
   </div>
 
 <div class="col-xs-2">
-      <div class="row">
-        <div class="progress progress-bar-vertical">
-          <div class="progress-bar" role="progressbar" aria-valuenow="gameService.getGame().batsman.runs"
-            aria-valuemin="0" aria-valuemax="gameService.getGame().targetScore"
-            [style.height]="progressBarService.getBarHeight(playerService.getCurrentPlayer().runs, gameService.getGame().targetScore)+ '%'">
-            {{playerService.getCurrentPlayer().runs}}
-          </div>
-          <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="gameService.getGame().batsman.runs"
-            aria-valuemin="0" aria-valuemax="gameService.getGame().targetScore"
-            [style.height]="progressBarService.getBarHeight(playerService.getOtherPlayer().runs, gameService.getGame().targetScore) + '%'">
-            {{playerService.getOtherPlayer().runs}}
-          </div>
-        </div>
-      </div>
-    </div>
+  <progress-bar [player]='playerService.getCurrentPlayer()'
+                [otherPlayer]='playerService.getOtherPlayer()'
+                [game]='gameService.getGame()'
+                [playerHeight]='progressBarService.getBarHeight(playerService.getCurrentPlayer().runs, gameService.getGame().targetScore)'
+                [otherPlayerHeight]='progressBarService.getBarHeight(playerService.getOtherPlayer().runs, gameService.getGame().targetScore)'>
+  </progress-bar>
+</div>
 
   <div class="col-xs-5" [@rightColumn]='gameAS.gameRestart'>
     <play-table [player]='computer' [otherPlayer]='user' [game]='game'></play-table>

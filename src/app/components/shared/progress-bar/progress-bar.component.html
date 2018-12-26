@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="progress progress-bar-vertical">
+    <div class="progress-bar" role="progressbar" aria-valuenow="game.batsman.runs"
+    aria-valuemin="0" aria-valuemax="game.targetScore"
+    [style.height]="playerHeight + '%'">
+      {{player.runs}}
+    </div>
+    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="game.batsman.runs"
+    aria-valuemin="0" aria-valuemax="game.targetScore"
+    [style.height]="otherPlayerHeight + '%'">
+      {{otherPlayer.runs}}
+    </div>
+  </div>
+</div>
