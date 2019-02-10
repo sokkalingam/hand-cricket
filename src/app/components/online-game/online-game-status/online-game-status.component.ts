@@ -18,7 +18,7 @@ export class OnlineGameStatusComponent {
   GameStatus = GameStatus;
   PlayerType = PlayerType;
 
-  constructor(private gameService: GameService,
-              private playerService: PlayerService) {}
+  constructor(public gameService: GameService,
+              public playerService: PlayerService) {}
 
 }

@@ -31,14 +31,14 @@ export class PlayComponent implements OnInit {
 
   JSON = JSON;
 
-  constructor(private socketService: SocketService,
-              private gameService: GameService,
-              private playService: PlayService,
-              private playerService: PlayerService,
-              private helperService: HelperService,
-              private progressBarService: ProgressBarService,
-              private chatService: ChatService,
-              private gameAS: GameAnimationService) { }
+  constructor(public socketService: SocketService,
+              public gameService: GameService,
+              public playService: PlayService,
+              public playerService: PlayerService,
+              public helperService: HelperService,
+              public progressBarService: ProgressBarService,
+              public chatService: ChatService,
+              public gameAS: GameAnimationService) { }
 
   ngOnInit(): void {
     this.game = this.gameService.getGame();

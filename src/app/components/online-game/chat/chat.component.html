@@ -29,10 +29,10 @@
   </ul>
   <div class="bottom_wrapper clearfix">
     <div class="message_input_wrapper">
-      <input class="message_input" [(ngModel)]='text' (keyup.enter)='send(text)'
+      <input class="message_input" [(ngModel)]='text' (keyup.enter)='send()'
         placeholder="Type your message here..." />
     </div>
-    <div class="send_message" (click)='send(text)'>
+    <div class="send_message" (click)='send()'>
       <div class="icon"></div>
       <div class="text">Send</div>
     </div>
